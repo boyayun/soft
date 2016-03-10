@@ -1,0 +1,43 @@
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[DebugChecksum]
+Checksum=1173205713
+[Exceptions]
+StopOnUncaught=_ 0
+StopOnThrow=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[struct_types]
+Fmt0=FrameDataStu-datalen	4	0
+[array_types]
+Fmt0=u8[131]	4	0
+Fmt1=u8[2]	4	0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Bp0=_ "STD_CODE" "{E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\projects\_tower_lcd_test\lcd_test.c}.60.3" 0 0 0 0 "" 0 "" 0
+Bp1=_ "STD_CODE" "{E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\projects\_tower_lcd_test\lcd_test.c}.46.3" 0 0 0 0 "" 0 "" 0
+Bp2=_ "STD_CODE" "{E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\projects\_tower_lcd_test\lcd_test.c}.207.3" 1 0 0 0 "" 0 "" 0
+Count=3
+[Aliases]
+A0=_ "C:\Freescale\KMSWDRV_EAR2_2\src\projects\_tower_lcd_test\lcd_test.c" ""
+A1=_ "C:\Freescale\KMSWDRV_EAR2_2\src\toolchain\iar\arch_delay.s" ""
+Count=2
+SuppressDialog=1

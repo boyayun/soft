@@ -1,0 +1,267 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:31
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\ftfa\ftfa.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\ftfa\ftfa.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\ftfa.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\ftfa.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\ftfa\ftfa.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      ftfa.c
+      6           * @version   1.0.3.0
+      7           * @date      October-06-2013
+      8           * @brief     Flash Memory Module (FTFA) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "ftfa.h"
+     12          
+     13          /******************************************************************************
+     14           * Public function definitions                                                *
+     15           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     16          int _FTFA_WriteArray (const void *pDst, void *pSrc, int size)
+     17          {
+   \                     _FTFA_WriteArray: (+1)
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0017             MOVS     R7,R2
+     18            register int n = 0;
+   \   00000004   0x2500             MOVS     R5,#+0
+     19            register uint32 *pUlongDst = (uint32*)pDst; 
+   \   00000006   0x0006             MOVS     R6,R0
+     20            register uint32 *pUlongSrc = (uint32*)pSrc;
+   \   00000008   0x000C             MOVS     R4,R1
+   \   0000000A   0xE006             B        ??_FTFA_WriteArray_0
+     21            
+     22            while ((size-n) > 0) { n+=_FTFA_WriteW32 (pUlongDst++, *(pUlongSrc++)); }
+   \                     ??_FTFA_WriteArray_1: (+1)
+   \   0000000C   0x6821             LDR      R1,[R4, #+0]
+   \   0000000E   0x0030             MOVS     R0,R6
+   \   00000010   0x.... 0x....      BL       _FTFA_WriteW32
+   \   00000014   0x1D36             ADDS     R6,R6,#+4
+   \   00000016   0x1D24             ADDS     R4,R4,#+4
+   \   00000018   0x182D             ADDS     R5,R5,R0
+   \                     ??_FTFA_WriteArray_0: (+1)
+   \   0000001A   0x1B78             SUBS     R0,R7,R5
+   \   0000001C   0x2801             CMP      R0,#+1
+   \   0000001E   0xDAF5             BGE      ??_FTFA_WriteArray_1
+     23          
+     24            return n;
+   \   00000020   0x0028             MOVS     R0,R5
+   \   00000022   0xBDF2             POP      {R1,R4-R7,PC}    ;; return
+     25          } 
+     26          
+
+   \                                 In section .text, align 2, keep-with-next
+     27          int _FTFA_ReadArray (void *pSrc, void *pDst, int size)
+     28          {
+   \                     _FTFA_ReadArray: (+1)
+   \   00000000   0xB418             PUSH     {R3,R4}
+     29            register uint8 *src = (uint8*)pSrc;
+     30            register uint8 *dst = (uint8*)pDst;
+     31            register int n = size;
+   \   00000002   0x2A00             CMP      R2,#+0
+   \   00000004   0xD006             BEQ      ??_FTFA_ReadArray_0
+   \   00000006   0x0013             MOVS     R3,R2
+     32            
+     33            while (n--) { *dst++ = *src++; }
+   \                     ??_FTFA_ReadArray_1: (+1)
+   \   00000008   0x7804             LDRB     R4,[R0, #+0]
+   \   0000000A   0x700C             STRB     R4,[R1, #+0]
+   \   0000000C   0x1C40             ADDS     R0,R0,#+1
+   \   0000000E   0x1C49             ADDS     R1,R1,#+1
+   \   00000010   0x1E5B             SUBS     R3,R3,#+1
+   \   00000012   0xD1F9             BNE      ??_FTFA_ReadArray_1
+     34            
+     35            return size;
+   \                     ??_FTFA_ReadArray_0: (+1)
+   \   00000014   0x0010             MOVS     R0,R2
+   \   00000016   0xBC12             POP      {R1,R4}
+   \   00000018   0x4770             BX       LR               ;; return
+     36          }
+     37          
+     38          #if defined (__ICCARM__)      /* IAR                                          */
+
+   \                                 In section .textrw, align 2, keep-with-next
+     39            __ramfunc int _FTFA_WriteW32 (const uint32 *pDst, uint32 val)
+     40          #elif defined(__GNUC__)       /* CW GCC                                       */  
+     41                      int _FTFA_WriteW32 (const uint32 *pDst, uint32 val)
+     42          #endif 
+     43          {
+   \                     _FTFA_WriteW32: (+1)
+   \   00000000   0xB418             PUSH     {R3,R4}
+     44            if ((FTFA_FSTAT & FTFA_FSTAT_FPVIOL_MASK) || 
+     45                (FTFA_FSTAT & FTFA_FSTAT_ACCERR_MASK)) { FTFA_FSTAT |= 0x30; }  
+   \   00000002   0x....             LDR      R2,??DataTable1  ;; 0x40020000
+   \   00000004   0x7813             LDRB     R3,[R2, #+0]
+   \   00000006   0x06DB             LSLS     R3,R3,#+27
+   \   00000008   0xD402             BMI      ??_FTFA_WriteW32_0
+   \   0000000A   0x7813             LDRB     R3,[R2, #+0]
+   \   0000000C   0x069B             LSLS     R3,R3,#+26
+   \   0000000E   0xD503             BPL      ??_FTFA_WriteW32_1
+   \                     ??_FTFA_WriteW32_0: (+1)
+   \   00000010   0x7813             LDRB     R3,[R2, #+0]
+   \   00000012   0x2430             MOVS     R4,#+48
+   \   00000014   0x431C             ORRS     R4,R4,R3
+   \   00000016   0x7014             STRB     R4,[R2, #+0]
+     46            FTFA_FCCOB0 = 0x06;
+   \                     ??_FTFA_WriteW32_1: (+1)
+   \   00000018   0x2306             MOVS     R3,#+6
+   \   0000001A   0x71D3             STRB     R3,[R2, #+7]
+     47            FTFA_FCCOB1 = (uint8)((uint32)pDst>> 16);
+   \   0000001C   0x0C03             LSRS     R3,R0,#+16
+   \   0000001E   0x7193             STRB     R3,[R2, #+6]
+     48            FTFA_FCCOB2 = (uint8)((uint32)pDst>>  8);
+   \   00000020   0x0A03             LSRS     R3,R0,#+8
+   \   00000022   0x7153             STRB     R3,[R2, #+5]
+     49            FTFA_FCCOB3 = (uint8)((uint32)pDst>>  0);
+   \   00000024   0x7110             STRB     R0,[R2, #+4]
+     50            FTFA_FCCOB4 = (uint8)(val >> 24);
+   \   00000026   0x0E08             LSRS     R0,R1,#+24
+   \   00000028   0x72D0             STRB     R0,[R2, #+11]
+     51            FTFA_FCCOB5 = (uint8)(val >> 16);
+   \   0000002A   0x0C08             LSRS     R0,R1,#+16
+   \   0000002C   0x7290             STRB     R0,[R2, #+10]
+     52            FTFA_FCCOB6 = (uint8)(val >>  8);
+   \   0000002E   0x0A08             LSRS     R0,R1,#+8
+   \   00000030   0x7250             STRB     R0,[R2, #+9]
+     53            FTFA_FCCOB7 = (uint8)(val >>  0);    
+   \   00000032   0x7211             STRB     R1,[R2, #+8]
+     54            FTFA_FSTAT |= FTFA_FSTAT_CCIF_MASK;    
+   \   00000034   0x2080             MOVS     R0,#+128
+   \   00000036   0x7811             LDRB     R1,[R2, #+0]
+   \   00000038   0x4301             ORRS     R1,R1,R0
+   \   0000003A   0x7011             STRB     R1,[R2, #+0]
+     55            while (!(FTFA_FSTAT & FTFA_FSTAT_CCIF_MASK));  
+   \                     ??_FTFA_WriteW32_2: (+1)
+   \   0000003C   0x7811             LDRB     R1,[R2, #+0]
+   \   0000003E   0x4201             TST      R1,R0
+   \   00000040   0xD0FC             BEQ      ??_FTFA_WriteW32_2
+     56            
+     57            return sizeof(uint32);
+   \   00000042   0x2004             MOVS     R0,#+4
+   \   00000044   0xBC12             POP      {R1,R4}
+   \   00000046   0x4770             BX       LR               ;; return
+     58          }
+     59          
+     60          #if defined (__ICCARM__)      /* IAR                                          */
+
+   \                                 In section .textrw, align 2, keep-with-next
+     61            __ramfunc void _FTFA_EraseSector (const void *pDst)
+     62          #elif defined(__GNUC__)       /* CW GCC                                       */  
+     63                      void _FTFA_EraseSector (const void *pDst) 
+     64          #endif 
+     65          {
+     66            if ((FTFA_FSTAT & FTFA_FSTAT_FPVIOL_MASK) || 
+     67                (FTFA_FSTAT & FTFA_FSTAT_ACCERR_MASK)) { FTFA_FSTAT |= 0x30; }
+   \                     _FTFA_EraseSector: (+1)
+   \   00000000   0x....             LDR      R1,??DataTable1  ;; 0x40020000
+   \   00000002   0x780A             LDRB     R2,[R1, #+0]
+   \   00000004   0x06D2             LSLS     R2,R2,#+27
+   \   00000006   0xD402             BMI      ??_FTFA_EraseSector_0
+   \   00000008   0x780A             LDRB     R2,[R1, #+0]
+   \   0000000A   0x0692             LSLS     R2,R2,#+26
+   \   0000000C   0xD503             BPL      ??_FTFA_EraseSector_1
+   \                     ??_FTFA_EraseSector_0: (+1)
+   \   0000000E   0x780A             LDRB     R2,[R1, #+0]
+   \   00000010   0x2330             MOVS     R3,#+48
+   \   00000012   0x4313             ORRS     R3,R3,R2
+   \   00000014   0x700B             STRB     R3,[R1, #+0]
+     68            FTFA_FCCOB0 = 0x09;
+   \                     ??_FTFA_EraseSector_1: (+1)
+   \   00000016   0x2209             MOVS     R2,#+9
+   \   00000018   0x71CA             STRB     R2,[R1, #+7]
+     69            FTFA_FCCOB1 = (uint8)((uint32)pDst>> 16);
+   \   0000001A   0x0C02             LSRS     R2,R0,#+16
+   \   0000001C   0x718A             STRB     R2,[R1, #+6]
+     70            FTFA_FCCOB2 = (uint8)((uint32)pDst>>  8);
+   \   0000001E   0x0A02             LSRS     R2,R0,#+8
+   \   00000020   0x714A             STRB     R2,[R1, #+5]
+     71            FTFA_FCCOB3 = (uint8)((uint32)pDst>>  0); 
+   \   00000022   0x7108             STRB     R0,[R1, #+4]
+     72            FTFA_FSTAT |= FTFA_FSTAT_CCIF_MASK;  
+   \   00000024   0x2080             MOVS     R0,#+128
+   \   00000026   0x780A             LDRB     R2,[R1, #+0]
+   \   00000028   0x4302             ORRS     R2,R2,R0
+   \   0000002A   0x700A             STRB     R2,[R1, #+0]
+     73            while (!(FTFA_FSTAT & FTFA_FSTAT_CCIF_MASK));
+   \                     ??_FTFA_EraseSector_2: (+1)
+   \   0000002C   0x780A             LDRB     R2,[R1, #+0]
+   \   0000002E   0x4202             TST      R2,R0
+   \   00000030   0xD0FC             BEQ      ??_FTFA_EraseSector_2
+     74          }
+   \   00000032   0x4770             BX       LR               ;; return
+
+   \                                 In section .textrw, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x40020000         DC32     0x40020000
+     75          /******************************************************************************
+     76           * End of module                                                              *
+     77           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   _FTFA_EraseSector
+       8   _FTFA_ReadArray
+      24   _FTFA_WriteArray
+        24   -> _FTFA_WriteW32
+       8   _FTFA_WriteW32
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+      52  _FTFA_EraseSector
+      26  _FTFA_ReadArray
+      36  _FTFA_WriteArray
+      72  _FTFA_WriteW32
+
+ 
+  62 bytes in section .text
+ 128 bytes in section .textrw
+ 
+ 190 bytes of CODE memory
+
+Errors: none
+Warnings: none

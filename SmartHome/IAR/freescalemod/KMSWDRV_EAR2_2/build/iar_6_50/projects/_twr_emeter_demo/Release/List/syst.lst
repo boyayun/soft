@@ -1,0 +1,176 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:37
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\syst\syst.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\syst\syst.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\syst.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\syst.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\syst\syst.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      syst.c
+      6           * @version   1.0.1.0
+      7           * @date      May-14-2012
+      8           * @brief     System Timer (SYST) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "syst.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static SYST_CALLBACK volatile pCallbackSYST=NULL;
+   \                     pCallbackSYST:
+   \   00000000                      DS8 4
+     17          
+     18          /******************************************************************************
+     19           * interrupt function prototypes                                              *
+     20           ******************************************************************************/
+     21          void syst_isr (void);
+     22          
+     23          /******************************************************************************
+     24           * Public function definitions                                                *
+     25           ******************************************************************************/
+     26          #pragma diag_suppress=Pa082
+
+   \                                 In section .text, align 2, keep-with-next
+     27          void SYST_Init (tSYST syst, uint8 ip, SYST_CALLBACK pCallback)
+     28          {   
+   \                     SYST_Init: (+1)
+   \   00000000   0xB418             PUSH     {R3,R4}
+     29            if (pCallback != NULL) 
+   \   00000002   0x001C             MOVS     R4,R3
+   \   00000004   0xD00A             BEQ      ??SYST_Init_0
+     30            { 
+     31              syst.CSR |= SysTick_CSR_TICKINT_MASK; /* enables system Timer exception   */   
+   \   00000006   0x2402             MOVS     R4,#+2
+   \   00000008   0x4304             ORRS     R4,R4,R0
+   \   0000000A   0x0020             MOVS     R0,R4
+     32              pCallbackSYST = pCallback; 
+   \   0000000C   0x....             LDR      R4,??DataTable1
+   \   0000000E   0x6023             STR      R3,[R4, #+0]
+     33              FAULT_SetIsr(INT_SysTick,ip); 
+   \   00000010   0x....             LDR      R3,??DataTable1_1  ;; 0xe000ed20
+   \   00000012   0x681C             LDR      R4,[R3, #+0]
+   \   00000014   0xB2D2             UXTB     R2,R2
+   \   00000016   0x0792             LSLS     R2,R2,#+30
+   \   00000018   0x4322             ORRS     R2,R2,R4
+   \   0000001A   0x601A             STR      R2,[R3, #+0]
+     34            }
+     35            SYST_RVR = syst.RVR;
+   \                     ??SYST_Init_0: (+1)
+   \   0000001C   0x....             LDR      R2,??DataTable1_2  ;; 0xe000e010
+   \   0000001E   0x6051             STR      R1,[R2, #+4]
+     36            SYST_CVR = 0l;
+   \   00000020   0x2300             MOVS     R3,#+0
+   \   00000022   0x6093             STR      R3,[R2, #+8]
+     37            SYST_CSR = syst.CSR;
+   \   00000024   0x6010             STR      R0,[R2, #+0]
+     38          }
+   \   00000026   0xBC11             POP      {R0,R4}
+   \   00000028   0x4770             BX       LR               ;; return
+     39          
+     40          /******************************************************************************
+     41           * interrupt functions definitions                                            *
+     42           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     43          void syst_isr (void) 
+     44          {   
+     45            /* call callback function                                                   */
+     46            if (pCallbackSYST != (SYST_CALLBACK)NULL) { pCallbackSYST (); }
+   \                     syst_isr: (+1)
+   \   00000000   0x....             LDR      R0,??DataTable1
+   \   00000002   0x6801             LDR      R1,[R0, #+0]
+   \   00000004   0x2900             CMP      R1,#+0
+   \   00000006   0xD100             BNE      ??syst_isr_0
+   \   00000008   0x4770             BX       LR
+   \                     ??syst_isr_0: (+1)
+   \   0000000A   0xB580             PUSH     {R7,LR}
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x4780             BLX      R0
+     47          }
+   \   00000010   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     pCallbackSYST
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0xE000ED20         DC32     0xe000ed20
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0xE000E010         DC32     0xe000e010
+     48          /******************************************************************************
+     49           * End of module                                                              *
+     50           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   SYST_Init
+       8   syst_isr
+         8   -- Indirect call
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+      42  SYST_Init
+       4  pCallbackSYST
+      18  syst_isr
+
+ 
+  4 bytes in section .bss
+ 72 bytes in section .text
+ 
+ 72 bytes of CODE memory
+  4 bytes of DATA memory
+
+Errors: none
+Warnings: none

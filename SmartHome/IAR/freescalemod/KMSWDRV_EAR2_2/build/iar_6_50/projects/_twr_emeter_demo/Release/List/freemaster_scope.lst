@@ -1,0 +1,364 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:30
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_scope.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_scope.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\freemaster_scope.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_scope.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_scope.c
+      1          /******************************************************************************
+      2          *
+      3          * Freescale Semiconductor Inc.
+      4          * (c) Copyright 2004-2010 Freescale Semiconductor
+      5          * ALL RIGHTS RESERVED.
+      6          *
+      7          ****************************************************************************//*!
+      8          *
+      9          * @file   freemaster_scope.c
+     10          *
+     11          * @brief  FreeMASTER Oscilloscope implementation
+     12          *
+     13          * @version 1.0.1.0
+     14          * 
+     15          * @date May-4-2012
+     16          * 
+     17          *******************************************************************************/
+     18          
+     19          #include "freemaster.h"
+     20          #include "freemaster_private.h"
+     21          #include "freemaster_protocol.h"
+     22          
+     23          #if FMSTR_USE_SCOPE
+     24          
+     25          /***********************************
+     26          *  local variables 
+     27          ***********************************/
+     28          
+
+   \                                 In section .bss, align 4
+     29          static FMSTR_U8  pcm_nScopeVarCount;        /* number of active scope variables */
+   \                     pcm_nScopeVarCount:
+   \   00000000                      DS8 1
+   \   00000001                      DS8 3
+   \   00000004                      DS8 8
+   \   0000000C                      DS8 32
+     30          static FMSTR_ADDR  pcm_pScopeVarAddr[FMSTR_MAX_SCOPE_VARS]; /* addresses of scope variables */
+     31          static FMSTR_SIZE8 pcm_pScopeVarSize[FMSTR_MAX_SCOPE_VARS]; /* sizes of scope variables */
+     32          
+     33          /**************************************************************************//*!
+     34          *
+     35          * @brief    Scope Initialization
+     36          *
+     37          ******************************************************************************/
+     38          
+
+   \                                 In section .text, align 2, keep-with-next
+     39          void FMSTR_InitScope(void)
+     40          {   
+     41          }
+   \                     FMSTR_InitScope: (+1)
+   \   00000000   0x4770             BX       LR               ;; return
+     42          
+     43          /**************************************************************************//*!
+     44          *
+     45          * @brief    Handling SETUPSCOPE and SETUPSCOPE_EX command
+     46          *
+     47          * @param    pMessageIO - original command (in) and response buffer (out) 
+     48          *
+     49          * @return   As all command handlers, the return value should be the buffer 
+     50          *           pointer where the response output finished (except checksum)
+     51          *
+     52          ******************************************************************************/
+     53          
+
+   \                                 In section .text, align 2, keep-with-next
+     54          FMSTR_BPTR FMSTR_SetUpScope(FMSTR_BPTR pMessageIO)
+     55          {
+   \                     FMSTR_SetUpScope: (+1)
+   \   00000000   0xB5F0             PUSH     {R4-R7,LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+     56              FMSTR_BPTR pResponse = pMessageIO;
+   \   00000004   0x9000             STR      R0,[SP, #+0]
+     57              FMSTR_U8 i, sz, nVarCnt;
+     58          
+     59              /* uninitialize scope */
+     60              pcm_nScopeVarCount = 0U;
+   \   00000006   0x2700             MOVS     R7,#+0
+   \   00000008   0x....             LDR      R2,??DataTable1
+   \   0000000A   0x7017             STRB     R7,[R2, #+0]
+     61          
+     62              /* seek the setup data */
+     63              pMessageIO = FMSTR_SkipInBuffer(pMessageIO, 2U);
+     64              
+     65              /* scope variable count  */
+     66              pMessageIO = FMSTR_ValueFromBuffer8(&nVarCnt, pMessageIO);
+   \   0000000C   0x7881             LDRB     R1,[R0, #+2]
+   \   0000000E   0x9102             STR      R1,[SP, #+8]
+   \   00000010   0x1CC5             ADDS     R5,R0,#+3
+     67          
+     68              /* scope variable information must fit into our buffers */
+     69              if(!nVarCnt || nVarCnt > (FMSTR_U8)FMSTR_MAX_SCOPE_VARS)
+   \   00000012   0x2900             CMP      R1,#+0
+   \   00000014   0xD001             BEQ      ??FMSTR_SetUpScope_0
+   \   00000016   0x2909             CMP      R1,#+9
+   \   00000018   0xDB03             BLT      ??FMSTR_SetUpScope_1
+     70              {
+     71                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_INVBUFF);
+   \                     ??FMSTR_SetUpScope_0: (+1)
+   \   0000001A   0x2085             MOVS     R0,#+133
+   \   0000001C   0x9900             LDR      R1,[SP, #+0]
+   \   0000001E   0x7008             STRB     R0,[R1, #+0]
+   \   00000020   0xE030             B        ??FMSTR_SetUpScope_2
+     72              }
+     73              
+     74              /* get all addresses and sizes */
+     75              for(i=0U; i<nVarCnt; i++)
+   \                     ??FMSTR_SetUpScope_1: (+1)
+   \   00000022   0x2600             MOVS     R6,#+0
+   \   00000024   0x....             LDR      R0,??DataTable1_1
+   \   00000026   0x9003             STR      R0,[SP, #+12]
+   \   00000028   0x....             LDR      R0,??DataTable1_2
+   \   0000002A   0x9001             STR      R0,[SP, #+4]
+   \   0000002C   0xE007             B        ??FMSTR_SetUpScope_3
+   \                     ??FMSTR_SetUpScope_4: (+1)
+   \   0000002E   0x1C76             ADDS     R6,R6,#+1
+   \   00000030   0xB2F6             UXTB     R6,R6
+   \   00000032   0x9801             LDR      R0,[SP, #+4]
+   \   00000034   0x1D00             ADDS     R0,R0,#+4
+   \   00000036   0x9001             STR      R0,[SP, #+4]
+   \   00000038   0x9803             LDR      R0,[SP, #+12]
+   \   0000003A   0x1C40             ADDS     R0,R0,#+1
+   \   0000003C   0x9003             STR      R0,[SP, #+12]
+   \                     ??FMSTR_SetUpScope_3: (+1)
+   \   0000003E   0x9802             LDR      R0,[SP, #+8]
+   \   00000040   0x4286             CMP      R6,R0
+   \   00000042   0xDA1B             BGE      ??FMSTR_SetUpScope_5
+     76              {
+     77                  /* variable size */
+     78                  pMessageIO = FMSTR_ValueFromBuffer8(&sz, pMessageIO);
+   \   00000044   0x782C             LDRB     R4,[R5, #+0]
+   \   00000046   0x1C69             ADDS     R1,R5,#+1
+     79                  pcm_pScopeVarSize[i] = sz;
+   \   00000048   0x9803             LDR      R0,[SP, #+12]
+   \   0000004A   0x7004             STRB     R4,[R0, #+0]
+     80                  
+     81                  /* variable address */
+     82                  pMessageIO = FMSTR_AddressFromBuffer(&pcm_pScopeVarAddr[i], pMessageIO);
+   \   0000004C   0x9801             LDR      R0,[SP, #+4]
+   \   0000004E   0x.... 0x....      BL       FMSTR_AddressFromBuffer
+   \   00000052   0x0005             MOVS     R5,R0
+     83          
+     84                  /* valid numeric variable sizes only */
+     85                  if(sz == 0U || sz > 8U)
+   \   00000054   0x2C00             CMP      R4,#+0
+   \   00000056   0xD001             BEQ      ??FMSTR_SetUpScope_6
+   \   00000058   0x2C09             CMP      R4,#+9
+   \   0000005A   0xD303             BCC      ??FMSTR_SetUpScope_7
+     86                  {
+     87                      return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_INVSIZE);
+   \                     ??FMSTR_SetUpScope_6: (+1)
+   \   0000005C   0x2086             MOVS     R0,#+134
+   \   0000005E   0x9900             LDR      R1,[SP, #+0]
+   \   00000060   0x7008             STRB     R0,[R1, #+0]
+   \   00000062   0xE00F             B        ??FMSTR_SetUpScope_2
+     88                  }
+     89                  
+     90          #if FMSTR_CFG_BUS_WIDTH > 1U
+     91                  /* even sizes only */
+     92                  if(sz & 0x1)
+     93                  {
+     94                      return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_INVSIZE);
+     95                  }
+     96          #endif
+     97                  
+     98          #if FMSTR_USE_TSA && FMSTR_USE_TSA_SAFETY
+     99                  if(!FMSTR_CheckTsaSpace(pcm_pScopeVarAddr[i], (FMSTR_SIZE8) sz, 0U))
+   \                     ??FMSTR_SetUpScope_7: (+1)
+   \   00000064   0x2200             MOVS     R2,#+0
+   \   00000066   0x0021             MOVS     R1,R4
+   \   00000068   0x9801             LDR      R0,[SP, #+4]
+   \   0000006A   0x6800             LDR      R0,[R0, #+0]
+   \   0000006C   0x.... 0x....      BL       FMSTR_CheckTsaSpace
+   \   00000070   0x2800             CMP      R0,#+0
+   \   00000072   0xD1DC             BNE      ??FMSTR_SetUpScope_4
+    100                  {
+    101                      return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_EACCESS);
+   \   00000074   0x2089             MOVS     R0,#+137
+   \   00000076   0x9900             LDR      R1,[SP, #+0]
+   \   00000078   0x7008             STRB     R0,[R1, #+0]
+   \   0000007A   0xE003             B        ??FMSTR_SetUpScope_2
+    102                  }
+    103          #endif
+    104                  
+    105              }
+    106          
+    107              /* activate scope */
+    108              pcm_nScopeVarCount = nVarCnt;
+   \                     ??FMSTR_SetUpScope_5: (+1)
+   \   0000007C   0x....             LDR      R1,??DataTable1
+   \   0000007E   0x7008             STRB     R0,[R1, #+0]
+    109          
+    110              /* return just a status */
+    111              return FMSTR_ConstToBuffer8(pResponse, FMSTR_STS_OK);
+   \   00000080   0x9800             LDR      R0,[SP, #+0]
+   \   00000082   0x7007             STRB     R7,[R0, #+0]
+   \                     ??FMSTR_SetUpScope_2: (+1)
+   \   00000084   0x9800             LDR      R0,[SP, #+0]
+   \   00000086   0x1C40             ADDS     R0,R0,#+1
+   \   00000088   0xB005             ADD      SP,SP,#+20
+   \   0000008A   0xBDF0             POP      {R4-R7,PC}       ;; return
+    112          }
+    113          
+    114          /**************************************************************************//*!
+    115          *
+    116          * @brief    Handling READSCOPE command
+    117          *
+    118          * @param    pMessageIO - original command (in) and response buffer (out) 
+    119          *
+    120          * @return   As all command handlers, the return value should be the buffer 
+    121          *           pointer where the response output finished (except checksum)
+    122          *
+    123          ******************************************************************************/
+    124          
+
+   \                                 In section .text, align 2, keep-with-next
+    125          FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR pMessageIO)
+    126          {
+   \                     FMSTR_ReadScope: (+1)
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+    127              FMSTR_U8 i;
+    128              
+    129              if(!pcm_nScopeVarCount)
+   \   00000002   0x....             LDR      R7,??DataTable1
+   \   00000004   0x7839             LDRB     R1,[R7, #+0]
+   \   00000006   0x2900             CMP      R1,#+0
+   \   00000008   0xD103             BNE      ??FMSTR_ReadScope_0
+    130              {
+    131                  return FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STC_NOTINIT);
+   \   0000000A   0x2188             MOVS     R1,#+136
+   \   0000000C   0x7001             STRB     R1,[R0, #+0]
+   \   0000000E   0x1C40             ADDS     R0,R0,#+1
+   \   00000010   0xBDF2             POP      {R1,R4-R7,PC}
+    132              }
+    133              
+    134              /* success */
+    135              pMessageIO = FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STS_OK);
+   \                     ??FMSTR_ReadScope_0: (+1)
+   \   00000012   0x2400             MOVS     R4,#+0
+   \   00000014   0x7004             STRB     R4,[R0, #+0]
+   \   00000016   0x1C40             ADDS     R0,R0,#+1
+    136              
+    137              for (i=0U; i<pcm_nScopeVarCount; i++)
+   \   00000018   0x1D3E             ADDS     R6,R7,#+4
+   \   0000001A   0x003D             MOVS     R5,R7
+   \   0000001C   0x350C             ADDS     R5,R5,#+12
+   \   0000001E   0xE007             B        ??FMSTR_ReadScope_1
+    138              {
+    139                  pMessageIO = FMSTR_CopyToBuffer(pMessageIO, pcm_pScopeVarAddr[i], pcm_pScopeVarSize[i]);
+   \                     ??FMSTR_ReadScope_2: (+1)
+   \   00000020   0x7832             LDRB     R2,[R6, #+0]
+   \   00000022   0x6829             LDR      R1,[R5, #+0]
+   \   00000024   0x.... 0x....      BL       FMSTR_CopyToBuffer
+    140              } 
+   \   00000028   0x1C64             ADDS     R4,R4,#+1
+   \   0000002A   0xB2E4             UXTB     R4,R4
+   \   0000002C   0x1D2D             ADDS     R5,R5,#+4
+   \   0000002E   0x1C76             ADDS     R6,R6,#+1
+   \                     ??FMSTR_ReadScope_1: (+1)
+   \   00000030   0x7839             LDRB     R1,[R7, #+0]
+   \   00000032   0x428C             CMP      R4,R1
+   \   00000034   0xDBF4             BLT      ??FMSTR_ReadScope_2
+    141                  
+    142              /* return end position */
+    143              return pMessageIO;  
+   \   00000036   0xBDF2             POP      {R1,R4-R7,PC}    ;; return
+    144          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     pcm_nScopeVarCount
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     pcm_nScopeVarCount+0x4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     pcm_nScopeVarCount+0xC
+    145          
+    146          #else  /* FMSTR_USE_SCOPE */
+    147          
+    148          /*lint -efile(766, freemaster_protocol.h) include file is not used in this case */
+    149          
+    150          #endif /* FMSTR_USE_SCOPE */
+    151          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   FMSTR_InitScope
+      24   FMSTR_ReadScope
+        24   -> FMSTR_CopyToBuffer
+      40   FMSTR_SetUpScope
+        40   -> FMSTR_AddressFromBuffer
+        40   -> FMSTR_CheckTsaSpace
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       2  FMSTR_InitScope
+      56  FMSTR_ReadScope
+     140  FMSTR_SetUpScope
+      44  pcm_nScopeVarCount
+          pcm_pScopeVarSize
+          pcm_pScopeVarAddr
+
+ 
+  44 bytes in section .bss
+ 210 bytes in section .text
+ 
+ 210 bytes of CODE memory
+  44 bytes of DATA memory
+
+Errors: none
+Warnings: none

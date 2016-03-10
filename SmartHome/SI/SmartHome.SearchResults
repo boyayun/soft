@@ -1,0 +1,4 @@
+---- CMDCONTROL Matches (3 in 2 files) ----
+Deveice.c (e:\tcl\project\smarthome\soft\smarthome\code\deveice):				case CMDCONTROL:
+Deveice.c (e:\tcl\project\smarthome\soft\smarthome\code\deveice):			case CMDCONTROL:
+Deveice.h (e:\tcl\project\smarthome\soft\smarthome\code\inc):#define CMDCONTROL			0x01	//¿ØÖÆÖ¡

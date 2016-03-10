@@ -1,0 +1,67 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V7.10.1.6676/W32 for ARM 18/Feb/2016  11:30:31            #
+#     Copyright 1999-2014 IAR Systems AB.                                     #
+#                                                                             #
+#           Source file   =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\toolchain\iar\crt0.s#
+#           List file     =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\List\crt0.lst#
+#           Object file   =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\Obj\crt0.o#
+#           Command line  =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\toolchain\iar\crt0.s #
+#                            -OE:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\Obj\ #
+#                            -s+ -M<> -w+ -r                                  #
+#                            -LE:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\List\ #
+#                            -t8 --cpu Cortex-M0+ --fpu None                  #
+#                                                                             #
+###############################################################################
+
+    1                           /*********************************************
+                                ********************************
+    2                            * (c) Copyright 2010-2012, Freescale
+                                 Semiconductor Inc.
+    3                            * ALL RIGHTS RESERVED.
+    4                            *********************************************
+                                ******************************//*!
+    5                            * @file      crt0.s
+    6                            * @version   1.0.1.0
+    7                            * @date      May-18-2012   
+    8                            * @brief     startup function (low level
+                                 part).
+    9                            *********************************************
+                                *********************************/
+   10                               PUBLIC  __iar_program_start
+   11                               EXTERN  start    
+   12                               SECTION .text:CODE
+   13                           __iar_program_start
+   14    00000000 4040              EORS    r0,r0                           ;
+                                             Initialize the GPRs
+   15    00000002 4940              EORS    r1,r1                           ;
+                                             Initialize the GPRs
+   16    00000004 5240              EORS    r2,r2                           ;
+                                             Initialize the GPRs
+   17    00000006 5B40              EORS    r3,r3                           ;
+                                             Initialize the GPRs
+   18    00000008 6440              EORS    r4,r4                           ;
+                                             Initialize the GPRs
+   19    0000000A 6D40              EORS    r5,r5                           ;
+                                             Initialize the GPRs
+   20    0000000C 7640              EORS    r6,r6                           ;
+                                             Initialize the GPRs
+   21    0000000E 7F40              EORS    r7,r7                           ;
+                                             Initialize the GPRs
+   22    00000010 72B6              CPSID   i                               ;
+                                             disable interrupts
+   23    00000012 ........          BL      start                           ;
+                                             call the C code
+   24                           __done
+   25    00000016 FEE7              B       __done
+   26                               END
+##############################
+#           CRC:0            #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 24          #
+##############################
+
+
+
+

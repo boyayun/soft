@@ -1,0 +1,3 @@
+---- devid Matches (2 in 1 files) ----
+Deveice.c (e:\tcl\project\smarthome\soft\smarthome\code\deveice):const u8 devid[DEVIDLEN] = "69245757160260316150723123456780124";
+Deveice.c (e:\tcl\project\smarthome\soft\smarthome\code\deveice):					FormatSend(CMDRETDEVID, (u8*)devid, DEVIDLEN);		//∑¢ÀÕ…Ë±∏ID÷°

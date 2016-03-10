@@ -1,0 +1,639 @@
+###############################################################################
+#
+# IAR ELF Linker V7.10.1.6676/W32 for ARM                 30/Jan/2016  15:22:38
+# Copyright 2007-2014 IAR Systems AB.
+#
+#    Output file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Exe\project.out
+#    Map file     =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\project.map
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\adc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\afe.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\aips.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\arch_delay.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\arm_cm0.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\cmp.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\config.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\crc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\crt0.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\dma.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\fll.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\fraclib\fraclib.a
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_appcmd.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_can.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_Kxx.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_protocol.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_rec.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_scope.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_serial.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_sfio.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_tsa.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\ftfa.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\gpio.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\i2c.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\irtc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\LCD.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\llwu.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\lptmr.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\mcm.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\meterlib\meterlib.a
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\mk341ph.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\mpu.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\osc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\osc32k.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\pit.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\pll.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\pmc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\rcm.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\rnga.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\sim.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\smc.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\spi.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\start.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\startup.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\swisr.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\syst.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\system.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\tmr.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\uart.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\vref.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\wdog.o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\xbar.o
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Exe\project.out
+#        --map
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\project.map
+#        --config
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\MKMxxZ128_flash_NVM.icf
+#        --entry __iar_program_start --inline --no_exceptions --no_vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x00000000 { ro section .intvec };
+"A2":  place at 0x00000400 { ro section .memcfg };
+"A4":  place at 0x0001fc00 { ro section .config };
+"A5":  place at 0x20000000 { rw section .noinit };
+"P1":  place in [from 0x00000000 to 0x0001ffff] { ro, block CodeRelocate };
+"P2":  place in [from 0x1ffff000 to 0x20002fff] {
+          rw, block CodeRelocateRam, block CSTACK, block HEAP };
+
+  Section              Kind        Address    Size  Object
+  -------              ----        -------    ----  ------
+"A1":                                         0xc0
+  .intvec              const    0x00000000    0xc0  system.o [1]
+                              - 0x000000c0    0xc0
+
+"P1", part 1 of 2:                             0x0
+  .rodata              const    0x000000c0     0x0  zero_init3.o [7]
+
+"A2":                                         0x10
+  .memcfg              const    0x00000400    0x10  system.o [1]
+                              - 0x00000410    0x10
+
+"P1", part 2 of 2:                          0x749c
+  .text                ro code  0x00000410  0x15ac  mk341ph.o [1]
+  .text                ro code  0x000019bc    0x58  pmc.o [1]
+  .text                ro code  0x00001a14   0x2b4  gpio.o [1]
+  .text                ro code  0x00001cc8    0x5c  ABImemcpy.o [7]
+  Veneer               ro code  0x00001d24    0x10  - Linker created -
+  .text                ro code  0x00001d34   0x2ac  config.o [1]
+  .text                ro code  0x00001fe0   0x2fc  irtc.o [1]
+  .text                ro code  0x000022dc    0xbc  pll.o [1]
+  .text                ro code  0x00002398    0x58  vref.o [1]
+  .text                ro code  0x000023f0   0x274  uart.o [1]
+  .text                ro code  0x00002664   0x250  freemaster_protocol.o [1]
+  .text                ro code  0x000028b4    0x9c  swisr.o [1]
+  .text                ro code  0x00002950   0x244  LCD.o [1]
+  .text                ro code  0x00002b94    0xd8  afe.o [1]
+  .text                ro code  0x00002c6c    0x88  adc.o [1]
+  .text                ro code  0x00002cf4    0x4c  xbar.o [1]
+  .text                ro code  0x00002d40   0x140  tmr.o [1]
+  .text                ro code  0x00002e80    0x30  cmp.o [1]
+  .text                ro code  0x00002eb0    0xc2  FRACLIB_Mul32.o [4]
+  .text                ro code  0x00002f72    0x2a  zero_init3.o [7]
+  .text                ro code  0x00002f9c   0xf26  meterlib1ph.o [6]
+  .text                ro code  0x00003ec2     0xa  xsprout.o [3]
+  .text                ro code  0x00003ecc   0x3bc  freemaster_rec.o [1]
+  .text                ro code  0x00004288    0x34  I32ToDbl.o [5]
+  .text                ro code  0x000042bc    0xc2  DblDiv.o [5]
+  .text                ro code  0x0000437e   0x184  DblMul.o [5]
+  .text                ro code  0x00004502   0x1b4  DblAddSub.o [5]
+  .text                ro code  0x000046b6     0x2  system.o [1]
+  .text                ro code  0x000046b8    0x38  sprintf.o [3]
+  Veneer               ro code  0x000046f0    0x10  - Linker created -
+  .text                ro code  0x00004700    0x24  ftfa.o [1]
+  .text                ro code  0x00004724    0x32  DblCmpGe.o [5]
+  .text                ro code  0x00004758    0x7c  DblToI64.o [5]
+  .text                ro code  0x000047d4    0xd8  atan2.o [5]
+  .text                ro code  0x000048ac    0x52  DblToI32.o [5]
+  .text                ro code  0x00004900   0x1e0  freemaster_serial.o [1]
+  .text                ro code  0x00004ae0    0xc8  freemaster_Kxx.o [1]
+  .text                ro code  0x00004ba8    0xd4  freemaster_scope.o [1]
+  .text                ro code  0x00004c7c   0x160  freemaster_tsa.o [1]
+  .text                ro code  0x00004ddc     0x8  arch_delay.o [1]
+  .text                ro code  0x00004de4    0x10  strlen.o [7]
+  .text                ro code  0x00004df4   0x9de  fraclib.o [4]
+  .text                ro code  0x000057d4   0xce2  xprintflarge_nomb.o [3]
+  .text                ro code  0x000064b8    0x3c  xdtest.o [5]
+  .text                ro code  0x000064f4    0x32  DblCmpLe.o [5]
+  .text                ro code  0x00006528   0x1e0  xatan.o [5]
+  .text                ro code  0x00006708    0x14  strchr.o [7]
+  .text                ro code  0x0000671c    0x18  memchr.o [7]
+  .text                ro code  0x00006734    0x6a  I64DivMod.o [7]
+  .text                ro code  0x0000679e    0x44  xdnorm.o [5]
+  .text                ro code  0x000067e2    0xe0  I32DivModFast.o [7]
+  .text                ro code  0x000068c2    0x20  div.o [3]
+  .data_init                    0x000068e4   0x844  <Block>
+    Initializer bytes  ro data  0x000068e4   0x844  <for .data-1>
+  .rodata              const    0x00007128   0x5d0  mk341ph.o [1]
+  CodeRelocate                  0x000076f8    0x80  <Block>
+    Initializer bytes  ro data  0x000076f8    0x80  <for CodeRelocateRam-1>
+  .text                ro code  0x00007778    0x6c  start.o [1]
+  .text                ro code  0x000077e4    0x60  startup.o [1]
+  .text                ro code  0x00007844    0x28  data_init.o [7]
+  .iar.init_table      const    0x0000786c    0x10  - Linker created -
+  .text                ro code  0x0000787c    0x18  crt0.o [1]
+  .rodata              const    0x00007894    0x10  config.o [1]
+  .rodata              const    0x000078a4     0x8  xprintflarge_nomb.o [3]
+                              - 0x000078ac  0x749c
+
+"A4":                                         0x78
+  .config              const    0x0001fc00    0x78  config.o [1]
+                              - 0x0001fc78    0x78
+
+"A5":                                         0x88
+  .noinit              uninit   0x20000000    0x78  config.o [1]
+  .noinit              uninit   0x20000078    0x10  config.o [1]
+                              - 0x20000088    0x88
+
+"P2", part 1 of 2:                           0x8c8
+  .data                         0x20000088   0x844  <Block>
+    .data-1                     0x20000088   0x844  <Init block>
+      .data            inited   0x20000088    0x3c  LCD.o [1]
+      .data            inited   0x200000c8   0x108  mk341ph.o [1]
+      .data            inited   0x200001d0    0x88  mk341ph.o [1]
+      .data            inited   0x20000258   0x618  mk341ph.o [1]
+      .data            inited   0x20000870    0x5c  mk341ph.o [1]
+  CodeRelocateRam               0x200008cc    0x80  <Block>
+    CodeRelocateRam-1           0x200008cc    0x80  <Init block>
+      .textrw          inited   0x200008cc    0x80  ftfa.o [1]
+                              - 0x2000094c   0x8c4
+
+"P2", part 2 of 2:                          0x1141
+  .bss                          0x20000950  0x1141  <Block>
+    .bss               zero     0x20000950     0x8  mk341ph.o [1]
+    .bss               zero     0x20000958     0x8  mk341ph.o [1]
+    .bss               zero     0x20000960     0x4  adc.o [1]
+    .bss               zero     0x20000964     0x4  afe.o [1]
+    .bss               zero     0x20000968     0x4  afe.o [1]
+    .bss               zero     0x2000096c     0x4  config.o [1]
+    .bss               zero     0x20000970  0x1054  freemaster_rec.o [1]
+    .bss               zero     0x200019c4    0x2c  freemaster_scope.o [1]
+    .bss               zero     0x200019f0    0x48  freemaster_serial.o [1]
+    .bss               zero     0x20001a38     0xc  freemaster_serial.o [1]
+    .bss               zero     0x20001a44     0x4  gpio.o [1]
+    .bss               zero     0x20001a48     0xd  LCD.o [1]
+    .bss               zero     0x20001a56     0x2  mk341ph.o [1]
+    .bss               zero     0x20001a58     0x8  mk341ph.o [1]
+    .bss               zero     0x20001a60     0x4  pmc.o [1]
+    .bss               zero     0x20001a64     0x8  swisr.o [1]
+    .bss               zero     0x20001a6c     0x4  swisr.o [1]
+    .bss               zero     0x20001a70     0x4  swisr.o [1]
+    .bss               zero     0x20001a74     0x4  swisr.o [1]
+    .bss               zero     0x20001a78     0x4  tmr.o [1]
+    .bss               zero     0x20001a7c     0x4  tmr.o [1]
+    .bss               zero     0x20001a80     0x4  tmr.o [1]
+    .bss               zero     0x20001a84     0x4  uart.o [1]
+    .bss               zero     0x20001a88     0x4  uart.o [1]
+    .bss               zero     0x20001a8c     0x4  xbar.o [1]
+    .bss               zero     0x20001a90     0x1  freemaster_Kxx.o [1]
+                              - 0x20001a91  0x1141
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x1141:
+          0x20000950  0x1141
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                 ro code  rw code  ro data  rw data
+    ------                 -------  -------  -------  -------
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj: [1]
+    LCD.o                      580                60       73
+    adc.o                      136                          4
+    afe.o                      216                          8
+    arch_delay.o                 8
+    cmp.o                       48
+    config.o                   684               136      140
+    crt0.o                      24
+    freemaster_Kxx.o           200                          1
+    freemaster_protocol.o      592
+    freemaster_rec.o           956                      4 180
+    freemaster_scope.o         212                         44
+    freemaster_serial.o        480                         84
+    freemaster_tsa.o           352
+    ftfa.o                      36      128      128
+    gpio.o                     692                          4
+    irtc.o                     764
+    mk341ph.o                5 548             3 544    2 078
+    pll.o                      188
+    pmc.o                       88                          4
+    start.o                    108
+    startup.o                   96
+    swisr.o                    156                         20
+    system.o                     2               208
+    tmr.o                      320                         12
+    uart.o                     628                          8
+    vref.o                      88
+    xbar.o                      76                          4
+    ---------------------------------------------------------
+    Total:                  13 278      128    4 076    6 664
+
+command line: [2]
+    ---------------------------------------------------------
+    Total:
+
+dl6M_tln.a: [3]
+    div.o                       32
+    sprintf.o                   56
+    xprintflarge_nomb.o      3 298                 8
+    xsprout.o                   10
+    ---------------------------------------------------------
+    Total:                   3 396                 8
+
+fraclib.a: [4]
+    FRACLIB_Mul32.o            194
+    fraclib.o                2 526
+    ---------------------------------------------------------
+    Total:                   2 720
+
+m6M_tl.a: [5]
+    DblAddSub.o                436
+    DblCmpGe.o                  50
+    DblCmpLe.o                  50
+    DblDiv.o                   194
+    DblMul.o                   388
+    DblToI32.o                  82
+    DblToI64.o                 124
+    I32ToDbl.o                  52
+    atan2.o                    216
+    xatan.o                    480
+    xdnorm.o                    68
+    xdtest.o                    60
+    ---------------------------------------------------------
+    Total:                   2 200
+
+meterlib.a: [6]
+    meterlib1ph.o            3 878
+    ---------------------------------------------------------
+    Total:                   3 878
+
+rt6M_tl.a: [7]
+    ABImemcpy.o                 92
+    I32DivModFast.o            224
+    I64DivMod.o                106
+    data_init.o                 40
+    memchr.o                    24
+    strchr.o                    20
+    strlen.o                    16
+    zero_init3.o                42
+    ---------------------------------------------------------
+    Total:                     564
+
+    Gaps                        10                          5
+    Linker created              32                16
+-------------------------------------------------------------
+    Grand Total:            26 078      128    4 100    6 669
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+.bss$$Base              0x20000950           --   Gb  - Linker created -
+.bss$$Limit             0x20001a91           --   Gb  - Linker created -
+.data$$Base             0x20000088           --   Gb  - Linker created -
+.data$$Limit            0x200008cc           --   Gb  - Linker created -
+.data_init$$Base        0x000068e4           --   Gb  - Linker created -
+.data_init$$Limit       0x00007128           --   Gb  - Linker created -
+ADC_Init                0x00002c6d    0x72  Code  Gb  adc.o [1]
+AFE_CH0_Init            0x00002b95    0x48  Code  Gb  afe.o [1]
+AFE_CH2_Init            0x00002bdd    0x48  Code  Gb  afe.o [1]
+AFE_CH2_isr             0x00002c25    0x26  Code  Gb  afe.o [1]
+CMP1_Init               0x00002e81     0x4  Code  Gb  cmp.o [1]
+CONFIG_CalcCalibData    0x00001de9   0x1b2  Code  Gb  config.o [1]
+CONFIG_PreProcessing    0x00001d9d    0x4c  Code  Gb  config.o [1]
+CONFIG_ReadFlash        0x00001d35     0xc  Code  Gb  config.o [1]
+CONFIG_SaveFlash        0x00001d41    0x22  Code  Gb  config.o [1]
+CONFIG_UpdateOffsets    0x00001d63    0x3a  Code  Gb  config.o [1]
+CodeRelocate$$Base      0x000076f8           --   Gb  - Linker created -
+CodeRelocate$$Limit     0x00007778           --   Gb  - Linker created -
+CodeRelocateRam$$Base   0x200008cc           --   Gb  - Linker created -
+CodeRelocateRam$$Limit  0x2000094c           --   Gb  - Linker created -
+FMSTR_AddressFromBuffer
+                        0x00004b8d    0x16  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_AddressToBuffer   0x00004b75    0x18  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_CheckTsaSpace     0x00004cdf    0xfe  Code  Gb  freemaster_tsa.o [1]
+FMSTR_Compare16S        0x0000412b    0x18  Code  Lc  freemaster_rec.o [1]
+FMSTR_Compare16U        0x00004143     0x8  Code  Lc  freemaster_rec.o [1]
+FMSTR_Compare32S        0x00004155    0x14  Code  Lc  freemaster_rec.o [1]
+FMSTR_Compare32U        0x0000416d     0xc  Code  Lc  freemaster_rec.o [1]
+FMSTR_Compare8S         0x00004109    0x18  Code  Lc  freemaster_rec.o [1]
+FMSTR_Compare8U         0x00004121     0xa  Code  Lc  freemaster_rec.o [1]
+FMSTR_CopyFromBuffer    0x00004aff    0x14  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_CopyFromBufferWithMask
+                        0x00004b4b    0x24  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_CopyMemory        0x00004ae9     0x2  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_CopyToBuffer      0x00004aeb     0x2  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_GetBoardInfo      0x00002771    0x72  Code  Gb  freemaster_protocol.o [1]
+FMSTR_GetRecBuff        0x000040d7    0x32  Code  Gb  freemaster_rec.o [1]
+FMSTR_GetRecStatus      0x0000409b    0x1c  Code  Gb  freemaster_rec.o [1]
+FMSTR_GetStringLen      0x00004cbd    0x22  Code  Gb  freemaster_tsa.o [1]
+FMSTR_GetTsaInfo        0x00004c7d    0x40  Code  Gb  freemaster_tsa.o [1]
+FMSTR_Init              0x00002665    0x16  Code  Gb  freemaster_protocol.o [1]
+FMSTR_InitRec           0x00003ecd     0xe  Code  Gb  freemaster_rec.o [1]
+FMSTR_InitSerial        0x00004901     0xa  Code  Gb  freemaster_serial.o [1]
+FMSTR_IsInRecBuffer     0x000040b7    0x20  Code  Gb  freemaster_rec.o [1]
+FMSTR_Isr               0x00004ae1     0x8  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_Listen            0x0000490b     0x4  Code  Lc  freemaster_serial.o [1]
+FMSTR_ProcessSCI        0x00004a77    0x5a  Code  Gb  freemaster_serial.o [1]
+FMSTR_ProtocolDecoder   0x0000267b    0xf6  Code  Gb  freemaster_protocol.o [1]
+FMSTR_ReadMem           0x000027e9    0x3c  Code  Gb  freemaster_protocol.o [1]
+FMSTR_ReadScope         0x00004c35    0x38  Code  Gb  freemaster_scope.o [1]
+FMSTR_Recorder          0x00004179    0x14  Code  Gb  freemaster_rec.o [1]
+FMSTR_Recorder2         0x00004195    0xda  Code  Lc  freemaster_rec.o [1]
+FMSTR_Rx                0x000049b3    0xc4  Code  Lc  freemaster_serial.o [1]
+FMSTR_SendResponse      0x00004945    0x6e  Code  Gb  freemaster_serial.o [1]
+FMSTR_SetExAddr         0x00004b6f     0x6  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_SetUpRec          0x00003edb   0x140  Code  Gb  freemaster_rec.o [1]
+FMSTR_SetUpScope        0x00004ba9    0x8c  Code  Gb  freemaster_scope.o [1]
+FMSTR_StartRec          0x0000401b    0x4a  Code  Gb  freemaster_rec.o [1]
+FMSTR_StopRec           0x00004065    0x36  Code  Gb  freemaster_rec.o [1]
+FMSTR_StrLen            0x0000288f    0x14  Code  Gb  freemaster_protocol.o [1]
+FMSTR_TsaGetTable       0x00000411    0x52  Code  Gb  mk341ph.o [1]
+FMSTR_ValueFromBuffer16
+                        0x00004b13     0xe  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_ValueFromBuffer32
+                        0x00004b21    0x16  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_ValueToBuffer16   0x00004b37    0x14  Code  Gb  freemaster_Kxx.o [1]
+FMSTR_WriteMem          0x00002825     0xc  Code  Gb  freemaster_protocol.o [1]
+FMSTR_WriteMemMask      0x0000285d    0x32  Code  Gb  freemaster_protocol.o [1]
+FRACLIB_FFMUL32         0x00002eb1          Code  Gb  FRACLIB_Mul32.o [4]
+FRACLIB_SSMUL32         0x00002edb          Code  Gb  FRACLIB_Mul32.o [4]
+FRACLIB_SUMUL32         0x00002f27          Code  Gb  FRACLIB_Mul32.o [4]
+FRACLIB_USMUL32         0x00002f01          Code  Gb  FRACLIB_Mul32.o [4]
+FRACLIB_UUMUL32         0x00002f4d          Code  Gb  FRACLIB_Mul32.o [4]
+IRTC_GetClock           0x000021d3    0x5e  Code  Gb  irtc.o [1]
+IRTC_Init               0x00001fe1   0x1c6  Code  Gb  irtc.o [1]
+IRTC_SetClock           0x00002241    0x8e  Code  Gb  irtc.o [1]
+LCD_buffer              0x20001a48     0xc  Data  Gb  LCD.o [1]
+LL_fir_ll               0x00005789    0x4a  Code  Gb  fraclib.o [4]
+L_div                   0x00004df5   0x1a2  Code  Gb  fraclib.o [4]
+L_fir_ls                0x0000572b    0x58  Code  Gb  fraclib.o [4]
+L_sqr_ll                0x000051cd   0x55e  Code  Gb  fraclib.o [4]
+METERLIB1PH_CalcAuxiliary
+                        0x00003729   0x692  Code  Gb  meterlib1ph.o [6]
+METERLIB1PH_CalcVarHours
+                        0x000034c9   0x256  Code  Gb  meterlib1ph.o [6]
+METERLIB1PH_CalcWattHours
+                        0x000032bf   0x20a  Code  Gb  meterlib1ph.o [6]
+METERLIB1PH_ReadResults
+                        0x00003dbd   0x106  Code  Gb  meterlib1ph.o [6]
+METERLIB1PH_RemoveDcBias
+                        0x00002f9d   0x322  Code  Gb  meterlib1ph.o [6]
+PLL_Init                0x000022dd    0xbc  Code  Gb  pll.o [1]
+PMC_Init                0x000019bd    0x42  Code  Gb  pmc.o [1]
+PORTA_Init              0x00001a3d    0x2c  Code  Gb  gpio.o [1]
+PORTD_Init              0x00001a75    0x2c  Code  Gb  gpio.o [1]
+PORTE_Init              0x00001aa1    0x3e  Code  Gb  gpio.o [1]
+PORTF_Init              0x00001adf    0x2c  Code  Gb  gpio.o [1]
+PORTI_Init              0x00001b0b    0x2c  Code  Gb  gpio.o [1]
+PORT_InstallCallback    0x00001a15    0x28  Code  Gb  gpio.o [1]
+PTx_isr                 0x00001b59   0x118  Code  Gb  gpio.o [1]
+Region$$Table$$Base     0x0000786c           --   Gb  - Linker created -
+Region$$Table$$Limit    0x0000787c           --   Gb  - Linker created -
+SWISR0_HandlerInit      0x000028b5    0x28  Code  Gb  swisr.o [1]
+SWISR1_HandlerInit      0x000028dd    0x28  Code  Gb  swisr.o [1]
+S_div_llll              0x00004f9d   0x228  Code  Gb  fraclib.o [4]
+TMR_CH0_Init            0x00002d41    0x5e  Code  Gb  tmr.o [1]
+TMR_CH1_Init            0x00002d9f    0x42  Code  Gb  tmr.o [1]
+TMR_CH2_Init            0x00002de1    0x40  Code  Gb  tmr.o [1]
+UART0_UART1_isr         0x000024a1    0xc4  Code  Gb  uart.o [1]
+UART1_Init              0x00002419     0x8  Code  Gb  uart.o [1]
+UART2_UART3_isr         0x00002575    0xc4  Code  Gb  uart.o [1]
+UART_InstallCallbackUART0_UART1
+                        0x000023f1    0x28  Code  Gb  uart.o [1]
+VREF_Init               0x00002399    0x58  Code  Gb  vref.o [1]
+XBAR_Init               0x00002cf5    0x38  Code  Gb  xbar.o [1]
+_FTFA_EraseSector       0x20000915    0x34  Code  Gb  ftfa.o [1]
+_FTFA_WriteArray        0x00004701    0x24  Code  Gb  ftfa.o [1]
+_FTFA_WriteW32          0x200008cd    0x48  Code  Gb  ftfa.o [1]
+_GenldLargeNoMb         0x0000622d   0x258  Code  Lc  xprintflarge_nomb.o [3]
+_LdtobLargeNoMb         0x00005f2d   0x2ca  Code  Lc  xprintflarge_nomb.o [3]
+_LitobLargeNoMb         0x00005df9   0x12e  Code  Lc  xprintflarge_nomb.o [3]
+_PrintfLargeNoMb        0x000057d5   0x624  Code  Gb  xprintflarge_nomb.o [3]
+_PutcharsLargeNoMb      0x00006485    0x30  Code  Lc  xprintflarge_nomb.o [3]
+_SProut                 0x00003ec3     0xa  Code  Gb  xsprout.o [3]
+__aeabi_cdcmple         0x000064f5          Code  Gb  DblCmpLe.o [5]
+__aeabi_cdrcmple        0x00004725          Code  Gb  DblCmpGe.o [5]
+__aeabi_d2iz            0x000048ad          Code  Gb  DblToI32.o [5]
+__aeabi_d2lz            0x00004759          Code  Gb  DblToI64.o [5]
+__aeabi_d2uiz           0x000048d1          Code  Gb  DblToI32.o [5]
+__aeabi_dadd            0x00004503          Code  Gb  DblAddSub.o [5]
+__aeabi_ddiv            0x000042bd          Code  Gb  DblDiv.o [5]
+__aeabi_dmul            0x0000437f          Code  Gb  DblMul.o [5]
+__aeabi_dsub            0x000045c9          Code  Gb  DblAddSub.o [5]
+__aeabi_i2d             0x00004289          Code  Gb  I32ToDbl.o [5]
+__aeabi_idiv            0x0000680f          Code  Gb  I32DivModFast.o [7]
+__aeabi_idivmod         0x0000680f          Code  Gb  I32DivModFast.o [7]
+__aeabi_memcpy          0x00001cc9          Code  Gb  ABImemcpy.o [7]
+__aeabi_memcpy4         0x00001cf1          Code  Gb  ABImemcpy.o [7]
+__aeabi_memcpy8         0x00001cf1          Code  Gb  ABImemcpy.o [7]
+__aeabi_ui2d            0x0000429d          Code  Gb  I32ToDbl.o [5]
+__aeabi_uidiv           0x00006815          Code  Gb  I32DivModFast.o [7]
+__aeabi_uidivmod        0x00006815          Code  Gb  I32DivModFast.o [7]
+__aeabi_uldivmod        0x00006735          Code  Gb  I64DivMod.o [7]
+__iar_Atan              0x00006529   0x14a  Code  Gb  xatan.o [5]
+__iar_Dnorm             0x0000679f    0x44  Code  Gb  xdnorm.o [5]
+__iar_Dtest             0x000064b9    0x3c  Code  Gb  xdtest.o [5]
+__iar_Memchr            0x0000671d    0x18  Code  Gb  memchr.o [7]
+__iar_Strchr            0x00006709    0x14  Code  Gb  strchr.o [7]
+__iar_d2uiz             0x000048d5          Code  Gb  DblToI32.o [5]
+__iar_data_init3        0x00007845    0x28  Code  Gb  data_init.o [7]
+__iar_program_start     0x0000787d          Code  Gb  crt0.o [1]
+__iar_ui2d              0x000042a1          Code  Gb  I32ToDbl.o [5]
+__iar_zero_init3        0x00002f73    0x2a  Code  Gb  zero_init3.o [7]
+__memcfg_table          0x00000400    0x10  Data  Gb  system.o [1]
+__vector_table          0x00000000    0xc0  Data  Gb  system.o [1]
+a                       0x000066c8    0x40  Data  Lc  xatan.o [5]
+afech2_callback         0x00000859    0x3e  Code  Lc  mk341ph.o [1]
+arch_delay              0x00004ddd          Code  Gb  arch_delay.o [1]
+atan2                   0x000047d5    0xd8  Code  Gb  atan2.o [5]
+auxcalc_callback        0x0000091d   0x11e  Code  Lc  mk341ph.o [1]
+bLCD_CharPosition       0x20001a54     0x1  Data  Gb  LCD.o [1]
+baAscii1                0x00002b44    0x28  Data  Gb  LCD.o [1]
+baAscii2                0x00002b6c    0x28  Data  Gb  LCD.o [1]
+baAscii3                0x00002a14     0xc  Data  Gb  LCD.o [1]
+bpaPlace                0x20000088    0x3c  Data  Gb  LCD.o [1]
+buf                     0x200008b8    0x14  Data  Lc  mk341ph.o [1]
+button_callback         0x00000c31    0x7c  Code  Lc  mk341ph.o [1]
+default_isr             0x000046b7     0x2  Code  Gb  system.o [1]
+display_callback        0x00000a99   0x18c  Code  Lc  mk341ph.o [1]
+div                     0x000068c3    0x20  Code  Gb  div.o [3]
+fcmd_calibrate          0x0000191d    0x26  Code  Lc  mk341ph.o [1]
+fcmd_clr_counter        0x00001887    0x1e  Code  Lc  mk341ph.o [1]
+fcmd_clr_tampers        0x000018a5    0x36  Code  Lc  mk341ph.o [1]
+fcmd_dummy_fcn          0x00001871     0x8  Code  Lc  mk341ph.o [1]
+fcmd_fcn                0x20000224    0x24  Data  Lc  mk341ph.o [1]
+fcmd_idx                0x20000880     0x1  Data  Lc  mk341ph.o [1]
+fcmd_save_config        0x00001955    0x28  Code  Lc  mk341ph.o [1]
+fcmd_set_clock          0x000018db    0x10  Code  Lc  mk341ph.o [1]
+fcmd_set_pulse1         0x000018eb    0x16  Code  Lc  mk341ph.o [1]
+fcmd_set_pulse2         0x00001901    0x16  Code  Lc  mk341ph.o [1]
+fcmd_sw_reset           0x00001879     0xe  Code  Lc  mk341ph.o [1]
+freq                    0x200001d8     0x8  Data  Lc  mk341ph.o [1]
+freqAVG                 0x200008b0     0x8  Data  Lc  mk341ph.o [1]
+hardfault_isr           0x0000197d     0x8  Code  Gb  mk341ph.o [1]
+i24_sample              0x20001a5c     0x4  Data  Lc  mk341ph.o [1]
+imax                    0x20000250     0x8  Data  Lc  mk341ph.o [1]
+irms                    0x20000890     0x8  Data  Lc  mk341ph.o [1]
+kvarh_pulses            0x20000148    0x80  Data  Lc  mk341ph.o [1]
+kwh_pulses              0x200000c8    0x80  Data  Lc  mk341ph.o [1]
+main                    0x000004c5    0xe4  Code  Gb  mk341ph.o [1]
+menu_disp_class         0x00001855    0x10  Code  Lc  mk341ph.o [1]
+menu_disp_date          0x00000cad    0x14  Code  Lc  mk341ph.o [1]
+menu_disp_freq          0x00001531    0xee  Code  Lc  mk341ph.o [1]
+menu_disp_irms          0x00000f25    0xee  Code  Lc  mk341ph.o [1]
+menu_disp_kVA           0x00001229   0x106  Code  Lc  mk341ph.o [1]
+menu_disp_kVAR          0x00001125    0xfe  Code  Lc  mk341ph.o [1]
+menu_disp_kVARh         0x0000142d    0xee  Code  Lc  mk341ph.o [1]
+menu_disp_kW            0x00001019   0x104  Code  Lc  mk341ph.o [1]
+menu_disp_kWh           0x0000133d    0xe6  Code  Lc  mk341ph.o [1]
+menu_disp_pnum1         0x0000173d    0x14  Code  Lc  mk341ph.o [1]
+menu_disp_pnum2         0x00001759    0x10  Code  Lc  mk341ph.o [1]
+menu_disp_snum          0x00001839     0xc  Code  Lc  mk341ph.o [1]
+menu_disp_time          0x00000d05    0x10  Code  Lc  mk341ph.o [1]
+menu_disp_urms          0x00000e09   0x10c  Code  Lc  mk341ph.o [1]
+menu_disp_vbat          0x0000162d   0x110  Code  Lc  mk341ph.o [1]
+menu_fcn                0x200001e8    0x3c  Data  Lc  mk341ph.o [1]
+mlib                    0x20000258   0x618  Data  Lc  mk341ph.o [1]
+norm_mode_hw_init       0x000005f5   0x23a  Code  Lc  mk341ph.o [1]
+nvmcfg                  0x0001fc00    0x78  Data  Gb  config.o [1]
+nvmcnt                  0x00007894    0x10  Data  Gb  config.o [1]
+pCallback0              0x20001a6c     0x4  Data  Lc  swisr.o [1]
+pCallback1              0x20001a70     0x4  Data  Lc  swisr.o [1]
+pCallback2              0x20001a74     0x4  Data  Lc  swisr.o [1]
+pCallbackADC            0x20000960     0x4  Data  Lc  adc.o [1]
+pCallbackAFE_CH0        0x20000964     0x4  Data  Lc  afe.o [1]
+pCallbackAFE_CH2        0x20000968     0x4  Data  Lc  afe.o [1]
+pCallbackPMC            0x20001a60     0x4  Data  Lc  pmc.o [1]
+pCallbackPTx            0x20001a44     0x4  Data  Lc  gpio.o [1]
+pCallbackTMR0           0x20001a78     0x4  Data  Lc  tmr.o [1]
+pCallbackTMR1           0x20001a7c     0x4  Data  Lc  tmr.o [1]
+pCallbackTMR2           0x20001a80     0x4  Data  Lc  tmr.o [1]
+pCallbackUART0_UART1    0x20001a84     0x4  Data  Lc  uart.o [1]
+pCallbackUART2_UART3    0x20001a88     0x4  Data  Lc  uart.o [1]
+pCallbackXBAR           0x20001a8c     0x4  Data  Lc  xbar.o [1]
+password                0x20000882     0x2  Data  Lc  mk341ph.o [1]
+pcm_bNextAddrIsEx       0x20001a90     0x1  Data  Lc  freemaster_Kxx.o [1]
+pcm_bTrgVarSigned       0x20000973     0x1  Data  Lc  freemaster_rec.o [1]
+pcm_dwRecEndBuffPtr     0x200009b4     0x4  Data  Gb  freemaster_rec.o [1]
+pcm_dwRecWritePtr       0x200009b0     0x4  Data  Gb  freemaster_rec.o [1]
+pcm_nRecBuffAddr        0x200009bc     0x4  Data  Lc  freemaster_rec.o [1]
+pcm_nRecTriggerMode     0x20000970     0x1  Data  Gb  freemaster_rec.o [1]
+pcm_nRecVarCount        0x20000971     0x1  Data  Gb  freemaster_rec.o [1]
+pcm_nRxCheckSum         0x200019f0     0x1  Data  Lc  freemaster_serial.o [1]
+pcm_nRxTodo             0x20001a39     0x1  Data  Lc  freemaster_serial.o [1]
+pcm_nScopeVarCount      0x200019c4     0x1  Data  Lc  freemaster_scope.o [1]
+pcm_nTrgVarAddr         0x200009b8     0x4  Data  Lc  freemaster_rec.o [1]
+pcm_nTrgVarSize         0x20000972     0x1  Data  Lc  freemaster_rec.o [1]
+pcm_nTxTodo             0x20001a38     0x1  Data  Lc  freemaster_serial.o [1]
+pcm_pCommBuffer         0x200019f4    0x40  Data  Lc  freemaster_serial.o [1]
+pcm_pCompareFunc        0x200009c0     0x4  Data  Lc  freemaster_rec.o [1]
+pcm_pOwnRecBuffer       0x200009c4  0x1000  Data  Lc  freemaster_rec.o [1]
+pcm_pRecVarAddr         0x20000990    0x20  Data  Gb  freemaster_rec.o [1]
+pcm_pRecVarSize         0x20000974     0x8  Data  Gb  freemaster_rec.o [1]
+pcm_pRxBuff             0x20001a34     0x4  Data  Lc  freemaster_serial.o [1]
+pcm_pScopeVarAddr       0x200019d0    0x20  Data  Lc  freemaster_scope.o [1]
+pcm_pScopeVarSize       0x200019c8     0x8  Data  Lc  freemaster_scope.o [1]
+pcm_pTxBuff             0x20001a40     0x4  Data  Lc  freemaster_serial.o [1]
+pcm_uTrgThreshold       0x20000980     0x4  Data  Lc  freemaster_rec.o [1]
+pcm_wFlags              0x20001a3c     0x4  Data  Lc  freemaster_serial.o [1]
+pcm_wRecBuffStartIx     0x2000098e     0x2  Data  Gb  freemaster_rec.o [1]
+pcm_wRecFlags           0x2000097c     0x4  Data  Gb  freemaster_rec.o [1]
+pcm_wRecPostTrigger     0x20000986     0x2  Data  Gb  freemaster_rec.o [1]
+pcm_wRecTimeDiv         0x20000988     0x2  Data  Gb  freemaster_rec.o [1]
+pcm_wRecTimeDivCtr      0x2000098a     0x2  Data  Gb  freemaster_rec.o [1]
+pcm_wRecTotalSmps       0x20000984     0x2  Data  Gb  freemaster_rec.o [1]
+pcm_wStoprecCountDown   0x2000098c     0x2  Data  Gb  freemaster_rec.o [1]
+pulse_index             0x20000884     0x1  Data  Lc  mk341ph.o [1]
+pulses                  0x00007418    0x40  Data  Lc  mk341ph.o [1]
+rTime                   0x20000878     0x8  Data  Lc  mk341ph.o [1]
+ramcfg                  0x20000000    0x78  Data  Gb  config.o [1]
+ramcnt                  0x20000078    0x10  Data  Gb  config.o [1]
+reset_source            0x20001a56     0x2  Data  Lc  mk341ph.o [1]
+sprintf                 0x000046b9    0x38  Code  Gb  sprintf.o [3]
+start                   0x00007779    0x46  Code  Gb  start.o [1]
+startup                 0x000077e5    0x60  Code  Gb  startup.o [1]
+strlen                  0x00004de5    0x10  Code  Gb  strlen.o [7]
+swisr0_isr              0x00002905    0x10  Code  Gb  swisr.o [1]
+swisr1_isr              0x00002915    0x10  Code  Gb  swisr.o [1]
+swisr2_isr              0x00002925    0x10  Code  Gb  swisr.o [1]
+swisrcnt                0x20001a64     0x8  Data  Gb  swisr.o [1]
+symbol_mask             0x00002a04    0x10  Data  Gb  LCD.o [1]
+tamper_flags            0x200001d0     0x1  Data  Lc  mk341ph.o [1]
+u24_sample              0x20001a58     0x4  Data  Lc  mk341ph.o [1]
+umax                    0x20000248     0x8  Data  Lc  mk341ph.o [1]
+urms                    0x20000888     0x8  Data  Lc  mk341ph.o [1]
+va                      0x200008a8     0x8  Data  Lc  mk341ph.o [1]
+var                     0x200008a0     0x8  Data  Lc  mk341ph.o [1]
+varh                    0x20000958     0x8  Data  Lc  mk341ph.o [1]
+vfnLCD_Init             0x00002951    0x4c  Code  Gb  LCD.o [1]
+vfnLCD_MessageRoll      0x00002a21    0xa0  Code  Gb  LCD.o [1]
+vfnLCD_Write_Char       0x000029a9    0x5c  Code  Gb  LCD.o [1]
+vfnLCD_Write_Str        0x00002ac1    0x56  Code  Gb  LCD.o [1]
+w                       0x20000898     0x8  Data  Lc  mk341ph.o [1]
+wTime                   0x20000870     0x8  Data  Lc  mk341ph.o [1]
+wh                      0x20000950     0x8  Data  Lc  mk341ph.o [1]
+
+
+[1] = E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj
+[2] = command line
+[3] = dl6M_tln.a
+[4] = fraclib.a
+[5] = m6M_tl.a
+[6] = meterlib.a
+[7] = rt6M_tl.a
+
+  26 078 bytes of readonly  code memory
+     128 bytes of readwrite code memory
+   4 100 bytes of readonly  data memory
+   6 669 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

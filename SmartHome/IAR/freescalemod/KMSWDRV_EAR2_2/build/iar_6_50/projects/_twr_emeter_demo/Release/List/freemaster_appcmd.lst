@@ -1,0 +1,546 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:29
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_appcmd.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_appcmd.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\freemaster_appcmd.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_appcmd.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_appcmd.c
+      1          /******************************************************************************
+      2          *
+      3          * Freescale Semiconductor Inc.
+      4          * (c) Copyright 2004-2010 Freescale Semiconductor
+      5          * ALL RIGHTS RESERVED.
+      6          *
+      7          ****************************************************************************//*!
+      8          *
+      9          * @file   freemaster_appcmd.c
+     10          *
+     11          * @brief  FreeMASTER Application Commands implementation
+     12          *
+     13          * @version 1.0.1.0
+     14          * 
+     15          * @date May-4-2012
+     16          * 
+     17          *******************************************************************************/
+     18          
+     19          #include "freemaster.h"
+     20          #include "freemaster_private.h"
+     21          #include "freemaster_protocol.h"
+     22           
+     23          #if FMSTR_USE_APPCMD
+     24          
+     25          /***********************************
+     26          *  local variables 
+     27          ***********************************/
+     28          
+     29          static FMSTR_APPCMD_CODE pcm_nAppCmd;                               /* app.cmd code (to application) */
+     30          static FMSTR_APPCMD_DATA pcm_pAppCmdBuff[FMSTR_APPCMD_BUFF_SIZE];   /* app.cmd data buffer  */
+     31          static FMSTR_SIZE        pcm_nAppCmdLen;                            /* app.cmd data length */
+     32          
+     33          static FMSTR_APPCMD_RESULT  pcm_nAppCmdResult;                      /* app.cmd result code (from application) */
+     34          static FMSTR_SIZE8 pcm_nAppCmdResultDataLen;
+     35          
+     36          #if FMSTR_MAX_APPCMD_CALLS > 0
+     37          static FMSTR_APPCMD_CODE pcm_pAppCmdCallId[FMSTR_MAX_APPCMD_CALLS]; /* registerred callback commands */
+     38          static FMSTR_PAPPCMDFUNC pcm_pAppCmdCallFunc[FMSTR_MAX_APPCMD_CALLS];  /* registerred callback handlers */
+     39          #endif
+     40          
+     41          /***********************************
+     42          *  local functions
+     43          ***********************************/
+     44          
+     45          static FMSTR_INDEX FMSTR_FindAppCmdCallIndex(FMSTR_APPCMD_CODE nAppcmdCode);
+     46          
+     47          /**************************************************************************//*!
+     48          *
+     49          * @brief    Initialize app.cmds interface
+     50          *
+     51          ******************************************************************************/
+     52          
+     53          void FMSTR_InitAppCmds(void)
+     54          {
+     55          #if FMSTR_MAX_APPCMD_CALLS
+     56              FMSTR_INDEX i;
+     57              
+     58              for(i=0; i<FMSTR_MAX_APPCMD_CALLS; i++)
+     59              {
+     60                  pcm_pAppCmdCallId[i] = FMSTR_APPCMDRESULT_NOCMD;
+     61                  pcm_pAppCmdCallFunc[i] = NULL;
+     62              }
+     63          #endif      
+     64          
+     65              pcm_nAppCmd = FMSTR_APPCMDRESULT_NOCMD;
+     66              pcm_nAppCmdResult = FMSTR_APPCMDRESULT_NOCMD;
+     67          }
+     68          
+     69          /**************************************************************************//*!
+     70          *
+     71          * @brief    Handling SANDAPPCMD command
+     72          *
+     73          * @param    pMessageIO - original command (in) and response buffer (out) 
+     74          *
+     75          * @return   As all command handlers, the return value should be the buffer 
+     76          *           pointer where the response output finished (except checksum)
+     77          *
+     78          ******************************************************************************/
+     79          
+     80          FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR pMessageIO)
+     81          {
+     82              FMSTR_BPTR pResponse = pMessageIO;
+     83              FMSTR_U8 nArgsLen;
+     84              FMSTR_U8 nCode;
+     85          
+     86              /* the previous command not yet processed */
+     87              if(pcm_nAppCmd != FMSTR_APPCMDRESULT_NOCMD)
+     88              {
+     89                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_SERVBUSY);
+     90              }
+     91          
+     92              pMessageIO = FMSTR_SkipInBuffer(pMessageIO, 1U);
+     93              pMessageIO = FMSTR_ValueFromBuffer8(&nArgsLen, pMessageIO);
+     94              pMessageIO = FMSTR_ValueFromBuffer8(&nCode, pMessageIO);
+     95          
+     96              /* args len is datalen minus one */
+     97              nArgsLen--;
+     98                  
+     99              /* does the application command fit to buffer ? */
+    100              if (nArgsLen > (FMSTR_SIZE8) FMSTR_APPCMD_BUFF_SIZE)
+    101              {
+    102                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_INVBUFF);
+    103              }
+    104              
+    105              /* store command data into dedicated buffer */
+    106              pcm_nAppCmd = nCode;
+    107              pcm_nAppCmdLen = nArgsLen;
+    108              
+    109              /* data copy */
+    110              if(nArgsLen)
+    111              {
+    112                  FMSTR_ADDR appCmdBuffAddr;
+    113                  FMSTR_ARR2ADDR(appCmdBuffAddr, pcm_pAppCmdBuff);
+    114                  
+    115                  /*lint -e{534} ignoring return value */
+    116                  FMSTR_CopyFromBuffer(appCmdBuffAddr, pMessageIO, (FMSTR_SIZE8) nArgsLen);
+    117              }
+    118          
+    119              /* mark command as "running" (without any response data) */
+    120              pcm_nAppCmdResult = FMSTR_APPCMDRESULT_RUNNING;
+    121              pcm_nAppCmdResultDataLen = 0U;
+    122          
+    123              return FMSTR_ConstToBuffer8(pResponse, FMSTR_STS_OK);
+    124          }
+    125          
+    126          /**************************************************************************//*!
+    127          *
+    128          * @brief    Handling GETAPPCMDSTS command
+    129          *
+    130          * @param    pMessageIO - original command (in) and response buffer (out) 
+    131          *
+    132          * @return   As all command handlers, the return value should be the buffer 
+    133          *           pointer where the response output finished (except checksum)
+    134          *
+    135          * @note The callback-registerred commands are processed at the moment the PC 
+    136          *       tries to get the result for the first time. At this moment, we are
+    137          *       sure the PC already got the command delivery packet acknowledged.
+    138          *
+    139          ******************************************************************************/
+    140          
+    141          FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR pMessageIO)
+    142          {
+    143          #if FMSTR_MAX_APPCMD_CALLS
+    144              FMSTR_PAPPCMDFUNC pFunc = NULL;
+    145              FMSTR_INDEX nIndex;
+    146              
+    147              /* time to execute the command's callback */
+    148              if((nIndex = FMSTR_FindAppCmdCallIndex(pcm_nAppCmd)) >= 0)
+    149              {
+    150                  pFunc = pcm_pAppCmdCallFunc[nIndex];
+    151              }
+    152              
+    153              /* valid callback function found? */
+    154              if(pFunc)
+    155              {
+    156                  /* do execute callback, return value is app.cmd result code */
+    157                  pcm_nAppCmdResult = pFunc(pcm_nAppCmd, pcm_pAppCmdBuff, pcm_nAppCmdLen);
+    158          
+    159                  /* nothing more to do with this command (i.e. command acknowledged) */
+    160                  pcm_nAppCmd = FMSTR_APPCMDRESULT_NOCMD;
+    161              }
+    162          #endif
+    163          
+    164              pMessageIO = FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STS_OK);
+    165              return FMSTR_ValueToBuffer8(pMessageIO, (FMSTR_U8) pcm_nAppCmdResult);
+    166          }
+    167          
+    168          /**************************************************************************//*!
+    169          *
+    170          * @brief    Handling GETAPPCMDDATA command
+    171          *
+    172          * @param    pMessageIO - original command (in) and response buffer (out) 
+    173          *
+    174          * @return   As all command handlers, the return value should be the buffer 
+    175          *           pointer where the response output finished (except checksum)
+    176          *
+    177          ******************************************************************************/
+    178          
+    179          FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR pMessageIO)
+    180          {
+    181              FMSTR_BPTR pResponse = pMessageIO;
+    182              FMSTR_U8 nDataLen;
+    183              FMSTR_U8 nDataOffset;
+    184          
+    185              /* the previous command not yet processed */
+    186              if(pcm_nAppCmd != FMSTR_APPCMDRESULT_NOCMD)
+    187              {
+    188                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_SERVBUSY);
+    189              }
+    190          
+    191              pMessageIO = FMSTR_SkipInBuffer(pMessageIO, 1U);
+    192              pMessageIO = FMSTR_ValueFromBuffer8(&nDataLen, pMessageIO);
+    193              pMessageIO = FMSTR_ValueFromBuffer8(&nDataOffset, pMessageIO);
+    194          
+    195              /* the response would not fit into comm buffer */
+    196              if(nDataLen > (FMSTR_U16)FMSTR_COMM_BUFFER_SIZE)
+    197              {
+    198                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_RSPBUFFOVF);
+    199              }
+    200              
+    201              /* the data would be fetched outside the app.cmd response data */
+    202              if((((FMSTR_U16)nDataOffset) + nDataLen) > (FMSTR_SIZE8)pcm_nAppCmdResultDataLen)
+    203              {
+    204                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_INVSIZE);
+    205              }
+    206              
+    207              pResponse = FMSTR_ConstToBuffer8(pResponse, FMSTR_STS_OK);
+    208          
+    209              /* copy to buffer */
+    210              {    
+    211                  FMSTR_ADDR appCmdBuffAddr;
+    212                  FMSTR_ARR2ADDR(appCmdBuffAddr, pcm_pAppCmdBuff);
+    213                  pResponse = FMSTR_CopyToBuffer(pResponse, appCmdBuffAddr, (FMSTR_SIZE8)nDataLen);
+    214              }
+    215              
+    216              return pResponse;
+    217          }
+    218          
+    219          /**************************************************************************//*!
+    220          *
+    221          * @brief    Find index of registerred app.cmd callback
+    222          *
+    223          * @param    nAppcmdCode - App. command ID 
+    224          *
+    225          * @return   Index of function pointer in our local tables
+    226          *
+    227          ******************************************************************************/
+    228          
+    229          static FMSTR_INDEX FMSTR_FindAppCmdCallIndex(FMSTR_APPCMD_CODE nAppcmdCode)
+    230          {
+    231          #if FMSTR_MAX_APPCMD_CALLS > 0
+    232              FMSTR_INDEX i;
+    233              
+    234              for(i=0; i<FMSTR_MAX_APPCMD_CALLS; i++)
+    235              {
+    236                  if(pcm_pAppCmdCallId[i] == nAppcmdCode)
+    237                  {
+    238                      return i;
+    239                  }
+    240              }
+    241          #else
+    242              /*lint -esym(528, FMSTR_FindAppCmdCallIndex) this function is 
+    243                not referenced when APPCMD_CALLS are not used */
+    244              FMSTR_UNUSED(nAppcmdCode);
+    245          #endif
+    246                  
+    247              return -1;
+    248          }
+    249          
+    250          /**************************************************************************//*!
+    251          *
+    252          * @brief    API: Mark the application command is processed by the application
+    253          *
+    254          * @param    nResultCode - the result code which is returned to a host
+    255          *
+    256          ******************************************************************************/
+    257          
+    258          void FMSTR_AppCmdAck(FMSTR_APPCMD_RESULT nResultCode)
+    259          {
+    260              pcm_nAppCmdResult = nResultCode;
+    261              pcm_nAppCmdResultDataLen = 0U;
+    262              
+    263              /* waiting for a new command to come */
+    264              pcm_nAppCmd = FMSTR_APPCMDRESULT_NOCMD;
+    265          }
+    266          
+    267          /**************************************************************************//*!
+    268          *
+    269          * @brief    API: Mark the application command is processed by the application
+    270          *
+    271          * @param    pResultDataAddr - address of data we want to return to the PC
+    272          * @param    nResultDataLen - length of return data
+    273          *
+    274          ******************************************************************************/
+    275          
+    276          void FMSTR_AppCmdSetResponseData(FMSTR_ADDR nResultDataAddr, FMSTR_SIZE nResultDataLen)
+    277          {
+    278              /* any data supplied by user? */
+    279              if(nResultDataAddr)
+    280              {
+    281                  /* response data length is trimmed if response data would not fit into buffer */
+    282                  pcm_nAppCmdResultDataLen = (FMSTR_SIZE8) nResultDataLen;
+    283                  if(pcm_nAppCmdResultDataLen > (FMSTR_SIZE8) FMSTR_APPCMD_BUFF_SIZE)
+    284                  {
+    285                      pcm_nAppCmdResultDataLen = (FMSTR_SIZE8) FMSTR_APPCMD_BUFF_SIZE;
+    286                  }
+    287          
+    288                  if(pcm_nAppCmdResultDataLen > 0U)
+    289                  {
+    290                      FMSTR_ADDR appCmdBuffAddr;
+    291                      FMSTR_ARR2ADDR(appCmdBuffAddr, pcm_pAppCmdBuff);
+    292                      FMSTR_CopyMemory(appCmdBuffAddr, nResultDataAddr, pcm_nAppCmdResultDataLen);
+    293                  }
+    294              }
+    295              else
+    296              {
+    297                  /* no data being returned at all (same effect as pure FMSTR_AppCmdAck) */
+    298                  pcm_nAppCmdResultDataLen = 0U;
+    299              }
+    300          }
+    301          
+    302          /**************************************************************************//*!
+    303          *
+    304          * @brief    API: Fetch the application command code if one is ready for processing
+    305          *
+    306          * @return   A command code stored in the application cmd buffer.
+    307          *           The return value is FMSTR_APPCMDRESULT_NOCMD if there is no
+    308          *           new command since the last call to FMSTR_AppCmdAck
+    309          *
+    310          ******************************************************************************/
+    311          
+    312          FMSTR_APPCMD_CODE FMSTR_GetAppCmd(void)
+    313          {
+    314          #if FMSTR_MAX_APPCMD_CALLS
+    315              /* the user can never see the callback-registerred commands */
+    316              if(FMSTR_FindAppCmdCallIndex(pcm_nAppCmd) >= 0)
+    317              {
+    318                  return FMSTR_APPCMDRESULT_NOCMD;
+    319              }
+    320          #endif
+    321          
+    322              /* otherwise, return the appcomand pending */
+    323              return pcm_nAppCmd;     
+    324          }
+    325              
+    326          /**************************************************************************//*!
+    327          *
+    328          * @brief    API: Get a pointer to application command data
+    329          *
+    330          * @param    pDataLen - A pointer to variable which receives the data length
+    331          *
+    332          * @return   Pointer to the "application command" data 
+    333          *
+    334          ******************************************************************************/
+    335          
+    336          FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE* pDataLen)
+    337          {
+    338              /* no command, no data */
+    339              if(pcm_nAppCmd == FMSTR_APPCMDRESULT_NOCMD)
+    340              {
+    341                  return NULL;
+    342              }
+    343              
+    344          #if FMSTR_MAX_APPCMD_CALLS
+    345              /* the user never sees the callback-registerred commands */
+    346              if(FMSTR_FindAppCmdCallIndex(pcm_nAppCmd) >= 0)
+    347              {
+    348                  return NULL;
+    349              }
+    350          #endif
+    351          
+    352              /* caller want to know the data length */
+    353              if(pDataLen)
+    354              {
+    355                  *pDataLen = pcm_nAppCmdLen;
+    356              }
+    357              
+    358              /* data are saved in out buffer */
+    359              return pcm_nAppCmdLen ? pcm_pAppCmdBuff : (FMSTR_APPCMD_PDATA) NULL;
+    360          }
+    361          
+    362          /**************************************************************************//*!
+    363          *
+    364          * @brief    API: Register or unregister app.cmd callback handler
+    365          *
+    366          * @param    nAppCmdCode   - App.command ID
+    367          * @param    pCallbackFunc - Pointer to handler function (NULL to unregister)
+    368          *
+    369          * @return   Non-zero if successfull, zero if maximum callbacks already set
+    370          *
+    371          ******************************************************************************/
+    372          
+    373          FMSTR_BOOL FMSTR_RegisterAppCmdCall(FMSTR_APPCMD_CODE nAppCmdCode, FMSTR_PAPPCMDFUNC pCallbackFunc)
+    374          {
+    375          #if FMSTR_MAX_APPCMD_CALLS > 0
+    376          
+    377              FMSTR_INDEX nIndex;
+    378          
+    379              /* keep "void" ID as reserved */
+    380              if(nAppCmdCode == FMSTR_APPCMDRESULT_NOCMD)
+    381              {
+    382                  return FMSTR_FALSE;
+    383              }
+    384              
+    385              /* get index of app.cmd ID (if already set) */
+    386              nIndex = FMSTR_FindAppCmdCallIndex(nAppCmdCode);
+    387              
+    388              /* when not found, get a free slot (only if registerring new callback) */
+    389              if(nIndex < 0 && pCallbackFunc != NULL)
+    390              {
+    391                  nIndex = FMSTR_FindAppCmdCallIndex(FMSTR_APPCMDRESULT_NOCMD);
+    392              }
+    393              
+    394              /* failed? */
+    395              if(nIndex < 0)
+    396              {
+    397                  return FMSTR_FALSE;
+    398              }
+    399              
+    400              /* register handler */
+    401              pcm_pAppCmdCallFunc[nIndex] = pCallbackFunc;
+    402              pcm_pAppCmdCallId[nIndex] = (FMSTR_APPCMD_CODE) (pCallbackFunc ? 
+    403                  nAppCmdCode : FMSTR_APPCMDRESULT_NOCMD);
+    404                  
+    405              return FMSTR_TRUE;
+    406              
+    407          #else
+    408              FMSTR_UNUSED(pCallbackFunc);
+    409              FMSTR_UNUSED(nAppCmdCode);
+    410              
+    411              /* app.cmd callback not implemented */
+    412              return FMSTR_FALSE;
+    413                  
+    414          #endif  
+    415          }
+    416          
+    417          #else /* FMSTR_USE_APPCMD */
+    418          
+    419          /* void Application Command API functions */
+    420          
+
+   \                                 In section .text, align 2, keep-with-next
+    421          void FMSTR_AppCmdAck(FMSTR_APPCMD_RESULT nResultCode) 
+    422          { 
+    423              FMSTR_UNUSED(nResultCode);
+    424          }
+   \                     FMSTR_AppCmdAck: (+1)
+   \   00000000   0x4770             BX       LR               ;; return
+    425          
+
+   \                                 In section .text, align 2, keep-with-next
+    426          void FMSTR_AppCmdSetResponseData(FMSTR_ADDR pResultData, FMSTR_SIZE nResultDataLen)
+    427          {
+    428              FMSTR_UNUSED(pResultData);
+    429              FMSTR_UNUSED(nResultDataLen);
+    430          }
+   \                     FMSTR_AppCmdSetResponseData: (+1)
+   \   00000000   0x4770             BX       LR               ;; return
+    431          
+
+   \                                 In section .text, align 2, keep-with-next
+    432          FMSTR_APPCMD_CODE FMSTR_GetAppCmd(void) 
+    433          { 
+    434              return FMSTR_APPCMDRESULT_NOCMD;
+   \                     FMSTR_GetAppCmd: (+1)
+   \   00000000   0x20FF             MOVS     R0,#+255
+   \   00000002   0x4770             BX       LR               ;; return
+    435          }
+    436          
+
+   \                                 In section .text, align 2, keep-with-next
+    437          FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE* pDataLen) 
+    438          { 
+    439              FMSTR_UNUSED(pDataLen);
+    440              return NULL; 
+   \                     FMSTR_GetAppCmdData: (+1)
+   \   00000000   0x2000             MOVS     R0,#+0
+   \   00000002   0x4770             BX       LR               ;; return
+    441          }
+    442          
+
+   \                                 In section .text, align 2, keep-with-next
+    443          FMSTR_BOOL FMSTR_RegisterAppCmdCall(FMSTR_APPCMD_CODE nAppCmdCode, FMSTR_PAPPCMDFUNC pCallbackFunc) 
+    444          { 
+    445              FMSTR_UNUSED(nAppCmdCode);
+    446              FMSTR_UNUSED(pCallbackFunc);
+    447              return FMSTR_FALSE; 
+   \                     FMSTR_RegisterAppCmdCall: (+1)
+   \   00000000   0x2000             MOVS     R0,#+0
+   \   00000002   0x4770             BX       LR               ;; return
+    448          }
+    449          
+    450          /*lint -efile(766, freemaster_protocol.h) include file is not used in this case */
+    451          
+    452          #endif /* FMSTR_USE_APPCMD */
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   FMSTR_AppCmdAck
+       0   FMSTR_AppCmdSetResponseData
+       0   FMSTR_GetAppCmd
+       0   FMSTR_GetAppCmdData
+       0   FMSTR_RegisterAppCmdCall
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       2  FMSTR_AppCmdAck
+       2  FMSTR_AppCmdSetResponseData
+       4  FMSTR_GetAppCmd
+       4  FMSTR_GetAppCmdData
+       4  FMSTR_RegisterAppCmdCall
+
+ 
+ 16 bytes in section .text
+ 
+ 16 bytes of CODE memory
+
+Errors: none
+Warnings: none

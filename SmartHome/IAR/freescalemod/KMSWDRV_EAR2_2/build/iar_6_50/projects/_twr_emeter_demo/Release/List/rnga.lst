@@ -1,0 +1,201 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:35
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\rnga\rnga.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\rnga\rnga.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\rnga.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\rnga.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\rnga\rnga.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      rnga.c
+      6           * @version   1.0.3.0
+      7           * @date      May-14-2012
+      8           * @brief     Random Number Generator Accelerator (RNGA) source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "rnga.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static RNGA_ERROR_CALLBACK volatile pCallbackRNGA=NULL;
+   \                     pCallbackRNGA:
+   \   00000000                      DS8 4
+     17          
+     18          /******************************************************************************
+     19           * interrupt function prototypes                                              *
+     20           ******************************************************************************/
+     21          void rnga_isr (void);
+     22          
+     23          /******************************************************************************
+     24           * Public function definitions                                                *
+     25           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     26          void RNGA_Init (tRNGA rnga, uint8 ip, RNGA_ERROR_CALLBACK pCallback)
+     27          {  
+   \                     RNGA_Init: (+1)
+   \   00000000   0xB418             PUSH     {R3,R4}
+     28            if (pCallback != NULL) 
+   \   00000002   0x....             LDR      R3,??DataTable1  ;; 0x40029000
+   \   00000004   0x0014             MOVS     R4,R2
+   \   00000006   0xD015             BEQ      ??RNGA_Init_0
+     29            { 
+     30              RNG_CR = (rnga.CR | RNG_CR_INTM_MASK);
+   \   00000008   0x2404             MOVS     R4,#+4
+   \   0000000A   0x4304             ORRS     R4,R4,R0
+   \   0000000C   0x601C             STR      R4,[R3, #+0]
+     31              pCallbackRNGA = pCallback; 
+   \   0000000E   0x....             LDR      R0,??DataTable1_1
+   \   00000010   0x6002             STR      R2,[R0, #+0]
+     32              NVIC_SetIsr(INT_RNGA,ip);
+   \   00000012   0x2080             MOVS     R0,#+128
+   \   00000014   0x02C0             LSLS     R0,R0,#+11       ;; #+262144
+   \   00000016   0x....             LDR      R2,??DataTable1_2  ;; 0xe000e280
+   \   00000018   0x6813             LDR      R3,[R2, #+0]
+   \   0000001A   0x4303             ORRS     R3,R3,R0
+   \   0000001C   0x6013             STR      R3,[R2, #+0]
+   \   0000001E   0x....             LDR      R2,??DataTable1_3  ;; 0xe000e100
+   \   00000020   0x6813             LDR      R3,[R2, #+0]
+   \   00000022   0x4318             ORRS     R0,R0,R3
+   \   00000024   0x6010             STR      R0,[R2, #+0]
+   \   00000026   0x....             LDR      R0,??DataTable1_4  ;; 0xe000e410
+   \   00000028   0x6802             LDR      R2,[R0, #+0]
+   \   0000002A   0x0609             LSLS     R1,R1,#+24
+   \   0000002C   0x0889             LSRS     R1,R1,#+2
+   \   0000002E   0x4311             ORRS     R1,R1,R2
+   \   00000030   0x6001             STR      R1,[R0, #+0]
+   \   00000032   0xE000             B        ??RNGA_Init_1
+     33            }
+     34            else
+     35              RNG_CR = rnga.CR;  
+   \                     ??RNGA_Init_0: (+1)
+   \   00000034   0x6018             STR      R0,[R3, #+0]
+     36          }
+   \                     ??RNGA_Init_1: (+1)
+   \   00000036   0xBC11             POP      {R0,R4}
+   \   00000038   0x4770             BX       LR               ;; return
+     37          
+     38          /******************************************************************************
+     39           * interrupt functions definitions                                            *
+     40           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     41          void rnga_isr (void) 
+     42          {   
+     43            iosetw (RNG_CR,RNG_CR_CLRI_MASK);   /* clear ERRI interrupt flag            */
+   \                     rnga_isr: (+1)
+   \   00000000   0x2008             MOVS     R0,#+8
+   \   00000002   0x....             LDR      R1,??DataTable1_5  ;; 0x48029000
+   \   00000004   0x6008             STR      R0,[R1, #+0]
+     44            if (pCallbackRNGA != (RNGA_ERROR_CALLBACK)NULL) { pCallbackRNGA ();  }
+   \   00000006   0x....             LDR      R0,??DataTable1_1
+   \   00000008   0x6801             LDR      R1,[R0, #+0]
+   \   0000000A   0x2900             CMP      R1,#+0
+   \   0000000C   0xD100             BNE      ??rnga_isr_0
+   \   0000000E   0x4770             BX       LR
+   \                     ??rnga_isr_0: (+1)
+   \   00000010   0xB580             PUSH     {R7,LR}
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0x4780             BLX      R0
+     45          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x40029000         DC32     0x40029000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     pCallbackRNGA
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0xE000E410         DC32     0xe000e410
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x48029000         DC32     0x48029000
+     46          /******************************************************************************
+     47           * End of module                                                              *
+     48           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   RNGA_Init
+       8   rnga_isr
+         8   -- Indirect call
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+      58  RNGA_Init
+       4  pCallbackRNGA
+      24  rnga_isr
+
+ 
+   4 bytes in section .bss
+ 106 bytes in section .text
+ 
+ 106 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

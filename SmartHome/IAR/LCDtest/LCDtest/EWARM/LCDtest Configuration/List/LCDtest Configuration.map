@@ -1,0 +1,396 @@
+###############################################################################
+#
+# IAR ELF Linker V7.10.1.6676/W32 for ARM                 28/Jan/2016  10:46:16
+# Copyright 2007-2014 IAR Systems AB.
+#
+#    Output file  =  
+#        E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Exe\LCDtest Configuration.out
+#    Map file     =  
+#        E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration/List\LCDtest Configuration.map
+#    Command line =  
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\gpio.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\lcd.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\main.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\rtc.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\startup_stm32l152xba.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_cortex.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_dma.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_flash.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_flash_ex.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_flash_ramfunc.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_gpio.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_lcd.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_msp.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_pwr.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_pwr_ex.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_rcc.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_rcc_ex.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_rtc.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_rtc_ex.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_hal_uart.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\stm32l1xx_it.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\system_stm32l1xx.o"
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Obj\usart.o" --redirect _Printf=_PrintfFull --redirect
+#        _Scanf=_ScanfFull -o
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration\Exe\LCDtest Configuration.out" --map
+#        "E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest
+#        Configuration/List\LCDtest Configuration.map" --config
+#        E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM/stm32l152xba_flash.icf
+#        --semihosting --entry __iar_program_start --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x08000000 { ro section .intvec };
+"P1":  place in [from 0x08000000 to 0x0801ffff] { ro };
+"P2":  place in [from 0x20000000 to 0x20007fff] { rw, block CSTACK, block HEAP };
+
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A1":                                       0xf4
+  .intvec            ro code  0x08000000    0xf4  startup_stm32l152xba.o [1]
+                            - 0x080000f4    0xf4
+
+"P1":                                     0x26f0
+  .text              ro code  0x080000f4   0xf00  stm32l1xx_hal_rcc.o [1]
+  .text              ro code  0x08000ff4    0x50  stm32l1xx_hal.o [1]
+  .text              ro code  0x08001044    0x10  stm32l1xx_hal_pwr_ex.o [1]
+  .text              ro code  0x08001054   0x166  stm32l1xx_hal_cortex.o [1]
+  .text              ro code  0x080011ba    0x2e  copy_init3.o [4]
+  .text              ro code  0x080011e8    0x50  stm32l1xx_hal_msp.o [1]
+  .text              ro code  0x08001238   0x4e4  stm32l1xx_hal_uart.o [1]
+  .text              ro code  0x0800171c    0xa4  usart.o [1]
+  .text              ro code  0x080017c0   0x1ec  stm32l1xx_hal_gpio.o [1]
+  .text              ro code  0x080019ac   0x328  stm32l1xx_hal_rtc.o [1]
+  .text              ro code  0x08001cd4    0xe4  rtc.o [1]
+  .text              ro code  0x08001db8   0x202  stm32l1xx_hal_rtc_ex.o [1]
+  .text              ro code  0x08001fba   0x20c  stm32l1xx_hal_lcd.o [1]
+  .text              ro code  0x080021c6    0x22  zero_init3.o [4]
+  .text              ro code  0x080021e8   0x104  lcd.o [1]
+  .text              ro code  0x080022ec   0x154  main.o [1]
+  .text              ro code  0x08002440    0x54  gpio.o [1]
+  .text              ro code  0x08002494   0x134  stm32l1xx_hal_rcc_ex.o [1]
+  .text              ro code  0x080025c8    0x64  system_stm32l1xx.o [1]
+  .text              ro code  0x0800262c    0x28  data_init.o [4]
+  .iar.init_table    const    0x08002654    0x24  - Linker created -
+  .text              ro code  0x08002678    0x1c  stm32l1xx_it.o [1]
+  .text              ro code  0x08002694    0x1a  cmain.o [4]
+  .text              ro code  0x080026ae     0x4  low_level_init.o [3]
+  .text              ro code  0x080026b2     0x4  exit.o [3]
+  .text              ro code  0x080026b8     0xa  cexit.o [4]
+  .text              ro code  0x080026c4    0x14  exit.o [5]
+  .rodata            const    0x080026d8    0x10  stm32l1xx_hal_rcc.o [1]
+  .text              ro code  0x080026e8    0x10  startup_stm32l152xba.o [1]
+  .rodata            const    0x080026f8     0xc  stm32l1xx_hal_rcc.o [1]
+  .text              ro code  0x08002704     0xc  cstartup_M.o [4]
+  .rodata            const    0x08002710     0x4  stm32l1xx_hal_rcc.o [1]
+  .text              ro code  0x08002714     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002718     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800271c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002720     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002724     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002728     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800272c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002730     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002734     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002738     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800273c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002740     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002744     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002748     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800274c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002750     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002754     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002758     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800275c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002760     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002764     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002768     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800276c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002770     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002774     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002778     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800277c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002780     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002784     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002788     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800278c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002790     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002794     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x08002798     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x0800279c     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027a0     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027a4     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027a8     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027ac     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027b0     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027b4     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027b8     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027bc     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027c0     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027c4     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027c8     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027cc     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027d0     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027d4     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027d8     0x4  startup_stm32l152xba.o [1]
+  .text              ro code  0x080027dc     0x4  startup_stm32l152xba.o [1]
+  .rodata            const    0x080027e0     0x0  zero_init3.o [4]
+  .rodata            const    0x080027e0     0x0  copy_init3.o [4]
+  Initializer bytes  ro data  0x080027e0     0x4  <for P2 s0>
+                            - 0x080027e4  0x26f0
+
+"P2", part 1 of 3:                           0x4
+  P2 s0                       0x20000000     0x4  <Init block>
+    .data            inited   0x20000000     0x4  system_stm32l1xx.o [1]
+                            - 0x20000004     0x4
+
+"P2", part 2 of 3:                          0xa4
+  .bss               zero     0x20000004    0x40  usart.o [1]
+  .bss               zero     0x20000044    0x3c  lcd.o [1]
+  .bss               zero     0x20000080    0x20  rtc.o [1]
+  .bss               zero     0x200000a0     0x4  stm32l1xx_hal.o [1]
+                            - 0x200000a4    0xa0
+
+"P2", part 3 of 3:                         0x400
+  CSTACK                      0x200000a8   0x400  <Block>
+    CSTACK           uninit   0x200000a8   0x400  <Block tail>
+                            - 0x200004a8   0x400
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0xa0:
+          0x20000004  0xa0
+
+Copy (__iar_copy_init3)
+    1 source range, total size 0x4:
+          0x080027e0   0x4
+    1 destination range, total size 0x4:
+          0x20000000   0x4
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                  ro code  ro data  rw data
+    ------                  -------  -------  -------
+E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest Configuration\Obj: [1]
+    gpio.o                       84
+    lcd.o                       260                60
+    main.o                      340
+    rtc.o                       228                32
+    startup_stm32l152xba.o      464
+    stm32l1xx_hal.o              80                 4
+    stm32l1xx_hal_cortex.o      358
+    stm32l1xx_hal_gpio.o        492
+    stm32l1xx_hal_lcd.o         524
+    stm32l1xx_hal_msp.o          80
+    stm32l1xx_hal_pwr_ex.o       16
+    stm32l1xx_hal_rcc.o       3 840       32
+    stm32l1xx_hal_rcc_ex.o      308
+    stm32l1xx_hal_rtc.o         808
+    stm32l1xx_hal_rtc_ex.o      514
+    stm32l1xx_hal_uart.o      1 252
+    stm32l1xx_it.o               28
+    system_stm32l1xx.o          100        4        4
+    usart.o                     164                64
+    -------------------------------------------------
+    Total:                    9 940       36      164
+
+command line: [2]
+    -------------------------------------------------
+    Total:
+
+dl7M_tlf.a: [3]
+    exit.o                        4
+    low_level_init.o              4
+    -------------------------------------------------
+    Total:                        8
+
+rt7M_tl.a: [4]
+    cexit.o                      10
+    cmain.o                      26
+    copy_init3.o                 46
+    cstartup_M.o                 12
+    data_init.o                  40
+    zero_init3.o                 34
+    -------------------------------------------------
+    Total:                      168
+
+shb_l.a: [5]
+    exit.o                       20
+    -------------------------------------------------
+    Total:                       20
+
+    Gaps                          4
+    Linker created                        36    1 024
+-----------------------------------------------------
+    Grand Total:             10 140       72    1 188
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+?main                   0x08002695         Code  Gb  cmain.o [4]
+CSTACK$$Base            0x200000a8          --   Gb  - Linker created -
+CSTACK$$Limit           0x200004a8          --   Gb  - Linker created -
+HAL_GPIO_Init           0x080017c1  0x1be  Code  Gb  stm32l1xx_hal_gpio.o [1]
+HAL_GetTick             0x0800103b    0x6  Code  Wk  stm32l1xx_hal.o [1]
+HAL_IncTick             0x0800102f    0xc  Code  Wk  stm32l1xx_hal.o [1]
+HAL_Init                0x08000ff5   0x16  Code  Gb  stm32l1xx_hal.o [1]
+HAL_InitTick            0x0800100b   0x24  Code  Wk  stm32l1xx_hal.o [1]
+HAL_LCD_Init            0x08001fbb  0x108  Code  Gb  stm32l1xx_hal_lcd.o [1]
+HAL_LCD_MspInit         0x08002241   0x94  Code  Gb  lcd.o [1]
+HAL_LCD_UpdateDisplayRequest
+                        0x0800214b   0x50  Code  Gb  stm32l1xx_hal_lcd.o [1]
+HAL_LCD_Write           0x080020c3   0x88  Code  Gb  stm32l1xx_hal_lcd.o [1]
+HAL_MspInit             0x080011e9   0x50  Code  Gb  stm32l1xx_hal_msp.o [1]
+HAL_NVIC_EnableIRQ      0x08001157    0xe  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_NVIC_SetPriority    0x08001131   0x26  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_NVIC_SetPriorityGrouping
+                        0x08001125    0xc  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_PWREx_GetVoltageRange
+                        0x08001045    0xa  Code  Gb  stm32l1xx_hal_pwr_ex.o [1]
+HAL_RCCEx_PeriphCLKConfig
+                        0x08002495  0x120  Code  Gb  stm32l1xx_hal_rcc_ex.o [1]
+HAL_RCC_ClockConfig     0x080009c5  0x44c  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RCC_GetHCLKFreq     0x08000ec3   0x28  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RCC_GetPCLK1Freq    0x08000eeb   0x20  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RCC_GetPCLK2Freq    0x08000f0b   0x20  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RCC_GetSysClockFreq
+                        0x08000e19   0xaa  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RCC_OscConfig       0x080000f5  0x8c8  Code  Gb  stm32l1xx_hal_rcc.o [1]
+HAL_RTC_Init            0x080019ad   0xac  Code  Gb  stm32l1xx_hal_rtc.o [1]
+HAL_RTC_MspInit         0x08001d93   0x1a  Code  Gb  rtc.o [1]
+HAL_RTC_SetAlarm        0x08001db9  0x1c6  Code  Gb  stm32l1xx_hal_rtc_ex.o [1]
+HAL_RTC_SetDate         0x08001b69   0xf6  Code  Gb  stm32l1xx_hal_rtc.o [1]
+HAL_RTC_SetTime         0x08001a59  0x110  Code  Gb  stm32l1xx_hal_rtc.o [1]
+HAL_RTC_WaitForSynchro  0x08001f7f   0x3c  Code  Gb  stm32l1xx_hal_rtc_ex.o [1]
+HAL_SYSTICK_CLKSourceConfig
+                        0x08001171   0x20  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_SYSTICK_Callback    0x080011b9    0x2  Code  Wk  stm32l1xx_hal_cortex.o [1]
+HAL_SYSTICK_Config      0x08001165    0xc  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_SYSTICK_IRQHandler  0x080011b1    0x8  Code  Gb  stm32l1xx_hal_cortex.o [1]
+HAL_UART_ErrorCallback  0x080013d1    0x2  Code  Wk  stm32l1xx_hal_uart.o [1]
+HAL_UART_IRQHandler     0x080012a9  0x124  Code  Gb  stm32l1xx_hal_uart.o [1]
+HAL_UART_Init           0x08001239   0x70  Code  Gb  stm32l1xx_hal_uart.o [1]
+HAL_UART_MspInit        0x08001759   0x56  Code  Gb  usart.o [1]
+HAL_UART_RxCpltCallback
+                        0x080013cf    0x2  Code  Wk  stm32l1xx_hal_uart.o [1]
+HAL_UART_TxCpltCallback
+                        0x080013cd    0x2  Code  Wk  stm32l1xx_hal_uart.o [1]
+LCD_IRQHandler          0x08002685    0x2  Code  Gb  stm32l1xx_it.o [1]
+LCD_WaitForSynchro      0x0800219b   0x2c  Code  Gb  stm32l1xx_hal_lcd.o [1]
+MX_GPIO_Init            0x08002441   0x54  Code  Gb  gpio.o [1]
+MX_LCD_Init             0x080021e9   0x58  Code  Gb  lcd.o [1]
+MX_RTC_Init             0x08001cd5   0xbe  Code  Gb  rtc.o [1]
+MX_USART1_UART_Init     0x0800171d   0x3c  Code  Gb  usart.o [1]
+NVIC_EnableIRQ          0x0800107d   0x14  Code  Lc  stm32l1xx_hal_cortex.o [1]
+NVIC_EncodePriority     0x080010b7   0x3e  Code  Lc  stm32l1xx_hal_cortex.o [1]
+NVIC_GetPriorityGrouping
+                        0x08001073    0xa  Code  Lc  stm32l1xx_hal_cortex.o [1]
+NVIC_SetPriority        0x08001091   0x26  Code  Lc  stm32l1xx_hal_cortex.o [1]
+NVIC_SetPriorityGrouping
+                        0x08001055   0x1e  Code  Lc  stm32l1xx_hal_cortex.o [1]
+RCC_SetFlashLatencyFromMSIRange
+                        0x08000f31   0x8e  Code  Lc  stm32l1xx_hal_rcc.o [1]
+RTC_Bcd2ToByte          0x08001cbb   0x1a  Code  Gb  stm32l1xx_hal_rtc.o [1]
+RTC_ByteToBcd2          0x08001ca5   0x16  Code  Gb  stm32l1xx_hal_rtc.o [1]
+RTC_EnterInitMode       0x08001c6d   0x38  Code  Gb  stm32l1xx_hal_rtc.o [1]
+Region$$Table$$Base     0x08002654          --   Gb  - Linker created -
+Region$$Table$$Limit    0x08002678          --   Gb  - Linker created -
+SysTick_Config          0x080010f5   0x30  Code  Lc  stm32l1xx_hal_cortex.o [1]
+SysTick_Handler         0x08002679    0xc  Code  Gb  stm32l1xx_it.o [1]
+SystemClock_Config      0x08002375   0xae  Code  Gb  main.o [1]
+SystemCoreClock         0x20000000    0x4  Data  Gb  system_stm32l1xx.o [1]
+SystemInit              0x080025c9   0x4c  Code  Gb  system_stm32l1xx.o [1]
+UART_EndTransmit_IT     0x0800144d   0x30  Code  Lc  stm32l1xx_hal_uart.o [1]
+UART_Receive_IT         0x0800147d   0xc4  Code  Lc  stm32l1xx_hal_uart.o [1]
+UART_SetConfig          0x08001541  0x1d4  Code  Lc  stm32l1xx_hal_uart.o [1]
+UART_Transmit_IT        0x080013d3   0x7a  Code  Lc  stm32l1xx_hal_uart.o [1]
+USART1_IRQHandler       0x08002687    0xa  Code  Gb  stm32l1xx_it.o [1]
+__cmain                 0x08002695         Code  Gb  cmain.o [4]
+__exit                  0x080026c5   0x14  Code  Gb  exit.o [5]
+__iar_copy_init3        0x080011bb   0x2e  Code  Gb  copy_init3.o [4]
+__iar_data_init3        0x0800262d   0x28  Code  Gb  data_init.o [4]
+__iar_program_start     0x08002705         Code  Gb  cstartup_M.o [4]
+__iar_zero_init3        0x080021c7   0x22  Code  Gb  zero_init3.o [4]
+__low_level_init        0x080026af    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x08000000         Data  Gb  startup_stm32l152xba.o [1]
+_call_main              0x080026a1         Code  Gb  cmain.o [4]
+_exit                   0x080026b9         Code  Gb  cexit.o [4]
+_main                   0x080026ab         Code  Gb  cmain.o [4]
+aAPBAHBPrescTable       0x080026d8   0x10  Data  Gb  stm32l1xx_hal_rcc.o [1]
+aPLLDivisionFactorTable
+                        0x08002710    0x4  Data  Gb  stm32l1xx_hal_rcc.o [1]
+aPLLMULFactorTable      0x080026f8    0xc  Data  Gb  stm32l1xx_hal_rcc.o [1]
+exit                    0x080026b3    0x4  Code  Gb  exit.o [3]
+hlcd                    0x20000044   0x3c  Data  Gb  lcd.o [1]
+hrtc                    0x20000080   0x20  Data  Gb  rtc.o [1]
+huart1                  0x20000004   0x40  Data  Gb  usart.o [1]
+main                    0x080022ed   0x88  Code  Gb  main.o [1]
+uwTick                  0x200000a0    0x4  Data  Lc  stm32l1xx_hal.o [1]
+
+
+[1] = E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\LCDtest\LCDtest\EWARM\LCDtest Configuration\Obj
+[2] = command line
+[3] = dl7M_tlf.a
+[4] = rt7M_tl.a
+[5] = shb_l.a
+
+  10 140 bytes of readonly  code memory
+      72 bytes of readonly  data memory
+   1 188 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

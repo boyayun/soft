@@ -1,0 +1,215 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:30
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_sfio.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_sfio.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\freemaster_sfio.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_sfio.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_sfio.c
+      1          /******************************************************************************
+      2          *
+      3          * Freescale Semiconductor Inc.
+      4          * (c) Copyright 2004-2010 Freescale Semiconductor
+      5          * ALL RIGHTS RESERVED.
+      6          *
+      7          ****************************************************************************//*!
+      8          *
+      9          * @file   freemaster_sfio.c
+     10          *
+     11          * @brief  FreeMASTER SFIO (Matlab/Simulink interface) encapsulation handler
+     12          *
+     13          * @version 1.0.1.0
+     14          * 
+     15          * @date May-4-2012
+     16          * 
+     17          *******************************************************************************
+     18          *
+     19          * This file contains the SFIO communication handler and enables the SFIO tool
+     20          * to run over FreeMASTER. For more information, see Freescale SFIO documentation.
+     21          * 
+     22          *******************************************************************************/
+     23          
+     24          #include "freemaster.h"
+     25          #include "freemaster_private.h"
+     26          #include "freemaster_protocol.h"
+     27          
+     28          #if FMSTR_USE_SFIO
+     29          
+     30          /* the sfiolib needs to be added to the project */
+     31          #include "sfiolib.h"
+     32          
+     33          /***********************************
+     34          *  local variables 
+     35          ***********************************/
+     36          
+     37          static FMSTR_U8 pcm_nSfioRespLen;
+     38          
+     39          /* recorder runtime flags */
+     40          static volatile union 
+     41          {
+     42              FMSTR_FLAGS all;
+     43              
+     44              struct 
+     45              {
+     46                  unsigned bEvenRun : 1;     /* last command executed was the even one */
+     47                  unsigned bLastOK : 1;      /* last command executed properly */
+     48              } flg;
+     49              
+     50          } pcm_wSfioFlags;
+     51          
+     52          /**************************************************************************//*!
+     53          *
+     54          * @brief  Initialization of SFIO communication layer
+     55          *
+     56          ******************************************************************************/
+     57          
+     58          void FMSTR_InitSfio(void)
+     59          {
+     60              pcm_wSfioFlags.all = 0;
+     61          }
+     62          
+     63          /**************************************************************************//*!
+     64          *
+     65          * @brief  Handling SFIOFRAME (even and odd) commands
+     66          *
+     67          * @param  pMessageIO - original command (in) and response buffer (out) 
+     68          *
+     69          * @note  This function handles the SFIO (Matlab/Simulink Interface) command
+     70          *        encapsulated into FreeMASTER protocol. It emulates the SFIO serial
+     71          *        char-by-char communication.
+     72          *
+     73          ******************************************************************************/
+     74          
+     75          FMSTR_BPTR FMSTR_SfioFrame(FMSTR_BPTR pMessageIO)
+     76          {
+     77              FMSTR_BPTR pResponse = pMessageIO;
+     78              FMSTR_U8 i, nFrameLen, nByte;
+     79              SFIO_U16 nRet = 0;
+     80          
+     81              /* get command and remember if it was even/odd */
+     82              pMessageIO = FMSTR_ValueFromBuffer8(&nByte, pMessageIO);
+     83              pcm_wSfioFlags.flg.bEvenRun = (nByte & 1) ? 0 : 1;
+     84              pcm_wSfioFlags.flg.bLastOK = 0;
+     85              
+     86              /* get data length */
+     87              pMessageIO = FMSTR_ValueFromBuffer8(&nFrameLen, pMessageIO);
+     88          
+     89              /* feed the SFIO engine byte-by-byte */
+     90              for(i=0; nRet == 0 && i<nFrameLen; i++)
+     91              {
+     92                  pMessageIO = FMSTR_ValueFromBuffer8(&nByte, pMessageIO);
+     93                  nRet = SFIO_ProcessRecievedChar(nByte);
+     94              }
+     95                 
+     96              /* frame not handled or handled prematurely */
+     97              if(!nRet || i < nFrameLen)
+     98                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_SFIOERR);
+     99              
+    100              /* how much data to return? */
+    101              if(nRet > FMSTR_COMM_BUFFER_SIZE)
+    102                  return FMSTR_ConstToBuffer8(pResponse, FMSTR_STC_RSPBUFFOVF);
+    103              
+    104              /* remember this command had executed properly */
+    105              pcm_nSfioRespLen = (FMSTR_U8) nRet;
+    106              pcm_wSfioFlags.flg.bLastOK = 1;
+    107              
+    108              /* SFIO response to return */
+    109              pResponse = FMSTR_ConstToBuffer8(pResponse, FMSTR_STS_OK | FMSTR_STSF_VARLEN);
+    110              pResponse = FMSTR_ValueToBuffer8(pResponse, pcm_nSfioRespLen);
+    111              return FMSTR_CopyToBuffer(pResponse, (FMSTR_ADDR) SFIO_GetOutputBuffer(), pcm_nSfioRespLen);
+    112          }
+    113          
+    114          /**************************************************************************//*!
+    115          *
+    116          * @brief  Handling SFIOGETRESP (even and odd) commands
+    117          *
+    118          * @param  pMessageIO - original command (in) and response buffer (out) 
+    119          *
+    120          * @note  This function handles the retried request for the last SFIO response.
+    121          *        PC may request this retry when the last frame execution took too long
+    122          *        (e.g. due to breakpoint) but is still finished properly. The original
+    123          *        SFIOFRAME command returned timeout, so the PC will use SFIOGETRESP
+    124          *        to finish data.
+    125          *
+    126          *        The even/odd matching is here to have some dgree of robustness for 
+    127          *        a case when SFIOFRAME packet gets lost without ever reaching SFIO engine. 
+    128          *        Without any checking, the SFIOGETRESP would just blindly return the 
+    129          *        pre-last result and would definietelly cause Simulink problems. 
+    130          *        Having the check implemented, the PC can determine the even/odd mismatch
+    131          *        and may re-send the last SFIOFRAME command.
+    132          *
+    133          ******************************************************************************/
+    134              
+    135          FMSTR_BPTR FMSTR_SfioGetResp(FMSTR_BPTR pMessageIO)
+    136          {
+    137              FMSTR_U8 nByte;
+    138              
+    139              /* get command and determine if it is even/odd */
+    140              FMSTR_ValueFromBuffer8(&nByte, pMessageIO);
+    141          
+    142              /* last command must have been finished propely */
+    143              if(!pcm_wSfioFlags.flg.bLastOK)
+    144                   return FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STC_SFIOERR);
+    145          
+    146              /* only respond to "matching" request (even to even, odd to odd) */
+    147              if(nByte & 1)
+    148              {
+    149                  if(pcm_wSfioFlags.flg.bEvenRun)
+    150                      return FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STC_SFIOUNMATCH);
+    151              }
+    152              else
+    153              {
+    154                  if(!pcm_wSfioFlags.flg.bEvenRun)
+    155                      return FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STC_SFIOUNMATCH);
+    156              }    
+    157                  
+    158              /* SFIO response to return */
+    159              pMessageIO = FMSTR_ConstToBuffer8(pMessageIO, FMSTR_STS_OK | FMSTR_STSF_VARLEN);
+    160              pMessageIO = FMSTR_ValueToBuffer8(pMessageIO, pcm_nSfioRespLen);
+    161              return FMSTR_CopyToBuffer(pMessageIO, (FMSTR_ADDR) SFIO_GetOutputBuffer(), pcm_nSfioRespLen);
+    162          }
+    163          
+    164          #endif /* FMSTR_USE_SFIO */
+
+
+ 
+
+ 
+
+
+Errors: none
+Warnings: none

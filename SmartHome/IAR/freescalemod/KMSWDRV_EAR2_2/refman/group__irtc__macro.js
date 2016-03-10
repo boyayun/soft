@@ -1,0 +1,25 @@
+var group__irtc__macro =
+[
+    [ "IRTC_GetIsrFlag", "group__irtc__macro.html#ga5cc31541f9107100a8c56bd143b2436c", null ],
+    [ "IRTC_ClrIsrFlag", "group__irtc__macro.html#gaf96906d710e5b30873303f21ad041a28", null ],
+    [ "IRTC_DisableIsr", "group__irtc__macro.html#ga7a0473d8b3cb79f43b38a3dcd1d30def", null ],
+    [ "IRTC_EnableIsr", "group__irtc__macro.html#gaa1c3452054972e067db284ea0209d4b5", null ],
+    [ "IRTC_SelRtcClkoutSrc", "group__irtc__macro.html#ga84134c23384877b19ea3b6dcd0fd8faf", null ],
+    [ "IRTC_GetTamperLog", "group__irtc__macro.html#gaf7055f1dd258f13d8b697b412c6f23bb", null ],
+    [ "IRTC_SetTamperPinActiveLow", "group__irtc__macro.html#ga5f5a588f6dd18828f9af88d2d6768885", null ],
+    [ "IRTC_SetTamperPinActiveHigh", "group__irtc__macro.html#ga2384d930af622c78eec7973978a388b0", null ],
+    [ "IRTC_BootVLPR", "group__irtc__macro.html#gae2505ce49b3223ff20ef7836634390ce", null ],
+    [ "IRTC_BootRUN", "group__irtc__macro.html#ga4e4ee8078977ab47d9a098582d59fa6c", null ],
+    [ "IRTC_GetClock", "group__irtc__macro.html#ga6083623250e5f59fce657eebfeb7b3ae", null ],
+    [ "IRTC_SetClock", "group__irtc__macro.html#gabce1f444b210bd6ef3d898c147f1d396", null ],
+    [ "IRTC_SetAlarm", "group__irtc__macro.html#gaf4ce8fde5162c3ecf9a20a313d97699f", null ],
+    [ "IRTC_SetDST", "group__irtc__macro.html#ga2e1fd4b01ccb0e9522227b19bd89fd97", null ],
+    [ "IRTC_UpdateCoarseCompVal", "group__irtc__macro.html#ga86d939ca13ca97d0d4e77261e86110cb", null ],
+    [ "IRTC_UpdateFineCompVal", "group__irtc__macro.html#gadd874fe32be717d7d260e389f1efefeb", null ],
+    [ "IRTC_WrBbRam", "group__irtc__macro.html#gad22ff8eded5975b0329972336cb547e6", null ],
+    [ "IRTC_RdBbRam", "group__irtc__macro.html#ga1cffc031c36fd673dc64f99bccf6a162", null ],
+    [ "IRTC_Hibernate", "group__irtc__macro.html#ga330f32916958673852dbaa8d4894fb3d", null ],
+    [ "IRTC_InstallCallback", "group__irtc__macro.html#gadbfd9ae8769a901e6cd3d3f823731374", null ],
+    [ "IRTC_Init", "group__irtc__macro.html#gab72c26fd80d9ab2c6b1cd6d65f5b0cf6", null ],
+    [ "IRTC_WkupInit", "group__irtc__macro.html#gaff9af7d23af769bf763bfa9c7a1b9b24", null ]
+];

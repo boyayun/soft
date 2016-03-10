@@ -1,0 +1,4 @@
+---- FrameRevInit Matches (3 in 1 files) ----
+Devproanaly.c (e:\tcl\project\smarthome\soft\smarthome\code\devproanaly)://static void FrameRevInit(void)
+Devproanaly.c (e:\tcl\project\smarthome\soft\smarthome\code\devproanaly):static __INLINE void FrameRevInit(void)
+Devproanaly.c (e:\tcl\project\smarthome\soft\smarthome\code\devproanaly):	FrameRevInit();

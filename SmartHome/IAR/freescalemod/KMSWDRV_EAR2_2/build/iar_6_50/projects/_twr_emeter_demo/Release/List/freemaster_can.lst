@@ -1,0 +1,786 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:29
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_can.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_can.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\freemaster_can.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\freemaster_can.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\freemaster\freemaster_can.c
+      1          /******************************************************************************
+      2          *
+      3          * Freescale Semiconductor Inc.
+      4          * (c) Copyright 2004-2010 Freescale Semiconductor
+      5          * ALL RIGHTS RESERVED.
+      6          *
+      7          ****************************************************************************//*!
+      8          *
+      9          * @file   freemaster_can.c
+     10          *
+     11          * @brief  FreeMASTER CAN communication routines
+     12          *
+     13          * @version 1.1.1.0
+     14          * 
+     15          * @date May-4-2012
+     16          * 
+     17          *******************************************************************************/
+     18          
+     19          #include "freemaster.h"
+     20          #include "freemaster_private.h"
+     21          #include "freemaster_protocol.h"
+     22          
+     23          #define FMSTR_USE_CAN 0
+     24          #define FMSTR_USE_FLEXCAN 0
+     25          #if FMSTR_USE_CAN
+     26          
+     27          /***********************************
+     28          *  CAN low-level access macros 
+     29          ***********************************/
+     30          
+     31          #if FMSTR_USE_MSCAN
+     32          
+     33              #define FMSTR_CAN_ETXI() FMSTR_MSCAN_ETXI() 
+     34              #define FMSTR_CAN_DTXI() FMSTR_MSCAN_DTXI() 
+     35              #define FMSTR_CAN_ERXI() FMSTR_MSCAN_ERXI() 
+     36              #define FMSTR_CAN_DRXI() FMSTR_MSCAN_DRXI() 
+     37              #define FMSTR_CAN_TEST_RXFLG() FMSTR_MSCAN_TEST_RXFLG() 
+     38              #define FMSTR_CAN_CLEAR_RXFLG() FMSTR_MSCAN_CLEAR_RXFLG() 
+     39              #define FMSTR_CAN_TEST_TXFLG() FMSTR_MSCAN_TEST_TXFLG() 
+     40              #define FMSTR_CAN_GET_MBSTATUS() FMSTR_MSCAN_GET_MBSTATUS()
+     41              #define FMSTR_CAN_MAKEIDR0(id) FMSTR_MSCAN_MAKEIDR0(id) 
+     42              #define FMSTR_CAN_MAKEIDR1(id) FMSTR_MSCAN_MAKEIDR1(id) 
+     43              #define FMSTR_CAN_MAKEIDR2(id) FMSTR_MSCAN_MAKEIDR2(id) 
+     44              #define FMSTR_CAN_MAKEIDR3(id) FMSTR_MSCAN_MAKEIDR3(id) 
+     45          
+     46              #define FMSTR_CAN_TCTX FMSTR_MSCAN_TCTX 
+     47              #define FMSTR_CAN_TCFG(pctx) FMSTR_MSCAN_TCFG(pctx) 
+     48              #define FMSTR_CAN_TID(pctx, idr0, idr1, idr2, idr3) FMSTR_MSCAN_TID(pctx, idr0, idr1, idr2, idr3) 
+     49              #define FMSTR_CAN_TLEN(pctx, len) FMSTR_MSCAN_TLEN(pctx, len) 
+     50              #define FMSTR_CAN_TPRI(pctx, txPri) FMSTR_MSCAN_TPRI(pctx, txPri) 
+     51              #define FMSTR_CAN_PUTBYTE(pctx, dataByte) FMSTR_MSCAN_PUTBYTE(pctx, dataByte) 
+     52              #define FMSTR_CAN_TX(pctx) FMSTR_MSCAN_TX(pctx) 
+     53          
+     54              #define FMSTR_CAN_RCTX FMSTR_MSCAN_RCTX 
+     55              #define FMSTR_CAN_RINIT(idr0, idr1, idr2, idr3) FMSTR_MSCAN_RINIT(idr0, idr1, idr2, idr3) 
+     56              #define FMSTR_CAN_TINIT(idr0, idr1, idr2, idr3) FMSTR_MSCAN_TINIT(idr0, idr1, idr2, idr3)
+     57              #define FMSTR_CAN_RCFG() FMSTR_MSCAN_RCFG() 
+     58              #define FMSTR_CAN_RX(pctx) FMSTR_MSCAN_RX(pctx) 
+     59              #define FMSTR_CAN_TEST_RIDR(pctx, idr0, idr1, idr2, idr3) FMSTR_MSCAN_TEST_RIDR(pctx, idr0, idr1, idr2, idr3) 
+     60              #define FMSTR_CAN_RLEN(pctx) FMSTR_MSCAN_RLEN(pctx) 
+     61              #define FMSTR_CAN_GETBYTE(pctx) FMSTR_MSCAN_GETBYTE(pctx) 
+     62              #define FMSTR_CAN_RFINISH(pctx) FMSTR_MSCAN_RFINISH(pctx) 
+     63          
+     64          #elif FMSTR_USE_FLEXCAN
+     65          
+     66              #define FMSTR_CAN_ETXI() FMSTR_FCAN_ETXI() 
+     67              #define FMSTR_CAN_DTXI() FMSTR_FCAN_DTXI() 
+     68              #define FMSTR_CAN_ERXI() FMSTR_FCAN_ERXI() 
+     69              #define FMSTR_CAN_DRXI() FMSTR_FCAN_DRXI() 
+     70              #define FMSTR_CAN_TEST_RXFLG() FMSTR_FCAN_TEST_RXFLG() 
+     71              #define FMSTR_CAN_CLEAR_RXFLG() FMSTR_FCAN_CLEAR_RXFLG() 
+     72              #define FMSTR_CAN_TEST_TXFLG() FMSTR_FCAN_TEST_TXFLG() 
+     73              #define FMSTR_CAN_GET_MBSTATUS() FMSTR_FCAN_GET_MBSTATUS()
+     74              #define FMSTR_CAN_MAKEIDR0(id) FMSTR_FCAN_MAKEIDR0(id) 
+     75              #define FMSTR_CAN_MAKEIDR1(id) FMSTR_FCAN_MAKEIDR1(id) 
+     76              #define FMSTR_CAN_MAKEIDR2(id) FMSTR_FCAN_MAKEIDR2(id) 
+     77              #define FMSTR_CAN_MAKEIDR3(id) FMSTR_FCAN_MAKEIDR3(id) 
+     78          
+     79              #define FMSTR_CAN_TCTX FMSTR_FCAN_TCTX 
+     80              #define FMSTR_CAN_TCFG(pctx) FMSTR_FCAN_TCFG(pctx) 
+     81              #define FMSTR_CAN_TID(pctx, idr0, idr1, idr2, idr3) FMSTR_FCAN_TID(pctx, idr0, idr1, idr2, idr3) 
+     82              #define FMSTR_CAN_TLEN(pctx, len) FMSTR_FCAN_TLEN(pctx, len) 
+     83              #define FMSTR_CAN_TPRI(pctx, txPri) FMSTR_FCAN_TPRI(pctx, txPri) 
+     84              #define FMSTR_CAN_PUTBYTE(pctx, dataByte) FMSTR_FCAN_PUTBYTE(pctx, dataByte) 
+     85              #define FMSTR_CAN_TX(pctx) FMSTR_FCAN_TX(pctx) 
+     86          
+     87              #define FMSTR_CAN_RCTX FMSTR_FCAN_RCTX 
+     88              #define FMSTR_CAN_RINIT(idr0, idr1, idr2, idr3) FMSTR_FCAN_RINIT(idr0, idr1, idr2, idr3) 
+     89              #define FMSTR_CAN_TINIT(idr0, idr1, idr2, idr3) FMSTR_FCAN_TINIT(idr0, idr1, idr2, idr3)
+     90              #define FMSTR_CAN_RCFG() FMSTR_FCAN_RCFG() 
+     91              #define FMSTR_CAN_RX(pctx) FMSTR_FCAN_RX(pctx) 
+     92              #define FMSTR_CAN_TEST_RIDR(pctx, idr0, idr1, idr2, idr3) FMSTR_FCAN_TEST_RIDR(pctx, idr0, idr1, idr2, idr3) 
+     93              #define FMSTR_CAN_RLEN(pctx) FMSTR_FCAN_RLEN(pctx) 
+     94              #define FMSTR_CAN_GETBYTE(pctx) FMSTR_FCAN_GETBYTE(pctx) 
+     95              #define FMSTR_CAN_RFINISH(pctx) FMSTR_FCAN_RFINISH(pctx) 
+     96          
+     97          #else
+     98          #error CAN interface undefined
+     99          #endif
+    100          
+    101          /***********************************
+    102          *  local variables 
+    103          ***********************************/
+    104          
+    105          /* FreeMASTER communication buffer (in/out) plus the STS and LEN bytes */
+    106          static FMSTR_BCHR pcm_pCommBuffer[FMSTR_COMM_BUFFER_SIZE+3];    
+    107          
+    108          /* FreeMASTER runtime flags */
+    109          /*lint -e{960} using union */
+    110          static volatile union 
+    111          {
+    112              FMSTR_FLAGS all;
+    113              
+    114              struct 
+    115              {
+    116                  unsigned bTxActive : 1;        /* response is just being transmitted */
+    117                  unsigned bTxFirst : 1;         /* first frame to be send out */
+    118                  unsigned bRxActive : 1;        /* just in the middle of receiving (fragmented) frame */
+    119                  unsigned bRxFirst : 1;         /* expecting the first frame (FST) */
+    120                  unsigned bRxTgl1 : 1;          /* expecting TGL=1 in next frame */
+    121                  unsigned bRxFrameReady : 1;    /* frame received (waiting to be handled in poll) */
+    122                  unsigned bRxSpecial : 1;       /* special command received (not passed to ProtocolDecode) */
+    123                  
+    124              } flg;
+    125              
+    126          } pcm_wFlags;
+    127          
+    128          /* receive and transmit buffers and counters */
+    129          static FMSTR_SIZE8 pcm_nTxTodo;        /* transmission to-do counter (0 when tx is idle) */
+    130          static FMSTR_BPTR  pcm_pTxBuff;        /* pointer to next byte to transmit */
+    131          static FMSTR_SIZE8 pcm_nRxCtr;         /* how many bytes received (total across all framgents) */
+    132          static FMSTR_BPTR  pcm_pRxBuff;        /* pointer to next free place in RX buffer */
+    133          static FMSTR_BCHR  pcm_nRxErr;         /* error raised during receive process */
+    134          static FMSTR_BCHR  pcm_nRxCheckSum;    /* checksum of data being received */
+    135          static FMSTR_U8    pcm_uTxCtlByte;
+    136          static FMSTR_U8    pcm_uTxFrmCtr;      /* TX CAN frame counter (within one FreeMASTER frame) */
+    137          
+    138          #if FMSTR_CAN_CMDID_DYNAMIC
+    139              static FMSTR_U8 pcm_cmdIdr[4] = 
+    140              { 
+    141                  FMSTR_CAN_MAKEIDR0(FMSTR_CAN_CMDID),
+    142                  FMSTR_CAN_MAKEIDR1(FMSTR_CAN_CMDID),
+    143                  FMSTR_CAN_MAKEIDR2(FMSTR_CAN_CMDID),
+    144                  FMSTR_CAN_MAKEIDR3(FMSTR_CAN_CMDID)
+    145              };
+    146              
+    147              #define FMSTR_CAN_CMDID_IDR0 pcm_cmdIdr[0]
+    148              #define FMSTR_CAN_CMDID_IDR1 pcm_cmdIdr[1]
+    149              #define FMSTR_CAN_CMDID_IDR2 pcm_cmdIdr[2]
+    150              #define FMSTR_CAN_CMDID_IDR3 pcm_cmdIdr[3]
+    151          #else
+    152              #define FMSTR_CAN_CMDID_IDR0 FMSTR_CAN_MAKEIDR0(FMSTR_CAN_CMDID)
+    153              #define FMSTR_CAN_CMDID_IDR1 FMSTR_CAN_MAKEIDR1(FMSTR_CAN_CMDID)
+    154              #define FMSTR_CAN_CMDID_IDR2 FMSTR_CAN_MAKEIDR2(FMSTR_CAN_CMDID)
+    155              #define FMSTR_CAN_CMDID_IDR3 FMSTR_CAN_MAKEIDR3(FMSTR_CAN_CMDID)
+    156          #endif
+    157          
+    158          #if FMSTR_CAN_RESPID_DYNAMIC
+    159              static FMSTR_U8 pcm_respIdr[4] = 
+    160              { 
+    161                  FMSTR_CAN_MAKEIDR0(FMSTR_CAN_CMDID),
+    162                  FMSTR_CAN_MAKEIDR1(FMSTR_CAN_CMDID),
+    163                  FMSTR_CAN_MAKEIDR2(FMSTR_CAN_CMDID),
+    164                  FMSTR_CAN_MAKEIDR3(FMSTR_CAN_CMDID)
+    165              };
+    166              
+    167              #define FMSTR_CAN_RESPID_IDR0 pcm_respIdr[0]
+    168              #define FMSTR_CAN_RESPID_IDR1 pcm_respIdr[1]
+    169              #define FMSTR_CAN_RESPID_IDR2 pcm_respIdr[2]
+    170              #define FMSTR_CAN_RESPID_IDR3 pcm_respIdr[3]
+    171          #else
+    172              #define FMSTR_CAN_RESPID_IDR0 FMSTR_CAN_MAKEIDR0(FMSTR_CAN_RESPID)
+    173              #define FMSTR_CAN_RESPID_IDR1 FMSTR_CAN_MAKEIDR1(FMSTR_CAN_RESPID)
+    174              #define FMSTR_CAN_RESPID_IDR2 FMSTR_CAN_MAKEIDR2(FMSTR_CAN_RESPID)
+    175              #define FMSTR_CAN_RESPID_IDR3 FMSTR_CAN_MAKEIDR3(FMSTR_CAN_RESPID)
+    176          #endif
+    177          
+    178          /***********************************
+    179          *  local function prototypes
+    180          ***********************************/
+    181          
+    182          static void FMSTR_Listen(void);
+    183          static void FMSTR_RxDone(void);
+    184          static void FMSTR_SendError(FMSTR_BCHR nErrCode);
+    185          
+    186          /**************************************************************************//*!
+    187          *
+    188          * @brief    CAN communication initialization
+    189          *
+    190          ******************************************************************************/
+    191          
+    192          void FMSTR_InitCan(void)
+    193          {   
+    194              /* initialize all state variables */
+    195              pcm_wFlags.all = 0U;
+    196              pcm_nTxTodo = 0U;
+    197          
+    198              /* configure CAN receiving (used by FlexCAN to setup MB) */
+    199              FMSTR_CAN_RINIT(FMSTR_CAN_CMDID_IDR0, FMSTR_CAN_CMDID_IDR1, \
+    200                              FMSTR_CAN_CMDID_IDR2, FMSTR_CAN_CMDID_IDR3);
+    201              
+    202              /* configure CAN transmitting (used by FlexCAN to setup MB) */
+    203              FMSTR_CAN_TINIT(FMSTR_CAN_CMDID_IDR0, FMSTR_CAN_CMDID_IDR1, \
+    204                              FMSTR_CAN_CMDID_IDR2, FMSTR_CAN_CMDID_IDR3);
+    205          
+    206              /* start listening for commands */
+    207              FMSTR_Listen();
+    208          }
+    209          
+    210          void FMSTR_SetCanCmdID(FMSTR_U32 canID)
+    211          {   
+    212          #if FMSTR_CAN_CMDID_DYNAMIC
+    213              pcm_cmdIdr[0] = FMSTR_CAN_MAKEIDR0(canID);
+    214              pcm_cmdIdr[1] = FMSTR_CAN_MAKEIDR1(canID);
+    215              pcm_cmdIdr[2] = FMSTR_CAN_MAKEIDR2(canID);
+    216              pcm_cmdIdr[3] = FMSTR_CAN_MAKEIDR3(canID);
+    217          #else
+    218              FMSTR_UNUSED(canID);    
+    219          #endif
+    220          }
+    221          
+    222          void FMSTR_SetCanRespID(FMSTR_U32 canID)
+    223          {   
+    224          #if FMSTR_CAN_RESPID_DYNAMIC
+    225              pcm_respIdr[0] = FMSTR_CAN_MAKEIDR0(canID);
+    226              pcm_respIdr[1] = FMSTR_CAN_MAKEIDR1(canID);
+    227              pcm_respIdr[2] = FMSTR_CAN_MAKEIDR2(canID);
+    228              pcm_respIdr[3] = FMSTR_CAN_MAKEIDR3(canID);
+    229          #else
+    230              FMSTR_UNUSED(canID);    
+    231          #endif
+    232          }
+    233          
+    234          /**************************************************************************//*!
+    235          *
+    236          * @brief    Start listening on a CAN bus
+    237          *
+    238          ******************************************************************************/
+    239          
+    240          static void FMSTR_Listen(void)
+    241          {
+    242              /* disable transmitter state machine */
+    243              pcm_wFlags.flg.bTxActive = 0U;
+    244              
+    245              /* wait for first frame */
+    246              pcm_wFlags.flg.bRxFrameReady = 0U;
+    247              pcm_wFlags.flg.bRxFirst = 1U;
+    248              pcm_wFlags.flg.bRxActive = 1U;
+    249          
+    250              /* enable CAN receiving */
+    251              FMSTR_CAN_RCFG();
+    252              
+    253          #if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
+    254              FMSTR_CAN_ERXI();
+    255          #endif
+    256          }
+    257          
+    258          /**************************************************************************//*!
+    259          *
+    260          * @brief    Send response of given error code (no data) 
+    261          *
+    262          * @param    nErrCode - error code to be sent
+    263          *
+    264          ******************************************************************************/
+    265          
+    266          static void FMSTR_SendError(FMSTR_BCHR nErrCode)
+    267          {
+    268              /* fill & send single-byte response */
+    269              *pcm_pCommBuffer = nErrCode;
+    270              FMSTR_SendResponse(pcm_pCommBuffer, 1U);
+    271          }
+    272          
+    273          /**************************************************************************//*!
+    274          *
+    275          * @brief    Finalize transmit buffer before transmitting 
+    276          *
+    277          * @param    nLength - response length (1 for status + data length)
+    278          *
+    279          *
+    280          * This Function takes the data already prepared in the transmit buffer 
+    281          * (inlcuding the status byte). It computes the check sum and kicks on tx.
+    282          *
+    283          ******************************************************************************/
+    284          
+    285          void FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE8 nLength)
+    286          {
+    287              FMSTR_U16 chSum = 0U;
+    288              FMSTR_U8 i, c;
+    289          
+    290              /* remeber the buffer to be sent */
+    291              pcm_pTxBuff = pResponse;
+    292              
+    293              /* status byte and data are already there, compute checksum only     */
+    294              for (i=0U; i<nLength; i++)
+    295              {
+    296                  c = 0U;
+    297                  pResponse = FMSTR_ValueFromBuffer8(&c, pResponse);
+    298                  /* add character to checksum */
+    299                  chSum += c;
+    300                  /* prevent saturation to happen on DSP platforms */
+    301                  chSum &= 0xffU;
+    302              }
+    303              
+    304              /* store checksum after the message */
+    305              pResponse = FMSTR_ValueToBuffer8(pResponse, (FMSTR_U8) (((FMSTR_U16)~(chSum)) + 1U));
+    306          
+    307              /* send the message and the checksum */
+    308              pcm_nTxTodo = (FMSTR_SIZE8) (nLength + 1U); 
+    309          
+    310              /* now transmitting the response */
+    311              pcm_wFlags.flg.bTxActive = 1U;
+    312              pcm_wFlags.flg.bTxFirst = 1U;
+    313          
+    314              /* enable TX interrupt */
+    315          #if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
+    316              FMSTR_CAN_ETXI();
+    317          #endif
+    318          #if (FMSTR_SHORT_INTR) && (FMSTR_USE_FLEXCAN)
+    319              FMSTR_ProcessCanTx();
+    320          #endif
+    321          }
+    322          
+    323          /**************************************************************************//*!
+    324          *
+    325          * @brief Send one CAN frame if needed
+    326          *
+    327          * @return TRUE if frame was actually filled to a buffer and submitted for send
+    328          *
+    329          * This function is called internally by our interupt handler or poll routine.
+    330          * User may also decide to use FMSTR_CAN_PASSIVE_SW so it is then his responsibility
+    331          * to call us when a frame can be send.
+    332          *
+    333          ******************************************************************************/
+    334          
+    335          FMSTR_BOOL FMSTR_TxCan(void)
+    336          {
+    337              FMSTR_U8 ch;
+    338              FMSTR_CAN_TCTX tctx;
+    339              FMSTR_SIZE8 len = pcm_nTxTodo;
+    340              
+    341              if(!pcm_wFlags.flg.bTxActive || !pcm_nTxTodo)
+    342                  return FMSTR_FALSE;
+    343          
+    344              if(len > 7)
+    345                  len = 7;
+    346              
+    347              /* first byte is control */
+    348              if(pcm_wFlags.flg.bTxFirst)
+    349              {
+    350                  /* the first frame and the lenght*/
+    351                  pcm_uTxCtlByte = (FMSTR_U8) (FMSTR_CANCTL_FST | len);
+    352                  pcm_uTxFrmCtr = 0U;
+    353                  pcm_wFlags.flg.bTxFirst = 0U;
+    354              }
+    355              else
+    356              {
+    357                  /* the next frame */
+    358                  pcm_uTxCtlByte &= ~(FMSTR_CANCTL_FST | FMSTR_CANCTL_LEN_MASK);
+    359                  pcm_uTxCtlByte ^= FMSTR_CANCTL_TGL;
+    360                  pcm_uTxCtlByte |= len;
+    361                  pcm_uTxFrmCtr++;
+    362              }
+    363              
+    364              /* prepare transmit buffer */
+    365              FMSTR_CAN_TCFG(&tctx);
+    366              
+    367              /* set transmit priority and ID */
+    368              FMSTR_CAN_TPRI(&tctx, pcm_uTxFrmCtr);
+    369              FMSTR_CAN_TID(&tctx, FMSTR_CAN_RESPID_IDR0,
+    370                  FMSTR_CAN_RESPID_IDR1, FMSTR_CAN_RESPID_IDR2, FMSTR_CAN_RESPID_IDR3);
+    371              
+    372              /* is it the last frame? */
+    373              pcm_nTxTodo -= len;
+    374              if(!pcm_nTxTodo)
+    375                  pcm_uTxCtlByte |= FMSTR_CANCTL_LST; 
+    376              
+    377              /* set frame len */
+    378              FMSTR_CAN_TLEN(&tctx, (FMSTR_U8) (len+1));
+    379              
+    380              /* put control byte */
+    381              FMSTR_CAN_PUTBYTE(&tctx, pcm_uTxCtlByte);
+    382              
+    383              /* put data part */
+    384              while(len--)
+    385              {
+    386                  pcm_pTxBuff = FMSTR_ValueFromBuffer8(&ch, pcm_pTxBuff);
+    387                  FMSTR_CAN_PUTBYTE(&tctx, ch);
+    388              }
+    389          
+    390              /* submit frame for transmission */
+    391              FMSTR_CAN_TX(&tctx);
+    392          
+    393              /* if the full frame is safe in tx buffer(s), release the received command */
+    394              if(!pcm_nTxTodo)
+    395              {
+    396                  /* no more transmitting */        
+    397                  pcm_wFlags.flg.bTxActive = 0U;
+    398                  
+    399                  /* start listening immediatelly (also frees the last received frame) */
+    400                  FMSTR_Listen();
+    401              }
+    402          
+    403              /* returning TRUE, frame was sent */
+    404              return FMSTR_TRUE;
+    405          }
+    406          
+    407          
+    408          /**************************************************************************//*!
+    409          *
+    410          * @brief  Handle received CAN frame
+    411          *
+    412          * @return TRUE if this frame was handled by us (ID matched) 
+    413          * 
+    414          ******************************************************************************/
+    415          
+    416          FMSTR_BOOL FMSTR_RxCan(void)
+    417          {
+    418              FMSTR_CAN_RCTX rctx;
+    419              FMSTR_SIZE8 len;
+    420              FMSTR_U8 ctl, ch;
+    421              
+    422              if(!pcm_wFlags.flg.bRxActive)
+    423                  return FMSTR_FALSE;
+    424              
+    425              /* last FreeMASTER frame not yet handled */
+    426              if(pcm_wFlags.flg.bRxFrameReady)
+    427                  return FMSTR_FALSE;
+    428                  
+    429              /* get the frame */
+    430              FMSTR_CAN_RX(&rctx);
+    431              
+    432              /* test message ID is it matches the CMDID */
+    433              if(!FMSTR_CAN_TEST_RIDR(&rctx, FMSTR_CAN_CMDID_IDR0, FMSTR_CAN_CMDID_IDR1, 
+    434                  FMSTR_CAN_CMDID_IDR2, FMSTR_CAN_CMDID_IDR3))
+    435              {
+    436                  FMSTR_CAN_RFINISH(&rctx);
+    437                  return FMSTR_FALSE;
+    438              }
+    439              
+    440              /* get the first (control) byte */
+    441              ctl = FMSTR_CAN_GETBYTE(&rctx);
+    442              
+    443              /* should be master-to-slave (otherwise perhaps a self-received frame) */
+    444              if(!(ctl & FMSTR_CANCTL_M2S))
+    445                  goto frame_contd;
+    446              
+    447              /* first frame resets the state machine */
+    448              if((ctl & FMSTR_CANCTL_FST) || pcm_wFlags.flg.bRxFirst)
+    449              {
+    450                  if(!(ctl & FMSTR_CANCTL_FST) || /* must be the first frame! */
+    451                      (ctl & FMSTR_CANCTL_TGL))   /* TGL must be zero! */
+    452                  {
+    453                      /* frame is ours, but we ignore it */
+    454                      goto frame_contd;
+    455                  }
+    456                  
+    457                  /* now receive the rest of bigger FreeMASTER frame */
+    458                  pcm_wFlags.flg.bRxFirst = 0U;
+    459                  pcm_wFlags.flg.bRxTgl1 = 1U;
+    460                  
+    461                  /* special command? */
+    462                  if(ctl & FMSTR_CANCTL_SPC)
+    463                      pcm_wFlags.flg.bRxSpecial = 1U;
+    464                  else
+    465                      pcm_wFlags.flg.bRxSpecial = 0U;
+    466                  
+    467                  /* start receiving the frame */
+    468                  pcm_pRxBuff = pcm_pCommBuffer;
+    469                  pcm_nRxCheckSum = 0;
+    470                  pcm_nRxCtr = 0;
+    471                  pcm_nRxErr = 0;
+    472              }
+    473              else
+    474              {
+    475                  /* toggle bit should match */
+    476                  if((pcm_wFlags.flg.bRxTgl1 && !(ctl & FMSTR_CANCTL_TGL)) ||
+    477                     (!pcm_wFlags.flg.bRxTgl1 && (ctl & FMSTR_CANCTL_TGL)))
+    478                  {
+    479                      /* invalid sequence detected */
+    480                      pcm_nRxErr = FMSTR_STC_CANTGLERR;
+    481                      goto frame_done;
+    482                  }
+    483                  
+    484                  /* expect next frame toggled again */
+    485                  pcm_wFlags.flg.bRxTgl1 ^= 1U;
+    486              }
+    487              
+    488              /* frame is valid, get the data */
+    489              len = (FMSTR_SIZE8) (ctl & FMSTR_CANCTL_LEN_MASK);
+    490              
+    491              /* sanity check of the len field */
+    492              if(len >= FMSTR_CAN_RLEN(&rctx))
+    493              {
+    494                  /* invalid frame length, re-start receiving */
+    495                  pcm_nRxErr = FMSTR_STC_CANMSGERR;
+    496                  goto frame_done;
+    497              }        
+    498              
+    499              /* will data fit? */
+    500              if((pcm_nRxCtr+len) > FMSTR_COMM_BUFFER_SIZE)
+    501              {
+    502                  /* this frame must be ignored, start receiving again */
+    503                  pcm_nRxErr = FMSTR_STC_CANMSGERR;
+    504                  goto frame_done;
+    505              }
+    506          
+    507              /* okay, receive all data bytes */
+    508              pcm_nRxCtr += len;
+    509              while(len--)
+    510              {
+    511                  ch = FMSTR_CAN_GETBYTE(&rctx);
+    512                  pcm_pRxBuff = FMSTR_ValueToBuffer8(pcm_pRxBuff, ch);
+    513                  pcm_nRxCheckSum += ch;
+    514              }
+    515          
+    516              /* was it the last frame? */    
+    517              if(!(ctl & FMSTR_CANCTL_LST))
+    518                  goto frame_contd;
+    519              
+    520              /* done with the FreeMASTER frame, it will be handled later in RxDone */
+    521          frame_done:
+    522              /* disable receiver so it does not corrupt the frame until it is handled */
+    523              pcm_wFlags.flg.bRxActive = 0;
+    524              /* frame received. Checksum and frame will be checked later in RxDone */
+    525              pcm_wFlags.flg.bRxFrameReady = 1U;
+    526              
+    527              /* frame will continue by next chunk next time */
+    528          frame_contd:
+    529              FMSTR_CAN_RFINISH(&rctx);
+    530              return FMSTR_TRUE;
+    531          }
+    532          
+    533          /**************************************************************************//*!
+    534          *
+    535          * @brief  Handle received FreeMASTER frame
+    536          *
+    537          ******************************************************************************/
+    538          
+    539          static void FMSTR_RxDone(void)
+    540          {
+    541              /* frame really here? */
+    542              if(!pcm_wFlags.flg.bRxFrameReady)
+    543                  return ;
+    544              
+    545              /* acknowledge the flag, we're going to process the frame now */
+    546              pcm_wFlags.flg.bRxFrameReady = 0U;
+    547          
+    548              /* any fragmenatation error detected during the receive process? */
+    549              if(!pcm_nRxErr)
+    550              {
+    551                  /* check for our standard frame errors */
+    552                  
+    553                  /* checksum should be zero */
+    554                  if(pcm_nRxCheckSum)
+    555                  {
+    556                      pcm_nRxErr = FMSTR_STC_CMDCSERR;
+    557                  }
+    558                  /* checksum okay, check frame lenght */
+    559                  else
+    560                  {
+    561                      FMSTR_BPTR pFrame = pcm_pCommBuffer;
+    562                      FMSTR_BCHR len;
+    563                  
+    564                      pFrame = FMSTR_ValueFromBuffer8(&len, pFrame);
+    565              
+    566                      /* fast command? */
+    567                      if((len & FMSTR_FASTCMD) == FMSTR_FASTCMD)
+    568                      {
+    569                          /* get length */
+    570                          len = (FMSTR_BCHR)((len & FMSTR_FASTCMD_DATALEN_MASK) >> FMSTR_FASTCMD_DATALEN_SHIFT);
+    571                          
+    572                          /* add command-byte and checksum (are included in the nRxCtr) */
+    573                          len += 2;
+    574                      }
+    575                      /* std command */
+    576                      else
+    577                      {
+    578                          /* get length */
+    579                          pFrame = FMSTR_ValueFromBuffer8(&len, pFrame);
+    580          
+    581                          /* add command-byte, lenght and checksum (are included in the nRxCtr) */
+    582                          len += 3;
+    583                      }
+    584                      
+    585                      /* now the len received should match the data bytes received */
+    586                      if(pcm_nRxCtr != len)
+    587                          pcm_nRxErr = FMSTR_STC_CMDCSERR;
+    588                  }
+    589              }        
+    590          
+    591              /* any error? */
+    592              if(pcm_nRxErr)
+    593              {
+    594                  FMSTR_SendError(FMSTR_STC_CMDCSERR);
+    595              }
+    596              /* no error */
+    597              else 
+    598              {
+    599                  /* special CAN command? for our layer */
+    600                  if(pcm_wFlags.flg.bRxSpecial)
+    601                  {
+    602                      FMSTR_BPTR pFrame = pcm_pCommBuffer;
+    603                      FMSTR_BCHR c;
+    604          
+    605                      /* get the command */            
+    606                      FMSTR_ValueFromBuffer8(&c, pFrame);
+    607                      
+    608                      switch(c)
+    609                      {
+    610                      case FMSTR_CANSPC_PING:
+    611                          FMSTR_SendError(FMSTR_STS_OK);
+    612                          break;
+    613                      
+    614                      default:
+    615                          /* unknown command */
+    616                          FMSTR_SendError(FMSTR_STC_INVCMD);
+    617                      }
+    618                  }
+    619                  /* standard FreeMASTER command to be passed above */
+    620                  else
+    621                  {
+    622                      /* decode and handle frame by SCI classic driver */
+    623                      if(!FMSTR_ProtocolDecoder(pcm_pCommBuffer))
+    624                      {
+    625                          /* if no response was generated, start listening again, otherwise, 
+    626                             the receive will be initiated after transmission  is complete in 
+    627                             FMSTR_TxCan (this prevents our TX buffer to be corrupted by RX) */
+    628                          FMSTR_Listen();  
+    629                      }
+    630                  }
+    631              }
+    632          }
+    633          
+    634          /**************************************************************************//*!
+    635          *
+    636          * @brief    Handle CAN communication
+    637          *
+    638          * @note This function can be called either from CAN ISRs or from the polling routine
+    639          *
+    640          ******************************************************************************/
+    641          
+    642          void FMSTR_ProcessCanRx(void)
+    643          {
+    644              if(FMSTR_CAN_TEST_RXFLG())
+    645              {
+    646                  /* process the CAN frame */ 
+    647                  FMSTR_RxCan();
+    648                  
+    649                  /* CAN frame handled, release the flag */
+    650                  FMSTR_CAN_CLEAR_RXFLG();
+    651                      
+    652          #if FMSTR_LONG_INTR
+    653                  /* handle completed frame now? (may be we're in the interrupt) */
+    654                  if(pcm_wFlags.flg.bRxFrameReady)
+    655                      FMSTR_RxDone();
+    656          #endif
+    657              }    
+    658          }
+    659          
+    660          /**************************************************************************//*!
+    661          *
+    662          * @brief    Handle CAN communication
+    663          *
+    664          * @note This function can be called either from CAN ISRs or from the polling routine
+    665          *
+    666          ******************************************************************************/
+    667          
+    668          void FMSTR_ProcessCanTx(void)
+    669          {
+    670          #if FMSTR_USE_MSCAN
+    671              /* any TX buffer available? */
+    672              if(FMSTR_CAN_TEST_TXFLG())
+    673              {
+    674          #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+    675                  /* send one CAN frame (fills buffer and clears its TXFLG */
+    676                  if(!FMSTR_TxCan())
+    677                  {
+    678                      /* no more frames, disable TX Interrupt */
+    679                      FMSTR_CAN_DTXI();
+    680                  }
+    681          #else
+    682                  /* send if you have anything to be sent */
+    683                  FMSTR_TxCan();
+    684          #endif        
+    685              }
+    686          #elif FMSTR_USE_FLEXCAN
+    687          
+    688              /* is TX buffer ready for next packet? */
+    689              if((FMSTR_CAN_GET_MBSTATUS()) == FMSTR_FCANMB_CTXREADY)
+    690              {
+    691          #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+    692                  /* send one CAN frame (fills buffer and clears its TXFLG */
+    693                  if(!FMSTR_TxCan())
+    694                  {
+    695                      /* no more frames, disable TX Interrupt */
+    696                      FMSTR_CAN_DTXI();
+    697                  }
+    698          #else
+    699                  /* send if you have anything to be sent */
+    700                  FMSTR_TxCan();
+    701          #endif        
+    702              }
+    703          
+    704          
+    705          #endif
+    706          
+    707          
+    708          
+    709          }
+    710          
+    711          /*******************************************************************************
+    712          *
+    713          * @brief    API: Main "Polling" call from the application main loop
+    714          *
+    715          *******************************************************************************/
+    716          
+    717          void FMSTR_Poll(void)
+    718          { 
+    719              /* handle the physical CAN module */    
+    720          #if FMSTR_POLL_DRIVEN
+    721              FMSTR_ProcessCanRx();
+    722              FMSTR_ProcessCanTx();
+    723          #endif
+    724              
+    725          #if FMSTR_POLL_DRIVEN || FMSTR_SHORT_INTR
+    726          
+    727              /* except in the LONG_INTR mode, the frame gets handled here */
+    728              if(pcm_wFlags.flg.bRxFrameReady)
+    729                  FMSTR_RxDone();
+    730            
+    731          #endif
+    732          }
+    733          
+    734          #endif /* FMSTR_USE_CAN */
+    735          
+
+
+ 
+
+ 
+
+
+Errors: none
+Warnings: none

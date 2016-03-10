@@ -1,0 +1,1079 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:29
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\dma\dma.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\dma\dma.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\dma.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\dma.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\dma\dma.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      dma.c
+      6           * @version   1.0.1.0
+      7           * @date      Aug-14-2012
+      8           * @brief     Direct Memory Access (DMA) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "dma.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static DMA_CH_CALLBACK pCallbackDMA0=NULL;
+   \                     pCallbackDMA0:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     17          static DMA_CH_CALLBACK pCallbackDMA1=NULL;
+   \                     pCallbackDMA1:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     18          static DMA_CH_CALLBACK pCallbackDMA2=NULL;
+   \                     pCallbackDMA2:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     19          static DMA_CH_CALLBACK pCallbackDMA3=NULL;
+   \                     pCallbackDMA3:
+   \   00000000                      DS8 4
+     20          
+     21          /******************************************************************************
+     22           * interrupt functions prototype                                              *
+     23           ******************************************************************************/
+     24          void DMA0_isr (void);
+     25          void DMA1_isr (void);
+     26          void DMA2_isr (void);
+     27          void DMA3_isr (void);
+     28          
+     29          /******************************************************************************
+     30           * Public function definitions                                                *
+     31           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     32          void DMA_InstallCallbackDMA0 (uint8 ip, DMA_CH_CALLBACK pCallback)
+     33          {
+     34            if (pCallback != NULL) { pCallbackDMA0=pCallback; NVIC_SetIsr(INT_DMA0,ip); }  
+   \                     DMA_InstallCallbackDMA0: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD00F             BEQ      ??DMA_InstallCallbackDMA0_0
+   \   00000004   0x....             LDR      R2,??DataTable7
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+   \   00000008   0x2101             MOVS     R1,#+1
+   \   0000000A   0x....             LDR      R2,??DataTable8  ;; 0xe000e280
+   \   0000000C   0x6813             LDR      R3,[R2, #+0]
+   \   0000000E   0x430B             ORRS     R3,R3,R1
+   \   00000010   0x6013             STR      R3,[R2, #+0]
+   \   00000012   0x....             LDR      R2,??DataTable8_1  ;; 0xe000e100
+   \   00000014   0x6813             LDR      R3,[R2, #+0]
+   \   00000016   0x4319             ORRS     R1,R1,R3
+   \   00000018   0x6011             STR      R1,[R2, #+0]
+   \   0000001A   0x....             LDR      R1,??DataTable10  ;; 0xe000e400
+   \   0000001C   0x680A             LDR      R2,[R1, #+0]
+   \   0000001E   0x0180             LSLS     R0,R0,#+6
+   \   00000020   0x4310             ORRS     R0,R0,R2
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+     35          }
+   \                     ??DMA_InstallCallbackDMA0_0: (+1)
+   \   00000024   0x4770             BX       LR               ;; return
+     36          
+
+   \                                 In section .text, align 2, keep-with-next
+     37          void DMA_InstallCallbackDMA1 (uint8 ip, DMA_CH_CALLBACK pCallback)
+     38          {
+     39            if (pCallback != NULL) { pCallbackDMA1=pCallback; NVIC_SetIsr(INT_DMA1,ip); }  
+   \                     DMA_InstallCallbackDMA1: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD00F             BEQ      ??DMA_InstallCallbackDMA1_0
+   \   00000004   0x....             LDR      R2,??DataTable8_2
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+   \   00000008   0x2102             MOVS     R1,#+2
+   \   0000000A   0x....             LDR      R2,??DataTable8  ;; 0xe000e280
+   \   0000000C   0x6813             LDR      R3,[R2, #+0]
+   \   0000000E   0x430B             ORRS     R3,R3,R1
+   \   00000010   0x6013             STR      R3,[R2, #+0]
+   \   00000012   0x....             LDR      R2,??DataTable8_1  ;; 0xe000e100
+   \   00000014   0x6813             LDR      R3,[R2, #+0]
+   \   00000016   0x4319             ORRS     R1,R1,R3
+   \   00000018   0x6011             STR      R1,[R2, #+0]
+   \   0000001A   0x....             LDR      R1,??DataTable10  ;; 0xe000e400
+   \   0000001C   0x680A             LDR      R2,[R1, #+0]
+   \   0000001E   0x0380             LSLS     R0,R0,#+14
+   \   00000020   0x4310             ORRS     R0,R0,R2
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+     40          }
+   \                     ??DMA_InstallCallbackDMA1_0: (+1)
+   \   00000024   0x4770             BX       LR               ;; return
+     41          
+
+   \                                 In section .text, align 2, keep-with-next
+     42          void DMA_InstallCallbackDMA2 (uint8 ip, DMA_CH_CALLBACK pCallback)
+     43          {
+     44            if (pCallback != NULL) { pCallbackDMA2=pCallback; NVIC_SetIsr(INT_DMA2,ip); }  
+   \                     DMA_InstallCallbackDMA2: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD00F             BEQ      ??DMA_InstallCallbackDMA2_0
+   \   00000004   0x....             LDR      R2,??DataTable8_3
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+   \   00000008   0x2104             MOVS     R1,#+4
+   \   0000000A   0x....             LDR      R2,??DataTable8  ;; 0xe000e280
+   \   0000000C   0x6813             LDR      R3,[R2, #+0]
+   \   0000000E   0x430B             ORRS     R3,R3,R1
+   \   00000010   0x6013             STR      R3,[R2, #+0]
+   \   00000012   0x....             LDR      R2,??DataTable8_1  ;; 0xe000e100
+   \   00000014   0x6813             LDR      R3,[R2, #+0]
+   \   00000016   0x4319             ORRS     R1,R1,R3
+   \   00000018   0x6011             STR      R1,[R2, #+0]
+   \   0000001A   0x....             LDR      R1,??DataTable10  ;; 0xe000e400
+   \   0000001C   0x680A             LDR      R2,[R1, #+0]
+   \   0000001E   0x0580             LSLS     R0,R0,#+22
+   \   00000020   0x4310             ORRS     R0,R0,R2
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+     45          }
+   \                     ??DMA_InstallCallbackDMA2_0: (+1)
+   \   00000024   0x4770             BX       LR               ;; return
+     46          
+
+   \                                 In section .text, align 2, keep-with-next
+     47          void DMA_InstallCallbackDMA3 (uint8 ip, DMA_CH_CALLBACK pCallback)
+     48          {
+     49            if (pCallback != NULL) { pCallbackDMA3=pCallback; NVIC_SetIsr(INT_DMA3,ip); }  
+   \                     DMA_InstallCallbackDMA3: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD00F             BEQ      ??DMA_InstallCallbackDMA3_0
+   \   00000004   0x....             LDR      R2,??DataTable9
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+   \   00000008   0x2108             MOVS     R1,#+8
+   \   0000000A   0x....             LDR      R2,??DataTable8  ;; 0xe000e280
+   \   0000000C   0x6813             LDR      R3,[R2, #+0]
+   \   0000000E   0x430B             ORRS     R3,R3,R1
+   \   00000010   0x6013             STR      R3,[R2, #+0]
+   \   00000012   0x....             LDR      R2,??DataTable8_1  ;; 0xe000e100
+   \   00000014   0x6813             LDR      R3,[R2, #+0]
+   \   00000016   0x4319             ORRS     R1,R1,R3
+   \   00000018   0x6011             STR      R1,[R2, #+0]
+   \   0000001A   0x....             LDR      R1,??DataTable10  ;; 0xe000e400
+   \   0000001C   0x680A             LDR      R2,[R1, #+0]
+   \   0000001E   0x0780             LSLS     R0,R0,#+30
+   \   00000020   0x4310             ORRS     R0,R0,R2
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+     50          }
+   \                     ??DMA_InstallCallbackDMA3_0: (+1)
+   \   00000024   0x4770             BX       LR               ;; return
+     51          
+
+   \                                 In section .text, align 2, keep-with-next
+     52          void DMA0_Init(tDMA_CH dma)
+     53          {
+   \                     DMA0_Init: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+     54            if (pCallbackDMA0 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable7
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA0_Init_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+     55            DMA_DSR_BCR0 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA0_Init_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable10_1  ;; 0x40008100
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+     56            DMA_DCR0     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+     57            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+     58            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX0_CHCFG = 0x00;             } 
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA0_Init_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable12  ;; 0x40021000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+     59            DMA_SAR0      = dma.SAR;
+   \                     ??DMA0_Init_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+     60            DMA_DAR0      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+     61            DMA_DSR_BCR0  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+     62            DMA_DCR0      = dma.DCR;
+   \   00000046   0x60C2             STR      R2,[R0, #+12]
+     63            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+     64            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX0_CHCFG = (uint8)dma.CHCFG; }
+   \   00000048   0x....             B.N      ?Subroutine0
+     65          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine0: (+1)
+   \   00000000   0x4011             ANDS     R1,R1,R2
+   \   00000002   0xD002             BEQ      ??Subroutine0_0
+   \   00000004   0x9802             LDR      R0,[SP, #+8]
+   \   00000006   0x....             LDR      R1,??DataTable12  ;; 0x40021000
+   \   00000008   0x7008             STRB     R0,[R1, #+0]
+   \                     ??Subroutine0_0: (+1)
+   \   0000000A   0xBC11             POP      {R0,R4}
+   \   0000000C   0xB004             ADD      SP,SP,#+16
+   \   0000000E   0x4770             BX       LR               ;; return
+     66          
+
+   \                                 In section .text, align 2, keep-with-next
+     67          void DMA1_Init(tDMA_CH dma)
+     68          {
+   \                     DMA1_Init: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+     69            if (pCallbackDMA1 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable8_2
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA1_Init_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+     70            DMA_DSR_BCR1 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA1_Init_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable10_3  ;; 0x40008110
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+     71            DMA_DCR1     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+     72            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+     73            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX1_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA1_Init_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13  ;; 0x40022000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+     74            DMA_SAR1      = dma.SAR;
+   \                     ??DMA1_Init_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+     75            DMA_DAR1      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+     76            DMA_DSR_BCR1  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+     77            DMA_DCR1      = dma.DCR;    
+   \   00000046   0x60C2             STR      R2,[R0, #+12]
+     78            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+     79            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX1_CHCFG = (uint8)dma.CHCFG; }
+   \   00000048   0x4011             ANDS     R1,R1,R2
+   \   0000004A   0xD002             BEQ      ??DMA1_Init_2
+   \   0000004C   0x9802             LDR      R0,[SP, #+8]
+   \   0000004E   0x....             LDR      R1,??DataTable13  ;; 0x40022000
+   \   00000050   0x7008             STRB     R0,[R1, #+0]
+     80          }
+   \                     ??DMA1_Init_2: (+1)
+   \   00000052   0x....             B.N      ??Subroutine0_0
+     81          
+
+   \                                 In section .text, align 2, keep-with-next
+     82          void DMA2_Init(tDMA_CH dma)
+     83          {
+   \                     DMA2_Init: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+     84            if (pCallbackDMA2 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable8_3
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA2_Init_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+     85            DMA_DSR_BCR2 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA2_Init_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable12_1  ;; 0x40008120
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+     86            DMA_DCR2     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+     87            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+     88            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX2_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA2_Init_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13_1  ;; 0x40023000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+     89            DMA_SAR2      = dma.SAR;
+   \                     ??DMA2_Init_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+     90            DMA_DAR2      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+     91            DMA_DSR_BCR2  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+     92            DMA_DCR2      = dma.DCR;
+   \   00000046   0x60C2             STR      R2,[R0, #+12]
+     93            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+     94            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX2_CHCFG = (uint8)dma.CHCFG; }
+   \   00000048   0x4011             ANDS     R1,R1,R2
+   \   0000004A   0xD002             BEQ      ??DMA2_Init_2
+   \   0000004C   0x9802             LDR      R0,[SP, #+8]
+   \   0000004E   0x....             LDR      R1,??DataTable13_1  ;; 0x40023000
+   \   00000050   0x7008             STRB     R0,[R1, #+0]
+     95          }
+   \                     ??DMA2_Init_2: (+1)
+   \   00000052   0x....             B.N      ??Subroutine0_0
+     96          
+
+   \                                 In section .text, align 2, keep-with-next
+     97          void DMA3_Init(tDMA_CH dma)
+     98          {
+   \                     DMA3_Init: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+     99            if (pCallbackDMA3 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable9
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA3_Init_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+    100            DMA_DSR_BCR3 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA3_Init_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable13_2  ;; 0x40008130
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+    101            DMA_DCR3     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+    102            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+    103            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX3_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA3_Init_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13_3  ;; 0x40024000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+    104            DMA_SAR3      = dma.SAR;
+   \                     ??DMA3_Init_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+    105            DMA_DAR3      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+    106            DMA_DSR_BCR3  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+    107            DMA_DCR3      = dma.DCR;
+   \   00000046   0x60C2             STR      R2,[R0, #+12]
+    108            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */  
+    109            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX3_CHCFG = (uint8)dma.CHCFG; }
+   \   00000048   0x4011             ANDS     R1,R1,R2
+   \   0000004A   0xD002             BEQ      ??DMA3_Init_2
+   \   0000004C   0x9802             LDR      R0,[SP, #+8]
+   \   0000004E   0x....             LDR      R1,??DataTable13_3  ;; 0x40024000
+   \   00000050   0x7008             STRB     R0,[R1, #+0]
+    110          }
+   \                     ??DMA3_Init_2: (+1)
+   \   00000052   0x....             B.N      ??Subroutine0_0
+    111          
+
+   \                                 In section .text, align 2, keep-with-next
+    112          void DMA0_AdvInit(tDMA_CH dma, uint8 chacr, uint8 umnsm)
+    113          {
+   \                     DMA0_AdvInit: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+    114            if (pCallbackDMA0 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable13_4
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA0_AdvInit_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+    115            DMA_DSR_BCR0 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA0_AdvInit_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable10_1  ;; 0x40008100
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+    116            DMA_DCR0     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+    117            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+    118            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX0_CHCFG = 0x00;             } 
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA0_AdvInit_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable12  ;; 0x40021000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+    119            DMA_SAR0      = dma.SAR;
+   \                     ??DMA0_AdvInit_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+    120            DMA_DAR0      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+    121            DMA_DSR_BCR0  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+    122            DMA_DCR0 = dma.DCR|(chacr<<DMA_DCR_CHACR_SHIFT)|(umnsm<<DMA_DCR_UMNSM_SHIFT);
+   \   00000046   0x9B07             LDR      R3,[SP, #+28]
+   \   00000048   0x069B             LSLS     R3,R3,#+26
+   \   0000004A   0x4313             ORRS     R3,R3,R2
+   \   0000004C   0x9C08             LDR      R4,[SP, #+32]
+   \   0000004E   0x0624             LSLS     R4,R4,#+24
+   \   00000050   0x431C             ORRS     R4,R4,R3
+   \   00000052   0x60C4             STR      R4,[R0, #+12]
+    123            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+    124            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX0_CHCFG = (uint8)dma.CHCFG; }
+   \   00000054                      REQUIRE ?Subroutine0
+   \   00000054                      ;; // Fall through to label ?Subroutine0
+    125          }
+    126          
+
+   \                                 In section .text, align 2, keep-with-next
+    127          void DMA1_AdvInit(tDMA_CH dma, uint8 chacr, uint8 umnsm)
+    128          {
+   \                     DMA1_AdvInit: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+    129            if (pCallbackDMA1 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable13_5
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA1_AdvInit_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+    130            DMA_DSR_BCR1 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA1_AdvInit_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable10_3  ;; 0x40008110
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+    131            DMA_DCR1     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+    132            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+    133            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX1_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA1_AdvInit_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13  ;; 0x40022000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+    134            DMA_SAR1      = dma.SAR;
+   \                     ??DMA1_AdvInit_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+    135            DMA_DAR1      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+    136            DMA_DSR_BCR1  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+    137            DMA_DCR1 = dma.DCR|(chacr<<DMA_DCR_CHACR_SHIFT)|(umnsm<<DMA_DCR_UMNSM_SHIFT);
+   \   00000046   0x9B07             LDR      R3,[SP, #+28]
+   \   00000048   0x069B             LSLS     R3,R3,#+26
+   \   0000004A   0x4313             ORRS     R3,R3,R2
+   \   0000004C   0x9C08             LDR      R4,[SP, #+32]
+   \   0000004E   0x0624             LSLS     R4,R4,#+24
+   \   00000050   0x431C             ORRS     R4,R4,R3
+   \   00000052   0x60C4             STR      R4,[R0, #+12]
+    138            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+    139            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX1_CHCFG = (uint8)dma.CHCFG; }
+   \   00000054   0x4011             ANDS     R1,R1,R2
+   \   00000056   0xD002             BEQ      ??DMA1_AdvInit_2
+   \   00000058   0x9802             LDR      R0,[SP, #+8]
+   \   0000005A   0x....             LDR      R1,??DataTable13  ;; 0x40022000
+   \   0000005C   0x7008             STRB     R0,[R1, #+0]
+    140          }
+   \                     ??DMA1_AdvInit_2: (+1)
+   \   0000005E   0x....             B.N      ??Subroutine0_0
+    141          
+
+   \                                 In section .text, align 2, keep-with-next
+    142          void DMA2_AdvInit(tDMA_CH dma, uint8 chacr, uint8 umnsm)
+    143          {
+   \                     DMA2_AdvInit: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+    144            if (pCallbackDMA2 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable13_6
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA2_AdvInit_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+    145            DMA_DSR_BCR2 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA2_AdvInit_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable12_1  ;; 0x40008120
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+    146            DMA_DCR2     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable10_2  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+    147            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+    148            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX2_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA2_AdvInit_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13_1  ;; 0x40023000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+    149            DMA_SAR2      = dma.SAR;
+   \                     ??DMA2_AdvInit_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+    150            DMA_DAR2      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+    151            DMA_DSR_BCR2  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+    152            DMA_DCR2 = dma.DCR|(chacr<<DMA_DCR_CHACR_SHIFT)|(umnsm<<DMA_DCR_UMNSM_SHIFT);
+   \   00000046   0x9B07             LDR      R3,[SP, #+28]
+   \   00000048   0x069B             LSLS     R3,R3,#+26
+   \   0000004A   0x4313             ORRS     R3,R3,R2
+   \   0000004C   0x9C08             LDR      R4,[SP, #+32]
+   \   0000004E   0x0624             LSLS     R4,R4,#+24
+   \   00000050   0x431C             ORRS     R4,R4,R3
+   \   00000052   0x60C4             STR      R4,[R0, #+12]
+    153            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */
+    154            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX2_CHCFG = (uint8)dma.CHCFG; }
+   \   00000054   0x4011             ANDS     R1,R1,R2
+   \   00000056   0xD002             BEQ      ??DMA2_AdvInit_2
+   \   00000058   0x9802             LDR      R0,[SP, #+8]
+   \   0000005A   0x....             LDR      R1,??DataTable13_1  ;; 0x40023000
+   \   0000005C   0x7008             STRB     R0,[R1, #+0]
+    155          }
+   \                     ??DMA2_AdvInit_2: (+1)
+   \   0000005E   0x....             B.N      ??Subroutine0_0
+    156          
+
+   \                                 In section .text, align 2, keep-with-next
+    157          void DMA3_AdvInit(tDMA_CH dma, uint8 chacr, uint8 umnsm)
+    158          {
+   \                     DMA3_AdvInit: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB418             PUSH     {R3,R4}
+    159            if (pCallbackDMA3 != NULL)      { dma.DCR |= DMA_DCR_EINT_MASK;     }
+   \   00000004   0x....             LDR      R0,??DataTable13_7
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ      ??DMA3_AdvInit_0
+   \   0000000C   0x9806             LDR      R0,[SP, #+24]
+   \   0000000E   0x2180             MOVS     R1,#+128
+   \   00000010   0x0609             LSLS     R1,R1,#+24       ;; #-2147483648
+   \   00000012   0x4301             ORRS     R1,R1,R0
+   \   00000014   0x9106             STR      R1,[SP, #+24]
+    160            DMA_DSR_BCR3 |= DMA_DSR_BCR_DONE_MASK;  /* abort DMA channel operation      */
+   \                     ??DMA3_AdvInit_0: (+1)
+   \   00000016   0x....             LDR      R0,??DataTable13_2  ;; 0x40008130
+   \   00000018   0x6881             LDR      R1,[R0, #+8]
+   \   0000001A   0x2280             MOVS     R2,#+128
+   \   0000001C   0x0452             LSLS     R2,R2,#+17       ;; #+16777216
+   \   0000001E   0x430A             ORRS     R2,R2,R1
+   \   00000020   0x6082             STR      R2,[R0, #+8]
+    161            DMA_DCR3     &= ~DMA_DCR_ERQ_MASK;      /* peripheral request is ignored    */ 
+   \   00000022   0x68C1             LDR      R1,[R0, #+12]
+   \   00000024   0x....             LDR      R2,??DataTable13_8  ;; 0xbfffffff
+   \   00000026   0x400A             ANDS     R2,R2,R1
+   \   00000028   0x60C2             STR      R2,[R0, #+12]
+    162            /* disable DMA mux if DMA tranfer will be initiated by peripheral request   */
+    163            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX3_CHCFG = 0x00;             }
+   \   0000002A   0x2180             MOVS     R1,#+128
+   \   0000002C   0x05C9             LSLS     R1,R1,#+23       ;; #+1073741824
+   \   0000002E   0x9A06             LDR      R2,[SP, #+24]
+   \   00000030   0x420A             TST      R2,R1
+   \   00000032   0xD002             BEQ      ??DMA3_AdvInit_1
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x....             LDR      R4,??DataTable13_3  ;; 0x40024000
+   \   00000038   0x7023             STRB     R3,[R4, #+0]
+    164            DMA_SAR3      = dma.SAR;
+   \                     ??DMA3_AdvInit_1: (+1)
+   \   0000003A   0x9B03             LDR      R3,[SP, #+12]
+   \   0000003C   0x6003             STR      R3,[R0, #+0]
+    165            DMA_DAR3      = dma.DAR;
+   \   0000003E   0x9B04             LDR      R3,[SP, #+16]
+   \   00000040   0x6043             STR      R3,[R0, #+4]
+    166            DMA_DSR_BCR3  = dma.DSR;
+   \   00000042   0x9B05             LDR      R3,[SP, #+20]
+   \   00000044   0x6083             STR      R3,[R0, #+8]
+    167            DMA_DCR3 = dma.DCR|(chacr<<DMA_DCR_CHACR_SHIFT)|(umnsm<<DMA_DCR_UMNSM_SHIFT);
+   \   00000046   0x9B07             LDR      R3,[SP, #+28]
+   \   00000048   0x069B             LSLS     R3,R3,#+26
+   \   0000004A   0x4313             ORRS     R3,R3,R2
+   \   0000004C   0x9C08             LDR      R4,[SP, #+32]
+   \   0000004E   0x0624             LSLS     R4,R4,#+24
+   \   00000050   0x431C             ORRS     R4,R4,R3
+   \   00000052   0x60C4             STR      R4,[R0, #+12]
+    168            /* program DMA mux if DMA tranfer will be initiated by peripheral request   */  
+    169            if (dma.DCR & DMA_DCR_ERQ_MASK) { DMAMUX3_CHCFG = (uint8)dma.CHCFG; }
+   \   00000054   0x4011             ANDS     R1,R1,R2
+   \   00000056   0xD002             BEQ      ??DMA3_AdvInit_2
+   \   00000058   0x9802             LDR      R0,[SP, #+8]
+   \   0000005A   0x....             LDR      R1,??DataTable13_3  ;; 0x40024000
+   \   0000005C   0x7008             STRB     R0,[R1, #+0]
+    170          }
+   \                     ??DMA3_AdvInit_2: (+1)
+   \   0000005E   0x....             B.N      ??Subroutine0_0
+    171          
+    172          /******************************************************************************
+    173           * interrupt function definitions                                             *
+    174           ******************************************************************************/
+    175          #pragma diag_suppress=Pa082
+
+   \                                 In section .text, align 2, keep-with-next
+    176          void DMA0_isr (void)
+    177          {
+   \                     DMA0_isr: (+1)
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+    178            register uint32 tmp = DMA_DSR_BCR0;
+   \   00000002   0x....             LDR      R0,??DataTable13_9  ;; 0x40008108
+   \   00000004   0x6804             LDR      R4,[R0, #+0]
+    179            
+    180            DMA_Ack(DMA0);  /* acknowledge DMA transfer and/or clear error condition    */
+   \   00000006   0x2580             MOVS     R5,#+128
+   \   00000008   0x046D             LSLS     R5,R5,#+17       ;; #+16777216
+   \   0000000A   0x....             LDR      R0,??DataTable13_10  ;; 0x48008108
+   \   0000000C   0x6005             STR      R5,[R0, #+0]
+    181            if (pCallbackDMA0 != (DMA_CH_CALLBACK)NULL)
+   \   0000000E   0x....             LDR      R6,??DataTable13_4
+   \   00000010   0x....             B.N      ?Subroutine1
+    182            {
+    183              if (tmp &   DMA_DSR_BCR_CE_MASK) { pCallbackDMA0(  CE_CALLBACK); }
+    184              if (tmp & DMA_DSR_BCR_DONE_MASK) { pCallbackDMA0(DONE_CALLBACK); }
+    185            }
+    186          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine1: (+1)
+   \   00000000   0x6831             LDR      R1,[R6, #+0]
+   \   00000002   0x0008             MOVS     R0,R1
+   \   00000004   0xD008             BEQ      ??Subroutine1_0
+   \   00000006   0x0060             LSLS     R0,R4,#+1
+   \   00000008   0xD501             BPL      ??Subroutine1_1
+   \   0000000A   0x2001             MOVS     R0,#+1
+   \   0000000C   0x4788             BLX      R1
+   \                     ??Subroutine1_1: (+1)
+   \   0000000E   0x4025             ANDS     R5,R5,R4
+   \   00000010   0xD002             BEQ      ??Subroutine1_0
+   \   00000012   0x2002             MOVS     R0,#+2
+   \   00000014   0x6831             LDR      R1,[R6, #+0]
+   \   00000016   0x4788             BLX      R1
+   \                     ??Subroutine1_0: (+1)
+   \   00000018   0xBD70             POP      {R4-R6,PC}       ;; return
+    187          
+
+   \                                 In section .text, align 2, keep-with-next
+    188          void DMA1_isr (void)
+    189          {
+   \                     DMA1_isr: (+1)
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+    190            register uint32 tmp = DMA_DSR_BCR1;
+   \   00000002   0x....             LDR      R0,??DataTable13_11  ;; 0x40008118
+   \   00000004   0x6804             LDR      R4,[R0, #+0]
+    191            
+    192            DMA_Ack(DMA1);  /* acknowledge DMA transfer and/or clear error condition    */  
+   \   00000006   0x2580             MOVS     R5,#+128
+   \   00000008   0x046D             LSLS     R5,R5,#+17       ;; #+16777216
+   \   0000000A   0x....             LDR      R0,??DataTable13_12  ;; 0x48008118
+   \   0000000C   0x6005             STR      R5,[R0, #+0]
+    193            if (pCallbackDMA1 != (DMA_CH_CALLBACK)NULL)
+   \   0000000E   0x....             LDR      R6,??DataTable13_5
+   \   00000010                      REQUIRE ?Subroutine1
+   \   00000010                      ;; // Fall through to label ?Subroutine1
+    194            {
+    195              if (tmp &   DMA_DSR_BCR_CE_MASK) { pCallbackDMA1(  CE_CALLBACK); }
+    196              if (tmp & DMA_DSR_BCR_DONE_MASK) { pCallbackDMA1(DONE_CALLBACK); }
+    197            }
+    198          }
+    199          
+
+   \                                 In section .text, align 2, keep-with-next
+    200          void DMA2_isr (void)
+    201          {
+   \                     DMA2_isr: (+1)
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+    202            register uint32 tmp = DMA_DSR_BCR2;
+   \   00000002   0x....             LDR      R0,??DataTable13_13  ;; 0x40008128
+   \   00000004   0x6804             LDR      R4,[R0, #+0]
+    203            
+    204            DMA_Ack(DMA2);  /* acknowledge DMA transfer and/or clear error condition    */  
+   \   00000006   0x....             LDR      R7,??DataTable13_14  ;; 0x48008128
+   \   00000008   0x2580             MOVS     R5,#+128
+   \   0000000A   0x046D             LSLS     R5,R5,#+17       ;; #+16777216
+   \   0000000C   0x603D             STR      R5,[R7, #+0]
+    205            if (pCallbackDMA2 != (DMA_CH_CALLBACK)NULL)
+   \   0000000E   0x....             LDR      R6,??DataTable13_6
+   \   00000010   0x....             B.N      ?Subroutine2
+    206            {
+    207              if (tmp &   DMA_DSR_BCR_CE_MASK) { pCallbackDMA2(  CE_CALLBACK); }
+    208              if (tmp & DMA_DSR_BCR_DONE_MASK) { pCallbackDMA2(DONE_CALLBACK); }
+    209            }
+    210            DMA_Ack(DMA2);  /* acknowledge DMA transfer and/or clear error condition    */
+    211          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine2: (+1)
+   \   00000000   0x6831             LDR      R1,[R6, #+0]
+   \   00000002   0x0008             MOVS     R0,R1
+   \   00000004   0xD008             BEQ      ??Subroutine2_0
+   \   00000006   0x0060             LSLS     R0,R4,#+1
+   \   00000008   0xD501             BPL      ??Subroutine2_1
+   \   0000000A   0x2001             MOVS     R0,#+1
+   \   0000000C   0x4788             BLX      R1
+   \                     ??Subroutine2_1: (+1)
+   \   0000000E   0x402C             ANDS     R4,R4,R5
+   \   00000010   0xD002             BEQ      ??Subroutine2_0
+   \   00000012   0x2002             MOVS     R0,#+2
+   \   00000014   0x6831             LDR      R1,[R6, #+0]
+   \   00000016   0x4788             BLX      R1
+   \                     ??Subroutine2_0: (+1)
+   \   00000018   0x603D             STR      R5,[R7, #+0]
+   \   0000001A   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+    212          
+
+   \                                 In section .text, align 4, keep-with-next
+    213          void DMA3_isr (void)
+    214          {
+   \                     DMA3_isr: (+1)
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+    215            register uint32 tmp = DMA_DSR_BCR3;
+   \   00000002   0x4804             LDR      R0,??DMA3_isr_0  ;; 0x40008138
+   \   00000004   0x6804             LDR      R4,[R0, #+0]
+    216            
+    217            DMA_Ack(DMA3);  /* acknowledge DMA transfer and/or clear error condition    */    
+   \   00000006   0x4F04             LDR      R7,??DMA3_isr_0+0x4  ;; 0x48008138
+   \   00000008   0x2580             MOVS     R5,#+128
+   \   0000000A   0x046D             LSLS     R5,R5,#+17       ;; #+16777216
+   \   0000000C   0x603D             STR      R5,[R7, #+0]
+    218            if (pCallbackDMA3 != (DMA_CH_CALLBACK)NULL)
+   \   0000000E   0x4E03             LDR      R6,??DMA3_isr_0+0x8
+   \   00000010   0xE006             B.N      ??DMA3_isr_1
+   \   00000012   0xBF00             Nop      
+   \                     ??DMA3_isr_0:
+   \   00000014   0x40008138         DC32     0x40008138
+   \   00000018   0x48008138         DC32     0x48008138
+   \   0000001C   0x........         DC32     pCallbackDMA3
+   \                     ??DMA3_isr_1: (+1)
+   \   00000020                      REQUIRE ?Subroutine2
+   \   00000020                      ;; // Fall through to label ?Subroutine2
+    219            {
+    220              if (tmp &   DMA_DSR_BCR_CE_MASK) { pCallbackDMA3(  CE_CALLBACK); }
+    221              if (tmp & DMA_DSR_BCR_DONE_MASK) { pCallbackDMA3(DONE_CALLBACK); }
+    222            }
+    223            DMA_Ack(DMA3);  /* acknowledge DMA transfer and/or clear error condition    */
+    224          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7:
+   \   00000000   0x........         DC32     pCallbackDMA0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_1:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_2:
+   \   00000000   0x........         DC32     pCallbackDMA1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_3:
+   \   00000000   0x........         DC32     pCallbackDMA2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9:
+   \   00000000   0x........         DC32     pCallbackDMA3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10:
+   \   00000000   0xE000E400         DC32     0xe000e400
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_1:
+   \   00000000   0x40008100         DC32     0x40008100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_2:
+   \   00000000   0xBFFFFFFF         DC32     0xbfffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_3:
+   \   00000000   0x40008110         DC32     0x40008110
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12:
+   \   00000000   0x40021000         DC32     0x40021000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_1:
+   \   00000000   0x40008120         DC32     0x40008120
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13:
+   \   00000000   0x40022000         DC32     0x40022000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_1:
+   \   00000000   0x40023000         DC32     0x40023000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_2:
+   \   00000000   0x40008130         DC32     0x40008130
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_3:
+   \   00000000   0x40024000         DC32     0x40024000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_4:
+   \   00000000   0x........         DC32     pCallbackDMA0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_5:
+   \   00000000   0x........         DC32     pCallbackDMA1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_6:
+   \   00000000   0x........         DC32     pCallbackDMA2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_7:
+   \   00000000   0x........         DC32     pCallbackDMA3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_8:
+   \   00000000   0xBFFFFFFF         DC32     0xbfffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_9:
+   \   00000000   0x40008108         DC32     0x40008108
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_10:
+   \   00000000   0x48008108         DC32     0x48008108
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_11:
+   \   00000000   0x40008118         DC32     0x40008118
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_12:
+   \   00000000   0x48008118         DC32     0x48008118
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_13:
+   \   00000000   0x40008128         DC32     0x40008128
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable13_14:
+   \   00000000   0x48008128         DC32     0x48008128
+    225          /******************************************************************************
+    226           * End of module                                                              *
+    227           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      24   DMA0_AdvInit
+      24   DMA0_Init
+      16   DMA0_isr
+        16   -- Indirect call
+      24   DMA1_AdvInit
+      24   DMA1_Init
+      16   DMA1_isr
+        16   -- Indirect call
+      24   DMA2_AdvInit
+      24   DMA2_Init
+      24   DMA2_isr
+        24   -- Indirect call
+      24   DMA3_AdvInit
+      24   DMA3_Init
+      24   DMA3_isr
+        24   -- Indirect call
+       0   DMA_InstallCallbackDMA0
+       0   DMA_InstallCallbackDMA1
+       0   DMA_InstallCallbackDMA2
+       0   DMA_InstallCallbackDMA3
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable10
+       4  ??DataTable10_1
+       4  ??DataTable10_2
+       4  ??DataTable10_3
+       4  ??DataTable12
+       4  ??DataTable12_1
+       4  ??DataTable13
+       4  ??DataTable13_1
+       4  ??DataTable13_10
+       4  ??DataTable13_11
+       4  ??DataTable13_12
+       4  ??DataTable13_13
+       4  ??DataTable13_14
+       4  ??DataTable13_2
+       4  ??DataTable13_3
+       4  ??DataTable13_4
+       4  ??DataTable13_5
+       4  ??DataTable13_6
+       4  ??DataTable13_7
+       4  ??DataTable13_8
+       4  ??DataTable13_9
+       4  ??DataTable7
+       4  ??DataTable8
+       4  ??DataTable8_1
+       4  ??DataTable8_2
+       4  ??DataTable8_3
+       4  ??DataTable9
+      16  ?Subroutine0
+      26  ?Subroutine1
+      28  ?Subroutine2
+      84  DMA0_AdvInit
+      74  DMA0_Init
+      18  DMA0_isr
+      96  DMA1_AdvInit
+      84  DMA1_Init
+      16  DMA1_isr
+      96  DMA2_AdvInit
+      84  DMA2_Init
+      18  DMA2_isr
+      96  DMA3_AdvInit
+      84  DMA3_Init
+      32  DMA3_isr
+      38  DMA_InstallCallbackDMA0
+      38  DMA_InstallCallbackDMA1
+      38  DMA_InstallCallbackDMA2
+      38  DMA_InstallCallbackDMA3
+       4  pCallbackDMA0
+       4  pCallbackDMA1
+       4  pCallbackDMA2
+       4  pCallbackDMA3
+
+ 
+    16 bytes in section .bss
+ 1 112 bytes in section .text
+ 
+ 1 112 bytes of CODE memory
+    16 bytes of DATA memory
+
+Errors: none
+Warnings: none

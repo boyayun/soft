@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\projects\_tower_lcd_test\lcd_test.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+</userOverrides>
+
+

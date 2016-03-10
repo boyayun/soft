@@ -1,0 +1,302 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:28
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\cmp\cmp.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\cmp\cmp.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\cmp.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\cmp.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\cmp\cmp.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      cmp.c
+      6           * @version   1.0.4.0
+      7           * @date      Feb-13-2013
+      8           * @brief     Analog comparator (CMP) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "cmp.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static CMP_CALLBACK volatile pCallbackCMP0_CMP1=NULL;
+   \                     pCallbackCMP0_CMP1:
+   \   00000000                      DS8 4
+     17          
+     18          /******************************************************************************
+     19           * interrupt functions prototype                                              *
+     20           ******************************************************************************/
+     21          void CMP0_CMP1_isr (void);
+     22          
+     23          /******************************************************************************
+     24           * Public functions definitions                                               *
+     25           ******************************************************************************/
+     26          #pragma diag_suppress=Pa082
+
+   \                                 In section .text, align 2, keep-with-next
+     27          void CMP_InstallCallback (uint8 ip, CMP_CALLBACK pCallback)
+     28          {
+     29            if (pCallback != NULL) 
+   \                     CMP_InstallCallback: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD010             BEQ      ??CMP_InstallCallback_0
+     30            { 
+     31              pCallbackCMP0_CMP1 = pCallback;
+   \   00000004   0x....             LDR      R2,??DataTable2
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+     32              NVIC_SetIsr(INT_CMP0_CMP1,ip);
+   \   00000008   0x2180             MOVS     R1,#+128
+   \   0000000A   0x01C9             LSLS     R1,R1,#+7        ;; #+16384
+   \   0000000C   0x....             LDR      R2,??DataTable2_1  ;; 0xe000e280
+   \   0000000E   0x6813             LDR      R3,[R2, #+0]
+   \   00000010   0x430B             ORRS     R3,R3,R1
+   \   00000012   0x6013             STR      R3,[R2, #+0]
+   \   00000014   0x....             LDR      R2,??DataTable2_2  ;; 0xe000e100
+   \   00000016   0x6813             LDR      R3,[R2, #+0]
+   \   00000018   0x4319             ORRS     R1,R1,R3
+   \   0000001A   0x6011             STR      R1,[R2, #+0]
+   \   0000001C   0x....             LDR      R1,??DataTable2_3  ;; 0xe000e40c
+   \   0000001E   0x680A             LDR      R2,[R1, #+0]
+   \   00000020   0x0580             LSLS     R0,R0,#+22
+   \   00000022   0x4310             ORRS     R0,R0,R2
+   \   00000024   0x6008             STR      R0,[R1, #+0]
+     33            }  
+     34          }
+   \                     ??CMP_InstallCallback_0: (+1)
+   \   00000026   0x4770             BX       LR               ;; return
+     35          
+
+   \                                 In section .text, align 2, keep-with-next
+     36          void CMP0_Init (tCMP cmp, uint8 psel, uint8 msel)
+     37          {
+   \                     CMP0_Init: (+1)
+   \   00000000   0xB403             PUSH     {R0,R1}
+     38            CMP0_CR0   = cmp.CR0;
+   \   00000002   0x....             LDR      R0,??DataTable2_4  ;; 0x40072000
+   \   00000004   0x....             B.N      ?Subroutine0
+     39            CMP0_FPR   = cmp.FPR;
+     40            CMP0_SCR   = cmp.SCR;
+     41            CMP0_DACCR = cmp.DACCR;
+     42            CMP0_MUXCR = (uint8)((psel<<3)|msel);
+     43            CMP0_CR1   = cmp.CR1;
+     44          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine0: (+1)
+   \   00000000   0x4669             MOV      R1,SP
+   \   00000002   0x7809             LDRB     R1,[R1, #+0]
+   \   00000004   0x7001             STRB     R1,[R0, #+0]
+   \   00000006   0x4669             MOV      R1,SP
+   \   00000008   0x7889             LDRB     R1,[R1, #+2]
+   \   0000000A   0x7081             STRB     R1,[R0, #+2]
+   \   0000000C   0x4669             MOV      R1,SP
+   \   0000000E   0x78C9             LDRB     R1,[R1, #+3]
+   \   00000010   0x70C1             STRB     R1,[R0, #+3]
+   \   00000012   0x4669             MOV      R1,SP
+   \   00000014   0x7909             LDRB     R1,[R1, #+4]
+   \   00000016   0x7101             STRB     R1,[R0, #+4]
+   \   00000018   0x00D1             LSLS     R1,R2,#+3
+   \   0000001A   0x430B             ORRS     R3,R3,R1
+   \   0000001C   0x7143             STRB     R3,[R0, #+5]
+   \   0000001E   0x4669             MOV      R1,SP
+   \   00000020   0x7849             LDRB     R1,[R1, #+1]
+   \   00000022   0x7041             STRB     R1,[R0, #+1]
+   \   00000024   0xB002             ADD      SP,SP,#+8
+   \   00000026   0x4770             BX       LR               ;; return
+     45          
+
+   \                                 In section .text, align 2, keep-with-next
+     46          void CMP1_Init (tCMP cmp, uint8 psel, uint8 msel)
+     47          {
+   \                     CMP1_Init: (+1)
+   \   00000000   0xB403             PUSH     {R0,R1}
+     48            CMP1_CR0   = cmp.CR0;
+   \   00000002   0x....             LDR      R0,??DataTable2_5  ;; 0x40072008
+   \   00000004                      REQUIRE ?Subroutine0
+   \   00000004                      ;; // Fall through to label ?Subroutine0
+     49            CMP1_FPR   = cmp.FPR;
+     50            CMP1_SCR   = cmp.SCR;
+     51            CMP1_DACCR = cmp.DACCR;
+     52            CMP1_MUXCR = (uint8)((psel<<3)|msel);
+     53            CMP1_CR1   = cmp.CR1;
+     54          }
+     55          
+     56          /******************************************************************************
+     57           * interrupt functions definitions                                            *
+     58           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     59          void CMP0_CMP1_isr (void) 
+     60          { 
+   \                     CMP0_CMP1_isr: (+1)
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+     61            if (pCallbackCMP0_CMP1 != (CMP_CALLBACK)NULL) 
+   \   00000002   0x....             LDR      R4,??DataTable2
+   \   00000004   0x6820             LDR      R0,[R4, #+0]
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD018             BEQ      ??CMP0_CMP1_isr_0
+     62            {
+     63              /* process CMP0 module interrupt                                          */
+     64              if (SIM_SCGC4 & SIM_SCGC4_CMP0_MASK)
+   \   0000000A   0x....             LDR      R5,??DataTable2_6  ;; 0x4003f034
+   \   0000000C   0x6828             LDR      R0,[R5, #+0]
+   \   0000000E   0x0340             LSLS     R0,R0,#+13
+   \   00000010   0xD508             BPL      ??CMP0_CMP1_isr_1
+     65              {
+     66                /* process CMP0 CFR or CFF interrupt                                    */      
+     67                pCallbackCMP0_CMP1 (CMP0_CALLBACK, CMP0_SCR);
+   \   00000012   0x....             LDR      R0,??DataTable2_7  ;; 0x40072003
+   \   00000014   0x7801             LDRB     R1,[R0, #+0]
+   \   00000016   0xB249             SXTB     R1,R1
+   \   00000018   0x2001             MOVS     R0,#+1
+   \   0000001A   0x6822             LDR      R2,[R4, #+0]
+   \   0000001C   0x4790             BLX      R2
+     68                iosetb (CMP0_SCR,CMP_SCR_CFF_MASK|CMP_SCR_CFR_MASK);                            
+   \   0000001E   0x2006             MOVS     R0,#+6
+   \   00000020   0x....             LDR      R1,??DataTable2_8  ;; 0x48072003
+   \   00000022   0x7008             STRB     R0,[R1, #+0]
+     69              }
+     70              
+     71              if (SIM_SCGC4 & SIM_SCGC4_CMP1_MASK)
+   \                     ??CMP0_CMP1_isr_1: (+1)
+   \   00000024   0x6828             LDR      R0,[R5, #+0]
+   \   00000026   0x0300             LSLS     R0,R0,#+12
+   \   00000028   0xD508             BPL      ??CMP0_CMP1_isr_0
+     72              {
+     73                /* process CMP1 CFR or CFF interrupt                                    */      
+     74                pCallbackCMP0_CMP1 (CMP1_CALLBACK, CMP1_SCR);
+   \   0000002A   0x....             LDR      R0,??DataTable2_7  ;; 0x40072003
+   \   0000002C   0x7A01             LDRB     R1,[R0, #+8]
+   \   0000002E   0xB249             SXTB     R1,R1
+   \   00000030   0x2002             MOVS     R0,#+2
+   \   00000032   0x6822             LDR      R2,[R4, #+0]
+   \   00000034   0x4790             BLX      R2
+     75                iosetb (CMP1_SCR,CMP_SCR_CFF_MASK|CMP_SCR_CFR_MASK);                            
+   \   00000036   0x2006             MOVS     R0,#+6
+   \   00000038   0x....             LDR      R1,??DataTable2_8  ;; 0x48072003
+   \   0000003A   0x7208             STRB     R0,[R1, #+8]
+     76              }
+     77            } 
+     78          }
+   \                     ??CMP0_CMP1_isr_0: (+1)
+   \   0000003C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     pCallbackCMP0_CMP1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0xE000E40C         DC32     0xe000e40c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0x40072000         DC32     0x40072000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_5:
+   \   00000000   0x40072008         DC32     0x40072008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_6:
+   \   00000000   0x4003F034         DC32     0x4003f034
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_7:
+   \   00000000   0x40072003         DC32     0x40072003
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_8:
+   \   00000000   0x48072003         DC32     0x48072003
+     79          
+     80          /******************************************************************************
+     81           * End of module                                                              *
+     82           ******************************************************************************/
+     83          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   CMP0_CMP1_isr
+        16   -- Indirect call
+       8   CMP0_Init
+       8   CMP1_Init
+       0   CMP_InstallCallback
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+       4  ??DataTable2_5
+       4  ??DataTable2_6
+       4  ??DataTable2_7
+       4  ??DataTable2_8
+      40  ?Subroutine0
+      62  CMP0_CMP1_isr
+       6  CMP0_Init
+       4  CMP1_Init
+      40  CMP_InstallCallback
+       4  pCallbackCMP0_CMP1
+
+ 
+   4 bytes in section .bss
+ 188 bytes in section .text
+ 
+ 188 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

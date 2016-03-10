@@ -1,0 +1,53 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V7.10.1.6676/W32 for ARM 18/Feb/2016  11:30:31            #
+#     Copyright 1999-2014 IAR Systems AB.                                     #
+#                                                                             #
+#           Source file   =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\toolchain\iar\arch_delay.s#
+#           List file     =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\List\arch_delay.lst#
+#           Object file   =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\Obj\arch_delay.o#
+#           Command line  =  E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\src\toolchain\iar\arch_delay.s #
+#                            -OE:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\Obj\ #
+#                            -s+ -M<> -w+ -r                                  #
+#                            -LE:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\freescalemod\KMSWDRV_EAR2_2\build\iar_6_50\projects\_tower_lcd_test\Release\List\ #
+#                            -t8 --cpu Cortex-M0+ --fpu None                  #
+#                                                                             #
+###############################################################################
+
+    1                           /*********************************************
+                                ********************************
+    2                            * (c) Copyright 2010-2012, Freescale
+                                 Semiconductor Inc.
+    3                            * ALL RIGHTS RESERVED.
+    4                            *********************************************
+                                ******************************//*!
+    5                            * @file      arch_delay.s
+    6                            * @version   1.0.1.0
+    7                            * @date      May-18-2012    
+    8                            * @brief     Module with generic delay
+                                 function delaying software execution
+                                 
+    9                            *            for given number of core clock
+                                 ticks.
+   10                            *********************************************
+                                *********************************/
+   11                                 PUBLIC  arch_delay      
+   12                                 SECTION .text:CODE
+   13                           arch_delay
+   14    00000000 0638                subs  r0,#6   ; subtract function entry
+                                                     and exit code execution
+                                                     ticks
+   15    00000002 0238          loop: subs  r0,#2
+   16    00000004 FDD5                bpl   loop   
+   17    00000006 7047                bx    lr
+   18                                 END      
+##############################
+#           CRC:0            #
+#        Errors:   0         #
+#        Warnings: 0         #
+#          Bytes: 8          #
+##############################
+
+
+
+

@@ -1,0 +1,232 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:35
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pmc\pmc.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pmc\pmc.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\pmc.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\pmc.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pmc\pmc.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      pmc.c
+      6           * @version   1.0.3.0
+      7           * @date      May-4-2012
+      8           * @brief     Power Management Controller (PMC) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "pmc.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static PMC_CALLBACK pCallbackPMC=NULL;
+   \                     pCallbackPMC:
+   \   00000000                      DS8 4
+     17          
+     18          /******************************************************************************
+     19           * interrupt function prototypes                                              *
+     20           ******************************************************************************/
+     21          void pmc_isr (void);
+     22          
+     23          /******************************************************************************
+     24           * Public function definitions                                                *
+     25           ******************************************************************************/
+     26          #pragma diag_suppress=Pa082
+
+   \                                 In section .text, align 2, keep-with-next
+     27          void PMC_Init (tLVD lvd, tREG reg, uint8 ip, PMC_CALLBACK pCallback)
+     28          {
+   \                     PMC_Init: (+1)
+   \   00000000   0xB081             SUB      SP,SP,#+4
+   \   00000002   0xB403             PUSH     {R0,R1}
+     29            if (pCallback != NULL) { pCallbackPMC = pCallback; NVIC_SetIsr(INT_PMC,ip); }
+   \   00000004   0x0018             MOVS     R0,R3
+   \   00000006   0xD010             BEQ      ??PMC_Init_0
+   \   00000008   0x....             LDR      R0,??DataTable1
+   \   0000000A   0x6003             STR      R3,[R0, #+0]
+   \   0000000C   0x2040             MOVS     R0,#+64
+   \   0000000E   0x....             LDR      R1,??DataTable1_1  ;; 0xe000e280
+   \   00000010   0x680B             LDR      R3,[R1, #+0]
+   \   00000012   0x4303             ORRS     R3,R3,R0
+   \   00000014   0x600B             STR      R3,[R1, #+0]
+   \   00000016   0x....             LDR      R1,??DataTable1_2  ;; 0xe000e100
+   \   00000018   0x680B             LDR      R3,[R1, #+0]
+   \   0000001A   0x4318             ORRS     R0,R0,R3
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+   \   0000001E   0x....             LDR      R0,??DataTable1_3  ;; 0xe000e404
+   \   00000020   0x6801             LDR      R1,[R0, #+0]
+   \   00000022   0x0612             LSLS     R2,R2,#+24
+   \   00000024   0x0892             LSRS     R2,R2,#+2
+   \   00000026   0x430A             ORRS     R2,R2,R1
+   \   00000028   0x6002             STR      R2,[R0, #+0]
+     30            PMC_LVDSC1 = lvd.LVDSC1;
+   \                     ??PMC_Init_0: (+1)
+   \   0000002A   0x....             LDR      R0,??DataTable1_4  ;; 0x4007d000
+   \   0000002C   0x4669             MOV      R1,SP
+   \   0000002E   0x7809             LDRB     R1,[R1, #+0]
+   \   00000030   0x7001             STRB     R1,[R0, #+0]
+     31            PMC_LVDSC2 = lvd.LVDSC2;
+   \   00000032   0x4669             MOV      R1,SP
+   \   00000034   0x7849             LDRB     R1,[R1, #+1]
+   \   00000036   0x7041             STRB     R1,[R0, #+1]
+     32            PMC_REGSC  = reg.REGSC;
+   \   00000038   0x4669             MOV      R1,SP
+   \   0000003A   0x7909             LDRB     R1,[R1, #+4]
+   \   0000003C   0x7081             STRB     R1,[R0, #+2]
+     33          }
+   \   0000003E   0xB003             ADD      SP,SP,#+12
+   \   00000040   0x4770             BX       LR               ;; return
+     34          
+     35          /******************************************************************************
+     36           * interrupt functions definitions                                            *
+     37           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     38          void pmc_isr (void) 
+     39          { 
+   \                     pmc_isr: (+1)
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+     40            if (pCallbackPMC != (PMC_CALLBACK)NULL)
+   \   00000002   0x....             LDR      R4,??DataTable1
+   \   00000004   0x6821             LDR      R1,[R4, #+0]
+   \   00000006   0x0008             MOVS     R0,R1
+   \   00000008   0xD018             BEQ      ??pmc_isr_0
+     41            {
+     42              if ((PMC_LVDSC1 & PMC_LVDSC1_LVDF_MASK) && (PMC_LVDSC1 & PMC_LVDSC1_LVDIE_MASK))
+   \   0000000A   0x2580             MOVS     R5,#+128
+   \   0000000C   0x....             LDR      R6,??DataTable1_4  ;; 0x4007d000
+   \   0000000E   0x7830             LDRB     R0,[R6, #+0]
+   \   00000010   0x4228             TST      R0,R5
+   \   00000012   0xD007             BEQ      ??pmc_isr_1
+   \   00000014   0x7830             LDRB     R0,[R6, #+0]
+   \   00000016   0x0680             LSLS     R0,R0,#+26
+   \   00000018   0xD504             BPL      ??pmc_isr_1
+     43              {
+     44                iosetb (PMC_LVDSC1,PMC_LVDSC1_LVDACK_MASK); /* clear interrupt flag     */
+   \   0000001A   0x2040             MOVS     R0,#+64
+   \   0000001C   0x....             LDR      R2,??DataTable1_5  ;; 0x4807d000
+   \   0000001E   0x7010             STRB     R0,[R2, #+0]
+     45                pCallbackPMC (LVD_CALLBACK);
+   \   00000020   0x2001             MOVS     R0,#+1
+   \   00000022   0x4788             BLX      R1
+     46              }
+     47              if ((PMC_LVDSC2 & PMC_LVDSC2_LVWF_MASK) && (PMC_LVDSC2 & PMC_LVDSC2_LVWIE_MASK))
+   \                     ??pmc_isr_1: (+1)
+   \   00000024   0x7870             LDRB     R0,[R6, #+1]
+   \   00000026   0x4228             TST      R0,R5
+   \   00000028   0xD008             BEQ      ??pmc_isr_0
+   \   0000002A   0x7870             LDRB     R0,[R6, #+1]
+   \   0000002C   0x0680             LSLS     R0,R0,#+26
+   \   0000002E   0xD505             BPL      ??pmc_isr_0
+     48              {
+     49                iosetb (PMC_LVDSC2,PMC_LVDSC2_LVWACK_MASK); /* clear interrupt flag     */
+   \   00000030   0x2040             MOVS     R0,#+64
+   \   00000032   0x....             LDR      R1,??DataTable1_5  ;; 0x4807d000
+   \   00000034   0x7048             STRB     R0,[R1, #+1]
+     50                pCallbackPMC (LVW_CALLBACK);
+   \   00000036   0x2002             MOVS     R0,#+2
+   \   00000038   0x6821             LDR      R1,[R4, #+0]
+   \   0000003A   0x4788             BLX      R1
+     51              }
+     52            }
+     53          }
+   \                     ??pmc_isr_0: (+1)
+   \   0000003C   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     pCallbackPMC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0xE000E404         DC32     0xe000e404
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x4007D000         DC32     0x4007d000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x4807D000         DC32     0x4807d000
+     54          /******************************************************************************
+     55           * End of module                                                              *
+     56           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      12   PMC_Init
+      16   pmc_isr
+        16   -- Indirect call
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+      66  PMC_Init
+       4  pCallbackPMC
+      62  pmc_isr
+
+ 
+   4 bytes in section .bss
+ 152 bytes in section .text
+ 
+ 152 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

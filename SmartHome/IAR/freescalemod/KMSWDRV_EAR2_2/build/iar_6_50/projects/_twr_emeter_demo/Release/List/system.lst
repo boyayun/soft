@@ -1,0 +1,259 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:37
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\common\system.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\common\system.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\system.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\system.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\common\system.c
+      1          /****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           *************************************************************************//*!
+      5           * @file      system.c
+      6           * @version   1.0.1.0
+      7           * @date      Aug-10-2012      
+      8           * @brief     Kinetis-M system definitions.
+      9           ****************************************************************************/
+     10          #include "appconfig.h"
+     11          #include "system.h"
+     12          #include "common.h"
+     13          
+     14          /****************************************************************************
+     15          * Vector Table
+     16          *****************************************************************************/
+     17          typedef void (*vector_entry)(void);
+     18          
+     19          #if defined (__ICCARM__)    /* IAR                                          */
+     20            extern void __iar_program_start(void);
+     21            #pragma location = ".intvec"
+
+   \                                 In section .intvec, align 4, root
+     22            __root const vector_entry __vector_table[] = 
+   \                     __vector_table:
+   \   00000000   0x20002FF8         DC32 20002FF8H, __iar_program_start, default_isr, hardfault_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000010   0x........         DC32 default_isr, default_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000024   0x........         DC32 default_isr, default_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000038   0x........         DC32 default_isr, default_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   0000004C   0x........         DC32 default_isr, default_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000060   0x........         DC32 default_isr, default_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000074   0x........         DC32 swisr0_isr, default_isr, default_isr, default_isr, PTx_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000088   0x........         DC32 default_isr, UART0_UART1_isr, UART2_UART3_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000098   0x........         DC32 default_isr, AFE_CH2_isr, default_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   000000AC   0x........         DC32 swisr1_isr, default_isr, swisr2_isr, default_isr, default_isr
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \              0x........   
+     23          #elif defined(__GNUC__)     /* CW GCC                                       */
+     24            extern void __gcc_program_start(void);  
+     25            void (* const __vector_table[])() __attribute__ ((section(".intvec"))) =
+     26          #endif
+     27          {
+     28             VECTOR_000,              /* Initial SP                                   */
+     29             VECTOR_001,              /* Initial PC                                   */
+     30             VECTOR_002,
+     31             VECTOR_003,
+     32             VECTOR_004,
+     33             VECTOR_005,
+     34             VECTOR_006,
+     35             VECTOR_007,
+     36             VECTOR_008,
+     37             VECTOR_009,
+     38             VECTOR_010,
+     39             VECTOR_011,
+     40             VECTOR_012,
+     41             VECTOR_013,
+     42             VECTOR_014,
+     43             VECTOR_015,
+     44             VECTOR_016,
+     45             VECTOR_017,
+     46             VECTOR_018,
+     47             VECTOR_019,
+     48             VECTOR_020,
+     49             VECTOR_021,
+     50             VECTOR_022,
+     51             VECTOR_023,
+     52             VECTOR_024,
+     53             VECTOR_025,
+     54             VECTOR_026,
+     55             VECTOR_027,
+     56             VECTOR_028,
+     57             VECTOR_029,
+     58             VECTOR_030,
+     59             VECTOR_031,
+     60             VECTOR_032,
+     61             VECTOR_033,
+     62             VECTOR_034,
+     63             VECTOR_035,
+     64             VECTOR_036,
+     65             VECTOR_037,
+     66             VECTOR_038,
+     67             VECTOR_039,
+     68             VECTOR_040,
+     69             VECTOR_041,
+     70             VECTOR_042,
+     71             VECTOR_043,
+     72             VECTOR_044,
+     73             VECTOR_045,
+     74             VECTOR_046,
+     75             VECTOR_047
+     76          };
+     77          // Vector table end  
+     78          
+     79          /****************************************************************************
+     80           * Flash configuration field start
+     81           ****************************************************************************/
+     82          #if defined (__ICCARM__)    /* IAR                                          */
+     83            #pragma location = ".memcfg"
+
+   \                                 In section .memcfg, align 4, root
+     84            __root const vector_entry __memcfg_table[] = 
+   \                     __memcfg_table:
+   \   00000000   0xFFFFFFFF         DC32 0FFFFFFFFH, 0FFFFFFFFH, 0FFFFFFFFH, 0FFFFD3FEH
+   \              0xFFFFFFFF   
+   \              0xFFFFFFFF   
+   \              0xFFFFD3FE   
+     85          #elif defined(__GNUC__)     /* CW GCC                                       */
+     86            void (* const __memcfg_table[])() __attribute__ ((section(".memcfg"))) =
+     87          #endif
+     88          {    
+     89             CONFIG_1,
+     90             CONFIG_2,
+     91             CONFIG_3,
+     92             CONFIG_4,
+     93          };
+     94          //Flash configuration field end
+     95            
+     96          /****************************************************************************
+     97           * Memory trace buffer start
+     98           ****************************************************************************/
+     99          #if defined (MTB_RAM_RESERVE)
+    100            #if !defined(MTB_RAM_SIZE)
+    101              #define MTB_RAM_SIZE 0x40
+    102            #endif
+    103              #if defined (__ICCARM__) /* IAR                                         */
+    104                #pragma location = ".mtbram"
+    105                __root unsigned char __mtb_ram[MTB_RAM_SIZE];
+    106              #elif defined(__GNUC__)  /* CW GCC                                      */
+    107                unsigned char __attribute__((section (".mtbram"))) __mtb_ram[MTB_RAM_SIZE];
+    108            #endif
+    109          #endif   
+    110          // Memory trace buffer end  
+    111          
+    112          /****************************************************************************
+    113          * default_isr(void)
+    114          *
+    115          * Default ISR definition.
+    116          *
+    117          * In:  n/a
+    118          * Out: n/a
+    119          *****************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    120          void default_isr(void) 
+    121          { 
+    122            for (;;)
+   \                     default_isr: (+1)
+   \                     ??default_isr_0: (+1)
+   \   00000000   0xE7FE             B        ??default_isr_0
+    123            {
+    124            }
+    125          }
+    126          /****************************************************************************
+    127           * End of module                                                            *
+    128           ****************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   default_isr
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  __memcfg_table
+     192  __vector_table
+       2  default_isr
+
+ 
+ 192 bytes in section .intvec
+  16 bytes in section .memcfg
+   2 bytes in section .text
+ 
+   2 bytes of CODE  memory
+ 208 bytes of CONST memory
+
+Errors: none
+Warnings: none

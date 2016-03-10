@@ -1,0 +1,153 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:29
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\crc\crc.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\crc\crc.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\crc.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\crc.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\crc\crc.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      crc.c
+      6           * @version   1.0.1.0
+      7           * @date      May-4-2012
+      8           * @brief     Cyclic Redundancy Check (CRC) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "crc.h"
+     12          
+     13          /******************************************************************************
+     14           * Public function definitions                                                *
+     15           ******************************************************************************/
+     16          #pragma diag_suppress=Pa082
+
+   \                                 In section .text, align 2, keep-with-next
+     17          void* CRC_INIT (tCRC crc)
+     18          {    
+   \                     CRC_INIT: (+1)
+   \   00000000   0xB470             PUSH     {R4-R6}
+     19            CRC_CTRL  = (crc.CTRL & ~CRC_CTRL_WAS_MASK);
+   \   00000002   0x....             LDR      R3,??DataTable1  ;; 0x40034000
+   \   00000004   0x....             LDR      R5,??DataTable1_1  ;; 0xfdffffff
+   \   00000006   0x0014             MOVS     R4,R2
+   \   00000008   0x402C             ANDS     R4,R4,R5
+   \   0000000A   0x609C             STR      R4,[R3, #+8]
+     20            CRC_GPOLY = crc.GPOLY;
+   \   0000000C   0x6059             STR      R1,[R3, #+4]
+     21            CRC_CTRL |= CRC_CTRL_WAS_MASK;
+   \   0000000E   0x689C             LDR      R4,[R3, #+8]
+   \   00000010   0x43EE             MVNS     R6,R5
+   \   00000012   0x4326             ORRS     R6,R6,R4
+   \   00000014   0x609E             STR      R6,[R3, #+8]
+     22            CRC_DATA  = crc.DATA;
+   \   00000016   0x6018             STR      R0,[R3, #+0]
+     23            CRC_CTRL &= ~CRC_CTRL_WAS_MASK;
+   \   00000018   0x6898             LDR      R0,[R3, #+8]
+   \   0000001A   0x4005             ANDS     R5,R5,R0
+   \   0000001C   0x609D             STR      R5,[R3, #+8]
+     24            return (void*)CRC_BASE_PTR;
+   \   0000001E   0x0018             MOVS     R0,R3
+   \   00000020   0xBC70             POP      {R4-R6}
+   \   00000022   0x4770             BX       LR               ;; return
+     25          }
+     26          
+
+   \                                 In section .text, align 2, keep-with-next
+     27          uint32 CRC_CALC (const uint8 *ptr, uint32 len)
+     28          {    
+     29            register uint32 i;
+     30          
+     31            for (i = 0; i < len; i++) { (*(vuint8*)(CRC_BASE_PTR+0x0000)) = (*(ptr+i)); }  
+   \                     CRC_CALC: (+1)
+   \   00000000   0x....             LDR      R2,??DataTable1  ;; 0x40034000
+   \   00000002   0x2900             CMP      R1,#+0
+   \   00000004   0xD004             BEQ      ??CRC_CALC_0
+   \                     ??CRC_CALC_1: (+1)
+   \   00000006   0x7803             LDRB     R3,[R0, #+0]
+   \   00000008   0x7013             STRB     R3,[R2, #+0]
+   \   0000000A   0x1C40             ADDS     R0,R0,#+1
+   \   0000000C   0x1E49             SUBS     R1,R1,#+1
+   \   0000000E   0xD1FA             BNE      ??CRC_CALC_1
+     32            if (CRC_CTRL & CRC_CTRL_TCRC_MASK) { return (uint32)(CRC_DATA & 0xFFFFFFFF); }
+   \                     ??CRC_CALC_0: (+1)
+   \   00000010   0x6890             LDR      R0,[R2, #+8]
+   \   00000012   0x01C0             LSLS     R0,R0,#+7
+   \   00000014   0x6810             LDR      R0,[R2, #+0]
+   \   00000016   0xD400             BMI      ??CRC_CALC_2
+     33            else                               { return (uint32)(CRC_DATA & 0x0000FFFF); }
+   \   00000018   0xB280             UXTH     R0,R0
+   \                     ??CRC_CALC_2: (+1)
+   \   0000001A   0x4770             BX       LR               ;; return
+     34          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x40034000         DC32     0x40034000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0xFDFFFFFF         DC32     0xfdffffff
+     35          /******************************************************************************
+     36           * End of module                                                              *
+     37           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   CRC_CALC
+      12   CRC_INIT
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+      28  CRC_CALC
+      36  CRC_INIT
+
+ 
+ 72 bytes in section .text
+ 
+ 72 bytes of CODE memory
+
+Errors: none
+Warnings: none

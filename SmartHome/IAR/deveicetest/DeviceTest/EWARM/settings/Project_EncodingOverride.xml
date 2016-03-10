@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>E:\TCL\PROJECT\SmartHome\soft\SmartHome\Code\Init\Init.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>E:\TCL\PROJECT\SmartHome\soft\SmartHome\Code\lcddriver\lcddriver.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+  <override>
+    <path>E:\TCL\PROJECT\SmartHome\soft\SmartHome\IAR\smarthometest\Src\main.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+</userOverrides>
+
+

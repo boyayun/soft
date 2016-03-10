@@ -1,0 +1,958 @@
+#include "deveice.h"
+#include "stdio.h"
+#include "usart.h"
+#include "common.h"
+#include "lcddriver.h"
+
+#define MODSENDFIFOLEN	300
+#define MODREVFIFOLEN	MODSENDFIFOLEN
+#define MODSENDLEN		100
+
+u8 Uart2SendState;
+u8 modsendfifobuf[MODSENDFIFOLEN];
+u8 modrevfifobuf[MODREVFIFOLEN];
+
+u8 modsendbuf[MODSENDLEN];
+u8 cmdsend;				//要发送的命令
+u8 signal;				//信号等级
+const u8 devid[DEVIDLEN] = "123456789012303010000011601260101";
+const DevInfoStuType devinfo = {{16, 01, 26}, {16, 01, 26}, 0};
+InfoReportStuType inforeportpara;		//信息汇报参数
+AlarmStuType alarmpara;				//报警参数
+
+FifoTyp modsendfifo;				//模块数据发送FIFO
+FifoTyp modrevfifo;					//模块数据接收FIFO
+DevStateStuType devstate;			//设备状态
+
+FrameRevParaStu framerevpara;		//帧接收相关参数
+TimerParaStu framerevtimer; 		//帧接收定时器接口
+DataInterfaceStu dataup;			//设备数据上传接口
+
+FrameSendParaStu framesendpara;		//帧发送相关参数
+TimerParaStu framesendtimer; 		//帧发送定时器接口
+DataInterfaceStu datadown;			//下行数据到设备接口
+
+void Uart2DataHandle(void)
+{
+	if(1 != Uart2SendState)		//FIFO数据通过串口发出
+	{
+		if(0 != modsendfifo.Datalen)
+		{
+			u16 len;
+
+			Uart2SendState = 1;
+			len = FifoOutput(modsendbuf, &modsendfifo, MODSENDLEN);
+			HAL_UART_Transmit_IT(&huart1, modsendbuf, len);
+		}
+	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(&huart1 == huart)
+	{
+		Uart2SendState = 0;
+	}
+}
+
+/******************************************
+Fun: 帧接收参数初始化
+Input: void
+Output:void
+Return:void
+******************************************/
+static void FrameRevInit(void)
+//static __INLINE void FrameRevInit(void)
+{
+	memset(&framerevpara, 0, (sizeof(FrameRevParaStu)-DEBUGFRAMEREV));	//errortype不能被还原
+}
+
+/******************************************
+Fun: 帧发送参数初始化
+Input: void
+Output:void
+Return:void
+******************************************/
+static void FrameSendparaInit(void)
+//static __INLINE void FrameSendparaInit(void)
+{	
+	memset(&framesendpara, 0, sizeof(FrameSendParaStu));	
+}
+
+/******************************************
+Fun: 接收字节数据处理
+Input: data:接收到的字节数据
+Output:NULL
+Return:NULL
+******************************************/
+static void DevByteDataHandle(u8 data)
+{
+	u8* p = (u8*)&dataup.framedata.data;
+	
+	if(1 == framerevpara.datastate)
+	{
+		dataup.framectrl.byte = data;
+		framerevpara.datastate = 2;
+	}
+	else if(2 == framerevpara.datastate)
+	{
+		dataup.framedata.datalen = data;
+		framerevpara.datastate = 3;
+	}
+	else
+	{
+		p[framerevpara.len++] = data;
+		if(0 != dataup.framectrl.bit.encrypt)	
+		{
+			if(FRAMEDATALEN == framerevpara.len)	//加密情况下必须收满才能判断，命令字和校验3字节
+			{
+				StopTimer(&framerevtimer);
+				framerevpara.datastate = 4; 
+			}
+		}
+		else if(framerevpara.len == dataup.framedata.datalen)	//不加密只要长度一致就行
+		{
+			StopTimer(&framerevtimer);
+			framerevpara.datastate = 4;
+		}
+	}
+}
+
+/******************************************
+Fun: 接收字节数据字处理
+Input: byte:接收到的数据
+Output:NULL
+Return:NULL
+******************************************/
+void DevByteWordHandle(u8 byte)
+{
+	if(0 == dataup.state)
+	{
+		dataup.state = 1;
+		framerevpara.wrstate = 1;
+		goto wrflag;
+	}
+	if((1 == dataup.state) && (1 == framerevpara.wrstate) && (4 != framerevpara.datastate))
+	{
+		goto wrflag;
+	}
+	return;
+	
+	wrflag:
+	{
+		SetTimer(&framerevtimer, FRAMEREVCNT);
+		StartTimer(&framerevtimer);
+		
+		if(0 == framerevpara.wordstate)
+		{
+			if(FRAMEHEADER == byte)
+			{
+				framerevpara.wordstate = 1;
+			}
+			
+			else if(0 != framerevpara.datastate) 
+			{
+//				FifoPushOneByte(&modrevfifo, byte);
+				DevByteDataHandle(byte);	//写入数据byte
+			}
+
+			else
+			{
+				dataup.state = 0;
+				framerevpara.wrstate = 0;
+				StopTimer(&framerevtimer);
+			}
+		}
+		else
+		{
+			framerevpara.wordstate = 0;
+			if(FRAMEHEADER == byte)
+			{
+				if((3 == framerevpara.datastate) && (0 != dataup.framectrl.bit.encrypt))
+				{
+					StopTimer(&framerevtimer);
+					framerevpara.datastate = 4;
+				}
+				else
+				{
+					if(0 != framerevpara.datastate)//前一帧数据不完整，收到下一个帧头
+					{
+						#if DEBUGFRAMEREV
+						framerevpara.errortype = 3;
+						#endif
+					}
+					framerevpara.len = 0;
+					framerevpara.datastate = 1;
+				}
+			}
+
+			else if((0x55 == byte) && (0 != framerevpara.datastate))
+			{
+				DevByteDataHandle(0xF5);	//写入数据0xF5
+			}
+			
+			else	//错误数据
+			{
+				dataup.state = 0;
+				StopTimer(&framerevtimer);
+				FrameRevInit();
+#if DEBUGFRAMEREV
+				framerevpara.errortype = 3;
+#endif
+			}
+		}
+	}
+}
+
+#if DEBUGFRAMEREV
+/******************************************
+Fun: 帧接收错误处理
+Input: void
+Output:void
+Return:void
+******************************************/
+static void DevFrameErrHandle(void)
+{
+	switch(framerevpara.errortype)
+	{
+		case 0:
+			break;
+		
+		case 1:
+			printf("数据校验错误");
+			break;
+			
+		case 2:
+			printf("数据解密错误");
+			break;
+
+		case 3:
+			printf("错误帧");
+			break;
+			
+		default:
+			break;		
+	}
+	framerevpara.errortype = 0;
+}
+#endif
+
+/******************************************
+Fun: 帧接收定时时间到处理
+Input: void
+Output:void
+Return:void
+******************************************/
+static void DevRevTimerHandle(void)
+{
+	if(0 != framerevtimer.state)
+	{
+		framerevtimer.state = 0;
+
+		/*只有是加密数据且正在接收数据时且上一个收到的不是0xF5才会进行进一步处理*/
+		if((3 == framerevpara.datastate) && (0 != framerevpara.wordstate) && (0 != dataup.framectrl.bit.encrypt))
+		{
+			framerevpara.datastate = 4;
+		}
+		else	//错误帧
+		{
+#if DEBUGFRAMEREV
+			framerevpara.errortype = 3;
+#endif
+			dataup.state = 0;
+			StopTimer(&framerevtimer);
+			FrameRevInit();
+		}
+	}
+}
+
+void FormatSend(u8 cmd, u8* src, u8 len)
+{
+	u8 crclen = 0;
+	datadown.framehead[0] = FRAMEHEADER;
+	datadown.framehead[1] = FRAMEHEADER;
+	datadown.framectrl.byte = 0;
+	datadown.framedata.datalen = len + 3;
+	datadown.framedata.data[0] = cmd;
+	memcpy(&datadown.framedata.data[1], src, len);
+	
+	if(CRCCHECK == datadown.framectrl.bit.crctype)
+	{
+		union_u16 temp;
+		crclen = datadown.framedata.datalen+2;
+		temp.val= crc_calculate((u8*)&datadown, crclen);
+		datadown.framedata.data[len+1] = temp.u8adr[1];
+		datadown.framedata.data[len+2] = temp.u8adr[0];
+	}
+	else if(SUMCHECK == datadown.framectrl.bit.crctype)
+	{
+		crclen = datadown.framedata.datalen - 1;
+		datadown.framedata.data[len+1] = SumCheck((u8*)&datadown.framedata, crclen);
+		datadown.framedata.data[len+2] = 0;
+	}
+	else if(BCCCHECK == datadown.framectrl.bit.crctype)
+	{
+		crclen = datadown.framedata.datalen - 1;
+		datadown.framedata.data[len+1] = XorCheck((u8*)&datadown.framedata, crclen);
+		datadown.framedata.data[len+2] = 0;
+	}
+	datadown.state = 2;
+}
+
+/******************************************
+Fun: 接收设备数据命令解析
+Input: cmd:命令
+Output:void
+Return:void
+******************************************/
+static void DevCtrlHandle()
+{
+	switch(dataup.framedata.data[1])		//功能号
+	{
+		case 1:		//开关
+			devstate.power = dataup.framedata.data[2];
+			lcdpara.disnum = 2;
+			break;
+
+		case 2:		//模式
+			devstate.mode = dataup.framedata.data[2];
+			lcdpara.disnum = 1;
+			break;
+			
+		case 3:		//日期
+			devstate.date[0] = dataup.framedata.data[2];
+			devstate.date[1] = dataup.framedata.data[3];
+			devstate.date[2] = dataup.framedata.data[4];
+			lcdpara.disnum = 4;
+			break;
+
+		case 4:		//时间
+			devstate.time[0] = dataup.framedata.data[2];
+			devstate.time[1] = dataup.framedata.data[3];
+			devstate.time[2] = dataup.framedata.data[4];
+			lcdpara.disnum = 6;
+			break;
+
+		case 5:		//报警
+			break;
+			
+		case 6:		//温度
+			devstate.temparature = dataup.framedata.data[2];
+			break;
+
+		default:
+			break;
+	}
+}
+
+void SendCmdHandle()
+{
+	if(0 == datadown.state)
+	{
+		if(3 == dataup.state)
+		{
+			dataup.state = 0;
+
+			switch(dataup.framedata.data[0])
+			{
+				case CMDCONTROL:
+				case CMDCHECKSTE:
+					FormatSend(CMDSTE, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
+					break;
+					
+				case CMDINFOREPORTCFG:
+					{
+						u16 temp = 0;
+						temp = dataup.framedata.data[1]<<8 | dataup.framedata.data[2];
+						if(temp >= DEVCFGFREMIN)
+						{
+							FormatSend(CMDCONFIRM, NULL, NULL);	//发送确认帧
+						}
+						else
+						{
+							FormatSend(CMDINVALID, NULL, NULL);	//发送无效帧
+						}
+					}
+					break;
+					
+				case CMDRDDEVID:
+					FormatSend(CMDRETDEVID, (u8*)devid, DEVIDLEN);		//发送设备ID帧
+					break;
+					
+				case CMDRDDEVINFO:
+					FormatSend(CMDRETDEVINFO, (u8*)&devinfo, sizeof(DevInfoStuType));	//发送设备信息帧
+					break;
+
+				default:
+					break;
+			}
+		}
+		else if(0 != cmdsend)
+		{
+			switch(cmdsend)
+			{
+				case CMDINFOREPORT:
+					FormatSend(CMDINFOREPORT, (u8*)&devstate, sizeof(DevStateStuType));	//信息汇报帧
+					break;
+					
+				case CMDRDLINKSTE:
+					break;
+					
+				case CMDSETWORKMODE:
+					break;
+					
+				case CMDRDMODINFO:
+					break;
+					
+				default:
+					break;
+			}
+			cmdsend = 0;
+		}
+	}
+}
+
+void InfoReportTimerHandle()
+{
+	if(0 != inforeportpara.timer.state)
+	{
+		inforeportpara.timer.state = 0;
+		inforeportpara.timercnt--;
+		if(0 == inforeportpara.timercnt)
+		{
+			inforeportpara.timercnt = inforeportpara.reportcnt;
+			cmdsend = CMDINFOREPORT;
+		}
+	}
+}
+
+/******************************************
+Fun: 接收设备数据命令解析
+Input: cmd:命令
+Output:void
+Return:void
+******************************************/
+void DevRevCmdHandle()
+{
+	if(2 == dataup.state)
+	{
+		switch(dataup.framedata.data[0])
+		{
+			case CMDCONTROL:
+				DevCtrlHandle();
+				dataup.state = 3;
+				break;
+				
+			case CMDCONFIRM:
+				if(1 == alarmpara.state)
+				{
+					alarmpara.state = 2;
+				}
+				dataup.state = 0;
+				datadown.state = 0;
+				StopTimer(&framesendtimer);
+				FrameSendparaInit();
+				break;
+				
+			case CMDINFOREPORTCFG:
+				{
+					u16 temp = 0;
+					dataup.state = 3;
+					temp = dataup.framedata.data[1]<<8 | dataup.framedata.data[2];
+					if(temp >= DEVCFGFREMIN)
+					{
+						inforeportpara.reportcnt = temp; //设置汇报频率
+					}
+					else
+					{
+						inforeportpara.reportcnt = DEVCFGFREMIN;//设置汇报频率
+					}
+				}
+				break;
+				
+			case CMDCHECKSTE:
+				dataup.state = 3;
+				break;
+				
+			case CMDSTOPALARM:
+				dataup.state = 0;
+				alarmpara.state = 3;
+				break;
+				
+			case CMDRDDEVID:
+				dataup.state = 3;
+				break;
+				
+			case CMDRDDEVINFO:
+				dataup.state = 3;
+				break;
+				
+//			case CMDRETENCRYPARA:
+//				dataup.state = 0;
+//				datadown.state = 0;
+//				StopTimer(&framesendtimer);
+//				FrameSendparaInit();
+//				break;
+				
+	//		case CMDBPSTEST:
+	//			break;
+				
+//			case CMDRETLINKSTE:
+//				//显示链路状态
+//				dataup.state = 0;
+//				datadown.state = 0;
+//				StopTimer(&framesendtimer);
+//				FrameSendparaInit();
+//				break;
+				
+	//		case CMDDEVRST:
+	//			break;
+				
+	//		case CMDRDDEVPROFILE:
+	//			break;
+				
+			case CMDRSSI:
+				dataup.state = 0;
+				signal = dataup.framedata.data[1];//显示信号等级
+				break;
+				
+//			case CMDRETWORKMODE:
+//				dataup.state = 0;
+//				datadown.state = 0;
+//				StopTimer(&framesendtimer);
+//				FrameSendparaInit();
+//				break;
+				
+	//		case CMDWRDEVPROFILE:
+	//			break;
+				
+//			case CMDRETMODINFO:
+//				//显示模块信息
+//				dataup.state = 0;
+//				datadown.state = 0;
+//				StopTimer(&framesendtimer);
+//				FrameSendparaInit();
+//				break;
+				
+	//		case CMDUPPACK:
+	//			break;
+	//			
+	//		case CMDUPAPPCHK:
+	//			break;
+
+			default:
+				dataup.state = 0;
+				printf("不识别的命令");
+				break;
+		}
+	}
+}
+
+
+/******************************************
+Fun: 完整帧数据处理
+Input: void
+Output:void
+Return:void
+******************************************/
+static void DevFrameDataHandle(void)
+{
+	u16 tempcrc = 0;
+
+	if(4 == framerevpara.datastate)
+	{
+		u8 errortype = 0;
+		
+		if(0 != dataup.framectrl.bit.encrypt)
+		{
+			if(OK == Decoding((u8 *)&dataup.framedata, (framerevpara.len+1)))//解密从长度开始所以加1
+			{
+				if(framerevpara.len != dataup.framedata.datalen)
+				{
+					errortype = 3;
+				}
+			}
+			else
+			{
+				errortype = 2;
+			}
+		}
+
+		switch(dataup.framectrl.bit.crctype)
+		{
+			case CRCCHECK:
+				tempcrc = dataup.framedata.data[dataup.framedata.datalen-2]<<8 |dataup.framedata.data[dataup.framedata.datalen-1];//转换为小端模式
+				if(tempcrc != crc_calculate((u8*)&dataup, (dataup.framedata.datalen+2)))
+				{
+					errortype = 1;
+				}
+				break;
+
+			case SUMCHECK:
+				if(dataup.framedata.data[dataup.framedata.datalen-2] != SumCheck((u8*)&dataup, (dataup.framedata.datalen+2)))
+				{
+					errortype = 1;
+				}
+				
+			case BCCCHECK:
+				if(dataup.framedata.data[dataup.framedata.datalen-2] != XorCheck((u8*)&dataup, (dataup.framedata.datalen+2)))
+				{
+					errortype = 1;
+				}
+				break;
+
+			default:
+				break;
+		}
+
+		FrameRevInit();
+		if(0 == errortype)
+		{
+#if DEBUGFRAMEREV
+			printf("命令已正确解析\r\n");
+//			printf("%02x ", dataup.framedata.data[0]);
+#endif
+			dataup.state = 2;
+		}
+#if DEBUGFRAMEREV
+		else
+		{
+			framerevpara.errortype = errortype;
+		}
+#endif
+	}
+}
+
+/******************************************
+Fun: 发送一个字节到设备
+Input: data:发送的数据
+Output:void
+Return:void
+******************************************/
+void SendByteToDev(u8 data)
+//__weak void SendByteToDev(u8 data)
+{
+#if DEBUGFRAMEREV
+	printf("0x");
+	printf("%02x", data);
+#endif
+}
+
+/******************************************
+Fun: 发送数据到设备
+Input:void 
+Output:void
+Return:void
+******************************************/
+static void DevSendData(void)
+{
+	u8 i;
+	u8* p = (u8*)&datadown.framectrl;
+	
+	FifoPushOneByte(&modsendfifo, FRAMEHEADER);
+	FifoPushOneByte(&modsendfifo, FRAMEHEADER);
+	
+	for(i=0; i<framesendpara.len; i++)
+	{
+		if(FRAMEHEADER != p[i])
+		{
+			FifoPushOneByte(&modsendfifo, p[i]);
+		}
+		else
+		{
+			FifoPushOneByte(&modsendfifo, FRAMEHEADER);
+			FifoPushOneByte(&modsendfifo, 0x55);
+		}
+	}
+}
+
+/******************************************
+Fun: 帧发送定时时间到处理
+Input: void
+Output:void
+Return:void
+******************************************/
+static void DevSendTimerHandle(void)
+{
+	if(0 != framesendtimer.state)
+	{
+		framesendtimer.state = 0;		
+
+		if(RESENDCNT != framesendpara.resendcnt)
+		{
+			framesendpara.resendcnt++;		
+			DevSendData();	//重发
+		}
+		else
+		{
+#if DEBUGFRAMEREV
+			printf("没收到回复指令");
+#endif			
+			datadown.state = 0;
+			StopTimer(&framesendtimer);
+			FrameSendparaInit();	//初始化所有发送参数
+		}
+	}
+}
+
+/******************************************
+Fun: 下行数据处理
+Input: void
+Output:void
+Return:void
+******************************************/
+static void DatadownHandle(void)
+{
+	if(2 == datadown.state)
+	{
+		u8 tempcmd = 0;
+		tempcmd = datadown.framedata.data[0];
+		
+		framesendpara.len = datadown.framedata.datalen + 2; //控制域和长度2字节
+		
+		if(0 != datadown.framectrl.bit.encrypt)
+		{
+			Encoding((u8*)&datadown.framedata, (datadown.framedata.datalen+1));		//数据加密
+		}
+		
+		DevSendData();	//发送数据
+
+		switch(tempcmd)
+		{
+			case CMDINFOREPORT:
+			case CMDRDLINKSTE:
+			case CMDSETWORKMODE:
+			case CMDRDMODINFO:				
+				datadown.state = 3;
+				SetTimer(&framesendtimer, FRAMESENDCNT);
+				StartTimer(&framesendtimer);
+				break;
+
+			default:
+				datadown.state = 0;
+				break;
+		}
+	}
+}
+
+void AlarmHandle()
+{
+	if(devstate.temparature >= TEMPALARMVALUE)
+	{
+		if(0 == alarmpara.state)
+		{
+			alarmpara.state = 1;
+			devstate.tempalarm = 1;
+			FormatSend(CMDALARM, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
+			
+			SetTimer(&alarmpara.alarmtimer, ALARMCNTNOMAL);
+			StartTimer(&alarmpara.alarmtimer);
+		}
+		
+		if(2 == alarmpara.state)
+		{
+			alarmpara.state = 4;
+			SetTimer(&alarmpara.alarmtimer, ALARMCNTHANDLED);
+		}
+		
+		if(3 == alarmpara.state)
+		{
+			alarmpara.state = 4;
+			StopTimer(&alarmpara.alarmtimer);
+		}
+	}
+	else
+	{
+		if(5 == alarmpara.state)
+		{
+			alarmpara.state = 0;
+		}
+	}
+}
+
+void AlarmTimerHandle()
+{
+	if(1 == alarmpara.alarmtimer.state)
+	{
+		alarmpara.alarmtimer.state = 0;
+		FormatSend(CMDALARM, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
+	}
+}
+
+/******************************************
+Fun: 帧处理主循环
+Input: void
+Output:void
+Return:void
+******************************************/
+void DevFrameHandle(void)
+{	
+	DevRevTimerHandle();
+	DevFrameDataHandle();
+	DevRevCmdHandle();
+	
+#if DEBUGFRAMEREV
+	DevFrameErrHandle();
+#endif
+
+	SendCmdHandle();
+	DatadownHandle();
+	DevSendTimerHandle();
+
+	InfoReportTimerHandle();
+
+	AlarmTimerHandle();
+	AlarmHandle();
+	
+	Uart2DataHandle();
+}
+
+void UartInit()
+{
+	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
+}
+
+void DevHardInit()
+{
+	UartInit();
+}
+
+void DevParaInit()
+{
+	SetTimer(&inforeportpara.timer, INFOREPORTCNT);
+	StartTimer(&inforeportpara.timer);
+	FifoInit(&modsendfifo, modsendfifobuf, MODSENDFIFOLEN);
+	FifoInit(&modrevfifo, modrevfifobuf, MODREVFIFOLEN);
+
+	inforeportpara.reportcnt = DEVCFGFREMIN;
+	inforeportpara.timercnt = inforeportpara.reportcnt;
+	
+	devstate.date[0] = 16;
+	devstate.date[1] = 1;
+	devstate.date[2] = 26;
+	devstate.time[0] = 9;
+	devstate.time[1] = 5;
+	devstate.time[2] = 35;
+	devstate.temparature = 25;
+
+	//AppRtcInit();
+}
+
+StuKeyPara keypara;
+StuKeyValue keyvalue;
+
+void KeyTimerHandle()
+{
+	if(1 == keypara.keytimer.state)
+	{
+		keypara.keytimer.state = 0;
+		if(1 == keypara.KeyParaShake)
+		{
+			keypara.KeyParaShake = 0;
+			StopTimer(&keypara.keytimer);
+		}
+		else
+		{
+			keyvalue.KeyValueNum = KeyNumNOkey;
+			StopTimer(&keypara.keytimer);
+			
+			if(100 > devstate.temparature)
+			{
+				devstate.temparature++;
+			}
+			else
+			{
+				devstate.temparature = 25;
+			}
+		}
+	}
+}
+
+void KeyScan()
+{
+	if(0 == keypara.KeyParaShake)			//不消抖
+	{
+		u8 keynum = 0;
+		keynum = (u8)HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
+		switch(keypara.KeyParaState)
+		{
+			case KeyStateUp:
+				if(0 != keynum)
+				{
+					keypara.KeyParaState = KeyStateDowning;
+					keypara.KeyParaShake = TRUE;
+					SetTimer(&keypara.keytimer, KEYSHAKECNT);
+					StartTimer(&keypara.keytimer);
+//					FifoInput(&Uart1SendFifo, "开始消抖\r\n", sizeof"开始消抖\r\n");		//test
+					return;
+				}
+			break;
+			
+			case KeyStateDowning:
+				if(KeyNumNOkey != keynum)
+				{
+					keypara.KeyParaState = KeyStateDown;
+					keyvalue.KeyValueDown = TRUE;				//按下有效
+				}
+				else
+				{
+					keypara.KeyParaState = KeyStateUp;
+				}
+			break;
+			
+			case KeyStateDown:
+				if (KeyNumNOkey != keynum)
+				{
+
+				}
+				else
+				{
+					keypara.KeyParaState = KeyStateUping;
+					keypara.KeyParaShake = TRUE;
+					SetTimer(&keypara.keytimer, KEYSHAKECNT);
+					StartTimer(&keypara.keytimer);
+//					FifoInput(&Uart1SendFifo, "开始消抖\r\n", sizeof"开始消抖\r\n"); 	//test
+				}
+			break;
+			
+			case KeyStateUping:
+				if (KeyNumNOkey != keynum)
+				{
+					keypara.KeyParaState = KeyStateDown;
+				}
+				else
+				{
+					keypara.KeyParaState = KeyStateUp;
+					keyvalue.KeyValueUp = TRUE;						//抬起有效
+				}
+			break;
+
+			default:
+			break;
+		}
+	}
+	if(TRUE == keyvalue.KeyValueUp)
+	{
+		if(0 != keyvalue.KeyValueNum)
+		{
+			keyvalue.KeyValueNum = KeyNumNOkey;
+			StopTimer(&keypara.keytimer);
+			
+			if(0 < devstate.temparature)
+			{
+				devstate.temparature--;
+			}
+			else
+			{
+				devstate.temparature = 25;
+			}
+		}
+		else
+		{
+			keyvalue.KeyValueNum++;
+			SetTimer(&keypara.keytimer, KEYDOUBLECLICK);
+			StartTimer(&keypara.keytimer);
+		}
+	}
+}
+}

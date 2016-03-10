@@ -1,0 +1,397 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:35
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pit\pit.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pit\pit.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\pit.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\pit.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\pit\pit.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      pit.c
+      6           * @version   1.0.3.0
+      7           * @date      May-14-2012
+      8           * @brief     Periodic Interrupt Timer (PIT) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "pit.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static PIT_CALLBACK pCallbackPIT0_PIT1=NULL;
+   \                     pCallbackPIT0_PIT1:
+   \   00000000                      DS8 4
+     17          
+     18          /******************************************************************************
+     19           * interrupt function prototypes                                              *
+     20           ******************************************************************************/
+     21          void PIT0_PIT1_isr (void);
+     22          
+     23          /******************************************************************************
+     24           * Public function definitions                                                *
+     25           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     26          void PIT_InstallCallback (uint8 ip, PIT_CALLBACK pCallback)
+     27          {
+     28            if (pCallback != NULL)  
+   \                     PIT_InstallCallback: (+1)
+   \   00000000   0x000A             MOVS     R2,R1
+   \   00000002   0xD010             BEQ      ??PIT_InstallCallback_0
+     29            { 
+     30              pCallbackPIT0_PIT1 = pCallback; 
+   \   00000004   0x....             LDR      R2,??DataTable4
+   \   00000006   0x6011             STR      R1,[R2, #+0]
+     31              NVIC_SetIsr(INT_PIT0_PIT1,ip); 
+   \   00000008   0x2180             MOVS     R1,#+128
+   \   0000000A   0x0109             LSLS     R1,R1,#+4        ;; #+2048
+   \   0000000C   0x....             LDR      R2,??DataTable4_1  ;; 0xe000e280
+   \   0000000E   0x6813             LDR      R3,[R2, #+0]
+   \   00000010   0x430B             ORRS     R3,R3,R1
+   \   00000012   0x6013             STR      R3,[R2, #+0]
+   \   00000014   0x....             LDR      R2,??DataTable4_2  ;; 0xe000e100
+   \   00000016   0x6813             LDR      R3,[R2, #+0]
+   \   00000018   0x4319             ORRS     R1,R1,R3
+   \   0000001A   0x6011             STR      R1,[R2, #+0]
+   \   0000001C   0x....             LDR      R1,??DataTable4_3  ;; 0xe000e408
+   \   0000001E   0x680A             LDR      R2,[R1, #+0]
+   \   00000020   0x0780             LSLS     R0,R0,#+30
+   \   00000022   0x4310             ORRS     R0,R0,R2
+   \   00000024   0x6008             STR      R0,[R1, #+0]
+     32            }
+     33          }
+   \                     ??PIT_InstallCallback_0: (+1)
+   \   00000026   0x4770             BX       LR               ;; return
+     34          
+
+   \                                 In section .text, align 2, keep-with-next
+     35          void PIT0_CH0_Init  (tPIT_CH ch, uint32 value)
+     36          {
+   \                     PIT0_CH0_Init: (+1)
+   \   00000000   0xB410             PUSH     {R4}
+     37            PIT0_MCR    &= ~0x0002;             /* clear MDIS bit to enables clock      */
+   \   00000002   0x....             LDR      R2,??DataTable4_4  ;; 0x4002d000
+   \   00000004   0x6813             LDR      R3,[R2, #+0]
+   \   00000006   0x2402             MOVS     R4,#+2
+   \   00000008   0x43A3             BICS     R3,R3,R4
+   \   0000000A   0x6013             STR      R3,[R2, #+0]
+     38            PIT0_LDVAL0  = value;
+   \   0000000C   0x....             LDR      R2,??DataTable4_5  ;; 0x4002d100
+   \   0000000E   0x....             B.N      ?Subroutine0
+     39            PIT0_TFLG0   = PIT_TFLG_TIF_MASK;   /* clear interrupt flag                 */
+     40            PIT0_TCTRL0  = ch.TCTRL;
+     41          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine0: (+1)
+   \   00000000   0x6011             STR      R1,[R2, #+0]
+   \   00000002   0x2101             MOVS     R1,#+1
+   \   00000004   0x60D1             STR      R1,[R2, #+12]
+   \   00000006   0x6090             STR      R0,[R2, #+8]
+   \   00000008   0xBC10             POP      {R4}
+   \   0000000A   0x4770             BX       LR               ;; return
+     42          
+
+   \                                 In section .text, align 2, keep-with-next
+     43          void PIT0_CH1_Init  (tPIT_CH ch, uint32 value)
+     44          {
+   \                     PIT0_CH1_Init: (+1)
+   \   00000000   0xB410             PUSH     {R4}
+     45            PIT0_MCR    &= ~0x0002;             /* clear MDIS bit to enables clock      */
+   \   00000002   0x....             LDR      R2,??DataTable4_4  ;; 0x4002d000
+   \   00000004   0x6813             LDR      R3,[R2, #+0]
+   \   00000006   0x2402             MOVS     R4,#+2
+   \   00000008   0x43A3             BICS     R3,R3,R4
+   \   0000000A   0x6013             STR      R3,[R2, #+0]
+     46            PIT0_LDVAL1  = value;
+   \   0000000C   0x....             LDR      R2,??DataTable4_6  ;; 0x4002d110
+   \   0000000E                      REQUIRE ?Subroutine0
+   \   0000000E                      ;; // Fall through to label ?Subroutine0
+     47            PIT0_TFLG1   = PIT_TFLG_TIF_MASK;   /* clear interrupt flag                 */
+     48            PIT0_TCTRL1  = ch.TCTRL;
+     49          }
+     50          
+
+   \                                 In section .text, align 2, keep-with-next
+     51          void PIT1_CH0_Init  (tPIT_CH ch, uint32 value)
+     52          {
+   \                     PIT1_CH0_Init: (+1)
+   \   00000000   0xB410             PUSH     {R4}
+     53            PIT1_MCR    &= ~0x0002;             /* clear MDIS bit to enables clock      */
+   \   00000002   0x....             LDR      R2,??DataTable4_7  ;; 0x4002e000
+   \   00000004   0x6813             LDR      R3,[R2, #+0]
+   \   00000006   0x2402             MOVS     R4,#+2
+   \   00000008   0x43A3             BICS     R3,R3,R4
+   \   0000000A   0x6013             STR      R3,[R2, #+0]
+     54            PIT1_LDVAL0  = value;
+   \   0000000C   0x....             LDR      R2,??DataTable4_8  ;; 0x4002e100
+   \   0000000E   0x....             B.N      ?Subroutine0
+     55            PIT1_TFLG0   = PIT_TFLG_TIF_MASK;   /* clear interrupt flag                 */
+     56            PIT1_TCTRL0  = ch.TCTRL;
+     57          }
+     58          
+
+   \                                 In section .text, align 2, keep-with-next
+     59          void PIT1_CH1_Init  (tPIT_CH ch, uint32 value)
+     60          {
+   \                     PIT1_CH1_Init: (+1)
+   \   00000000   0xB410             PUSH     {R4}
+     61            PIT1_MCR    &= ~0x0002;             /* clear MDIS bit to enables clock      */
+   \   00000002   0x....             LDR      R2,??DataTable4_7  ;; 0x4002e000
+   \   00000004   0x6813             LDR      R3,[R2, #+0]
+   \   00000006   0x2402             MOVS     R4,#+2
+   \   00000008   0x43A3             BICS     R3,R3,R4
+   \   0000000A   0x6013             STR      R3,[R2, #+0]
+     62            PIT1_LDVAL1  = value;
+   \   0000000C   0x....             LDR      R2,??DataTable4_9  ;; 0x4002e110
+   \   0000000E   0x....             B.N      ?Subroutine0
+     63            PIT1_TFLG1   = PIT_TFLG_TIF_MASK;   /* clear interrupt flag                 */
+     64            PIT1_TCTRL1  = ch.TCTRL;
+     65          }
+     66          
+     67          /******************************************************************************
+     68           * interrupt functions definitions                                            *
+     69           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     70          void PIT0_PIT1_isr (void) 
+     71          { 
+   \                     PIT0_PIT1_isr: (+1)
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+     72            /* process PIT0 module iterrupts                                            */
+     73            if (SIM_SCGC6 & SIM_SCGC6_PIT0_MASK)
+   \   00000002   0x....             LDR      R4,??DataTable4_10  ;; 0x4003f03c
+   \   00000004   0x6820             LDR      R0,[R4, #+0]
+   \   00000006   0x0480             LSLS     R0,R0,#+18
+   \   00000008   0xD514             BPL      ??PIT0_PIT1_isr_0
+     74            {
+     75              /* CH0 interrupt                                                          */
+     76              if (PIT0_TFLG0 == PIT_TFLG_TIF_MASK)
+   \   0000000A   0x....             LDR      R5,??DataTable4_11  ;; 0x4002d10c
+   \   0000000C   0x6828             LDR      R0,[R5, #+0]
+   \   0000000E   0x2801             CMP      R0,#+1
+   \   00000010   0xD106             BNE      ??PIT0_PIT1_isr_1
+     77              {
+     78                PIT0_TFLG0 = PIT_TFLG_TIF_MASK;   /* clear interrupt flag               */
+   \   00000012   0x6028             STR      R0,[R5, #+0]
+     79                if (pCallbackPIT0_PIT1 != (PIT_CALLBACK)NULL) 
+   \   00000014   0x....             LDR      R0,??DataTable4
+   \   00000016   0x6801             LDR      R1,[R0, #+0]
+   \   00000018   0x0008             MOVS     R0,R1
+   \   0000001A   0xD001             BEQ      ??PIT0_PIT1_isr_1
+     80                  pCallbackPIT0_PIT1 (PIT0CH0_CALLBACK);
+   \   0000001C   0x2001             MOVS     R0,#+1
+   \   0000001E   0x4788             BLX      R1
+     81              }
+     82            
+     83              /* CH1 interrupt                                                          */
+     84              if (PIT0_TFLG1 == PIT_TFLG_TIF_MASK)
+   \                     ??PIT0_PIT1_isr_1: (+1)
+   \   00000020   0x6928             LDR      R0,[R5, #+16]
+   \   00000022   0x2801             CMP      R0,#+1
+   \   00000024   0xD106             BNE      ??PIT0_PIT1_isr_0
+     85              {
+     86                PIT0_TFLG1 = PIT_TFLG_TIF_MASK;   /* clear interrupt flag               */
+   \   00000026   0x6128             STR      R0,[R5, #+16]
+     87                if (pCallbackPIT0_PIT1 != (PIT_CALLBACK)NULL) 
+   \   00000028   0x....             LDR      R0,??DataTable4
+   \   0000002A   0x6801             LDR      R1,[R0, #+0]
+   \   0000002C   0x0008             MOVS     R0,R1
+   \   0000002E   0xD001             BEQ      ??PIT0_PIT1_isr_0
+     88                  pCallbackPIT0_PIT1 (PIT0CH1_CALLBACK);
+   \   00000030   0x2002             MOVS     R0,#+2
+   \   00000032   0x4788             BLX      R1
+     89              }
+     90            }
+     91            
+     92            /* process PIT1 module iterrupts                                            */
+     93            if (SIM_SCGC6 & SIM_SCGC6_PIT1_MASK)
+   \                     ??PIT0_PIT1_isr_0: (+1)
+   \   00000034   0x6820             LDR      R0,[R4, #+0]
+   \   00000036   0x0440             LSLS     R0,R0,#+17
+   \   00000038   0xD514             BPL      ??PIT0_PIT1_isr_2
+     94            {
+     95              /* CH0 interrupt                                                          */
+     96              if (PIT1_TFLG0 == PIT_TFLG_TIF_MASK)
+   \   0000003A   0x....             LDR      R4,??DataTable4_12  ;; 0x4002e10c
+   \   0000003C   0x6820             LDR      R0,[R4, #+0]
+   \   0000003E   0x2801             CMP      R0,#+1
+   \   00000040   0xD106             BNE      ??PIT0_PIT1_isr_3
+     97              {
+     98                PIT1_TFLG0 = PIT_TFLG_TIF_MASK;   /* clear interrupt flag               */
+   \   00000042   0x6020             STR      R0,[R4, #+0]
+     99                if (pCallbackPIT0_PIT1 != (PIT_CALLBACK)NULL) 
+   \   00000044   0x....             LDR      R0,??DataTable4
+   \   00000046   0x6801             LDR      R1,[R0, #+0]
+   \   00000048   0x0008             MOVS     R0,R1
+   \   0000004A   0xD001             BEQ      ??PIT0_PIT1_isr_3
+    100                  pCallbackPIT0_PIT1 (PIT1CH0_CALLBACK);
+   \   0000004C   0x2004             MOVS     R0,#+4
+   \   0000004E   0x4788             BLX      R1
+    101              }
+    102              
+    103              /* CH1 interrupt                                                          */
+    104              if (PIT1_TFLG1 == PIT_TFLG_TIF_MASK)
+   \                     ??PIT0_PIT1_isr_3: (+1)
+   \   00000050   0x6920             LDR      R0,[R4, #+16]
+   \   00000052   0x2801             CMP      R0,#+1
+   \   00000054   0xD106             BNE      ??PIT0_PIT1_isr_2
+    105              {
+    106                PIT1_TFLG1 = PIT_TFLG_TIF_MASK;   /* clear interrupt flag               */
+   \   00000056   0x6120             STR      R0,[R4, #+16]
+    107                if (pCallbackPIT0_PIT1 != (PIT_CALLBACK)NULL) 
+   \   00000058   0x....             LDR      R0,??DataTable4
+   \   0000005A   0x6801             LDR      R1,[R0, #+0]
+   \   0000005C   0x0008             MOVS     R0,R1
+   \   0000005E   0xD001             BEQ      ??PIT0_PIT1_isr_2
+    108                  pCallbackPIT0_PIT1 (PIT1CH1_CALLBACK);
+   \   00000060   0x2008             MOVS     R0,#+8
+   \   00000062   0x4788             BLX      R1
+    109              }
+    110            }
+    111          }
+   \                     ??PIT0_PIT1_isr_2: (+1)
+   \   00000064   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4:
+   \   00000000   0x........         DC32     pCallbackPIT0_PIT1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_1:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_2:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_3:
+   \   00000000   0xE000E408         DC32     0xe000e408
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_4:
+   \   00000000   0x4002D000         DC32     0x4002d000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_5:
+   \   00000000   0x4002D100         DC32     0x4002d100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_6:
+   \   00000000   0x4002D110         DC32     0x4002d110
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_7:
+   \   00000000   0x4002E000         DC32     0x4002e000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_8:
+   \   00000000   0x4002E100         DC32     0x4002e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_9:
+   \   00000000   0x4002E110         DC32     0x4002e110
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_10:
+   \   00000000   0x4003F03C         DC32     0x4003f03c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_11:
+   \   00000000   0x4002D10C         DC32     0x4002d10c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_12:
+   \   00000000   0x4002E10C         DC32     0x4002e10c
+    112          /******************************************************************************
+    113           * End of module                                                              *
+    114           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       4   PIT0_CH0_Init
+       4   PIT0_CH1_Init
+      16   PIT0_PIT1_isr
+        16   -- Indirect call
+       4   PIT1_CH0_Init
+       4   PIT1_CH1_Init
+       0   PIT_InstallCallback
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable4
+       4  ??DataTable4_1
+       4  ??DataTable4_10
+       4  ??DataTable4_11
+       4  ??DataTable4_12
+       4  ??DataTable4_2
+       4  ??DataTable4_3
+       4  ??DataTable4_4
+       4  ??DataTable4_5
+       4  ??DataTable4_6
+       4  ??DataTable4_7
+       4  ??DataTable4_8
+       4  ??DataTable4_9
+      12  ?Subroutine0
+      16  PIT0_CH0_Init
+      14  PIT0_CH1_Init
+     102  PIT0_PIT1_isr
+      16  PIT1_CH0_Init
+      16  PIT1_CH1_Init
+      40  PIT_InstallCallback
+       4  pCallbackPIT0_PIT1
+
+ 
+   4 bytes in section .bss
+ 268 bytes in section .text
+ 
+ 268 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

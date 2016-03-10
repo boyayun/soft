@@ -1,0 +1,726 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:28
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\projects\_twr_emeter_demo\config.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\projects\_twr_emeter_demo\config.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\config.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\config.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\projects\_twr_emeter_demo\config.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ******************************************************************************
+      5           * @file      config.c
+      6           * @author    R55013
+      7           * @version   1.0.1.0
+      8           * @date      Sep-12-2011
+      9           * @brief     Configuration data management.
+     10           ******************************************************************************/
+     11          #include <string.h>
+     12          #include <math.h>
+     13          #include "drivers.h"
+     14          #include "fraclib.h"
+     15          #include "meterlib.h"
+     16          #include "config.h" 
+     17          
+     18          /******************************************************************************
+     19           * public data definitions
+     20           ******************************************************************************/
+     21          /* this variables is stored in parameter section of the flash  addr=0x001fc00 */
+     22          #if defined (__ICCARM__) /* IAR   */
+     23            #pragma location = ".config"
+
+   \                                 In section .config, align 8
+     24            const tCONFIG_FLASH_DATA nvmcfg =
+   \                     nvmcfg:
+   \   00000000   0x005F 0x0001      DC16 95, 1, 8, 8, 46, 3
+   \              0x0008 0x0008
+   \              0x002E 0x0003
+   \   0000000C   0x00 0x00          DC8 0, 0, 0, 0
+   \              0x00 0x00    
+   \   00000010   0x00000000         DC32 0H, 406CC000H, 0H, 0H, 0H, 40140000H, 0H, 0H, 540D8D20H, 3FE921FBH
+   \              0x406CC000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x40140000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x540D8D20   
+   \              0x3FE921FB   
+   \   00000038   0x00000000         DC32 0H, 0H, 0H, 0H, 0H, 0H, -2147483648, 2147483647, -2147483648
+   \              0x00000000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x00000000   
+   \              0x80000000   
+   \              0x7FFFFFFF   
+   \              0x80000000   
+   \   0000005C   0x7FFFFFFF         DC32 2147483647
+   \   00000060   0x0000             DC16 0
+   \   00000062   0x00 0x00          DC8 0, 0
+   \   00000064   0x00000000         DC32 0, -2147483648, 0, -2147483648
+   \              0x80000000   
+   \              0x00000000   
+   \              0x80000000   
+   \   00000074   0xFFFF             DC16 65535
+   \   00000076   0x00 0x00          DC8 0, 0
+     25          #elif defined(__GNUC__) /* CW GCC */
+     26            const tCONFIG_FLASH_DATA nvmcfg __attribute__ ((section(".config"))) = 
+     27          #endif
+     28          {
+     29              /* basic power meter configuration data                                   */
+     30              METER_SN,             /* Electricity meter serial number                  */
+     31              1,                    /* tarif T1=1,T2=2,T3=3 and T4=4                    */ 
+     32              8,                    /* number of pulses index for Wh generation   50k   */
+     33              8,                    /* number of pulses index for VARh generation 50k   */ 
+     34              46,                   /* VREFH trimming value - trimmed to 1.200 V on 2.0 */
+     35              3,                    /* VREFL trimming value - trimmed to 0.400 V on 2.0 */
+     36              /* pre-calibration data - user/measured inputs                            */  
+     37              CAL_VOLT,             /* preset calibration voltage [Vrms]                */
+     38              0.0,                  /* measured voltage [Vrms]                          */
+     39              CAL_CURR,             /* preset calibration current [Arms]                */
+     40              0.0,                  /* measured current [Arms]                          */
+     41              0.785398163,          /* preset calibration angle [rad] = 45 degrees      */
+     42              0.0,                  /* measured angle between voltage and current [rad] */
+     43              0.0,                  /* measured active power [W]                        */
+     44              0.0,                  /* measured reactive power [VAR]                    */
+     45              FRAC32(-1.0),         /* measured maximum voltage- for offset calculation */
+     46              FRAC32( 1.0),         /* measured minimum voltage- for offset calculation */
+     47              FRAC32(-1.0),         /* measured maximum current- for offset calculation */
+     48              FRAC32( 1.0),         /* measured minimum current- for offset calculation */   
+     49              /* post-calibration data - calculated phase delay, offsets and gains      */
+     50              0,                    /* AFE ch3 vs ch1 delay in modulator clocks         */
+     51              0l,                   /* current measurement offset (AFE ch1)             */
+     52              FRAC32(-1.0),         /* current measurement gain (AFE ch1)               */
+     53              0l,                   /* voltage measurement offset (AFE ch3)             */
+     54              FRAC32(-1.0),         /* voltage measurement gain (AFE ch3)               */
+     55              /* configuration flag                                                     */
+     56              0xffff                /* 0xffff=read default configuration data           */
+     57          };
+     58          
+     59          /* this variables is stored in flash                                          */
+
+   \                                 In section .rodata, align 4, keep-with-next
+     60          const tCONFIG_NOINIT_DATA nvmcnt = 
+   \                     nvmcnt:
+   \   00000000   0x00000000         DC32 0, 0
+   \              0x00000000   
+   \   00000008   0x0003 0x0000      DC16 3, 0, 0, 21845
+   \              0x0000 0x5555
+     61          {
+     62              /* basic power meter configuration data                                   */
+     63              0l,                   /* active energy counter                            */ 
+     64              0l,                   /* reactive energy counter                          */ 
+     65              3,                    /* menu index                                       */
+     66              0,                    /* 0= active energy (T1) => XBAR_OUT6               */
+     67              FALSE,                /* hardfault didn't occur                           */
+     68              /* configuration flag                                                     */
+     69              0x5555                /* 0x5555=configuration valid                       */
+     70          };
+     71          
+     72          /* these variables are stored in non-initialized ram                          */
+     73          #if defined (__ICCARM__) /* IAR   */
+
+   \                                 In section .noinit, align 4
+     74            __no_init volatile tCONFIG_NOINIT_DATA  ramcnt;
+   \                     ramcnt:
+   \   00000000                      DS8 16
+
+   \                                 In section .noinit, align 8
+     75            __no_init volatile tCONFIG_FLASH_DATA   ramcfg;
+   \                     ramcfg:
+   \   00000000                      DS8 120
+     76          #elif defined(__GNUC__) /* CW GCC */
+     77            volatile tCONFIG_NOINIT_DATA  ramcnt __attribute__ ((section(".noinit")));
+     78            volatile tCONFIG_FLASH_DATA   ramcfg __attribute__ ((section(".noinit")));
+     79          #endif
+     80          
+     81          /******************************************************************************
+     82           * public function definitions
+     83           ******************************************************************************/
+     84          /***************************************************************************//*!
+     85           * @brief   Reads configuration data from NVM memory conditionally.
+     86           * @param   ptr   - pointer to tCONFIG_DATA to be read
+     87           * @note    Implemented as a function call.
+     88           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     89          void CONFIG_ReadFlash (tCONFIG_FLASH_DATA *ptr)
+     90          {
+   \                     CONFIG_ReadFlash: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     91            memcpy ((void*)ptr, (void*)&nvmcfg, sizeof(tCONFIG_FLASH_DATA)); 
+   \   00000002   0x2278             MOVS     R2,#+120
+   \   00000004   0x....             LDR      R1,??DataTable5_12
+   \   00000006   0x.... 0x....      BL       __aeabi_memcpy
+     92          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+     93          
+     94          /***************************************************************************//*!
+     95           * @brief   Writes configuration data to NVM memory.
+     96           * @param   ptr   - pointer to tCONFIG_DATA to be saved
+     97           * @param   flag  - configuration flag 
+     98           * @note    Implemented as a function call.
+     99           ******************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    100          void CONFIG_SaveFlash (tCONFIG_FLASH_DATA *ptr, uint16 flag)
+    101          { 
+   \                     CONFIG_SaveFlash: (+1)
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0005             MOVS     R5,R0
+   \   00000004   0x000E             MOVS     R6,R1
+    102            DisableInterrupts();
+   \   00000006   0xB672             CPSID i
+    103            FTFA_EraseSector ((void*)&nvmcfg);
+   \   00000008   0x....             LDR      R4,??DataTable5_12
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0x.... 0x....      BL       _FTFA_EraseSector
+    104            ptr->flag = flag;
+   \   00000010   0x2074             MOVS     R0,#+116
+   \   00000012   0x522E             STRH     R6,[R5, R0]
+    105            FTFA_WriteArray  ((void*)&nvmcfg, (void*)ptr, sizeof(tCONFIG_FLASH_DATA)); 
+   \   00000014   0x2278             MOVS     R2,#+120
+   \   00000016   0x0029             MOVS     R1,R5
+   \   00000018   0x0020             MOVS     R0,R4
+   \   0000001A   0x.... 0x....      BL       _FTFA_WriteArray
+    106            EnableInterrupts();
+   \   0000001E   0xB662             CPSIE i
+    107          }
+   \   00000020   0xBD70             POP      {R4-R6,PC}       ;; return
+    108          
+    109          /***************************************************************************//*!
+    110           * @brief   Updates offset of the phase voltage and current measurements 
+    111           *          conditionally.
+    112           * @param   ptr   - pointer to tCONFIG_FLASH_DATA
+    113           * @param   u     - phase voltage sample
+    114           * @param   i     - phase current sample
+    115           * @note    Implemented as a function call.
+    116           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    117          void CONFIG_UpdateOffsets (tCONFIG_FLASH_DATA *ptr, Frac32 u, Frac32 i)
+    118          {
+   \                     CONFIG_UpdateOffsets: (+1)
+   \   00000000   0xB438             PUSH     {R3-R5}
+    119            if (ptr->flag == 0xfff5) /* update offsets if pre-processing active         */
+   \   00000002   0x0003             MOVS     R3,R0
+   \   00000004   0x3350             ADDS     R3,R3,#+80
+   \   00000006   0x8C9C             LDRH     R4,[R3, #+36]
+   \   00000008   0x....             LDR      R5,??DataTable5  ;; 0xfff5
+   \   0000000A   0x42AC             CMP      R4,R5
+   \   0000000C   0xD113             BNE      ??CONFIG_UpdateOffsets_0
+    120            { 
+    121              if (ptr->u_msrmax < u) { ptr->u_msrmax = u; } /* find voltage max. value  */
+   \   0000000E   0x681C             LDR      R4,[R3, #+0]
+   \   00000010   0x428C             CMP      R4,R1
+   \   00000012   0xDA00             BGE      ??CONFIG_UpdateOffsets_1
+   \   00000014   0x000C             MOVS     R4,R1
+   \                     ??CONFIG_UpdateOffsets_1: (+1)
+   \   00000016   0x601C             STR      R4,[R3, #+0]
+    122              if (ptr->u_msrmin > u) { ptr->u_msrmin = u; } /* find voltage min. value  */
+   \   00000018   0x685C             LDR      R4,[R3, #+4]
+   \   0000001A   0x42A1             CMP      R1,R4
+   \   0000001C   0xDD00             BLE      ??CONFIG_UpdateOffsets_2
+   \   0000001E   0x0021             MOVS     R1,R4
+   \                     ??CONFIG_UpdateOffsets_2: (+1)
+   \   00000020   0x6059             STR      R1,[R3, #+4]
+    123              if (ptr->i_msrmax < i) { ptr->i_msrmax = i; } /* find current max. value  */
+   \   00000022   0x6899             LDR      R1,[R3, #+8]
+   \   00000024   0x4291             CMP      R1,R2
+   \   00000026   0xDA00             BGE      ??CONFIG_UpdateOffsets_3
+   \   00000028   0x0011             MOVS     R1,R2
+   \                     ??CONFIG_UpdateOffsets_3: (+1)
+   \   0000002A   0x6099             STR      R1,[R3, #+8]
+    124              if (ptr->i_msrmin > i) { ptr->i_msrmin = i; } /* find current min. value  */
+   \   0000002C   0x68D9             LDR      R1,[R3, #+12]
+   \   0000002E   0x428A             CMP      R2,R1
+   \   00000030   0xDD00             BLE      ??CONFIG_UpdateOffsets_4
+   \   00000032   0x000A             MOVS     R2,R1
+   \                     ??CONFIG_UpdateOffsets_4: (+1)
+   \   00000034   0x60DA             STR      R2,[R3, #+12]
+    125            }
+    126          }
+   \                     ??CONFIG_UpdateOffsets_0: (+1)
+   \   00000036   0xBC31             POP      {R0,R4,R5}
+   \   00000038   0x4770             BX       LR               ;; return
+    127          
+    128          /***************************************************************************//*!
+    129           * @brief   Pre-processes measurements conditionally.
+    130           * @param   ptr   - pointer to tCONFIG_FLASH_DATA
+    131           * @param   urms  - RMS phase voltage
+    132           * @param   irms  - RMS phase current
+    133           * @param   urms  - RMS phase voltage
+    134           * @param   w     - active power
+    135           * @param   var   - reactive power
+    136           * @note    Implemented as a function call.
+    137           ******************************************************************************/
+    138          #define TIMEOUT_IN_SEC(x) x*4
+
+   \                                 In section .text, align 2, keep-with-next
+    139          void CONFIG_PreProcessing (tCONFIG_FLASH_DATA *ptr, double urms, double irms, 
+    140                                     double w, double var)
+    141          {
+   \                     CONFIG_PreProcessing: (+1)
+   \   00000000   0xB418             PUSH     {R3,R4}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0010             MOVS     R0,R2
+   \   00000006   0x0019             MOVS     R1,R3
+    142            static int timeout=0;
+    143            
+    144            if (ptr->flag == 0xfff5)     /* store measurements if pre-processing active */
+   \   00000008   0x2274             MOVS     R2,#+116
+   \   0000000A   0x5AA2             LDRH     R2,[R4, R2]
+   \   0000000C   0x....             LDR      R3,??DataTable5  ;; 0xfff5
+   \   0000000E   0x429A             CMP      R2,R3
+   \   00000010   0xD11A             BNE      ??CONFIG_PreProcessing_0
+    145            {
+    146              ptr->urms_msr    = urms;
+   \   00000012   0x0022             MOVS     R2,R4
+   \   00000014   0x3218             ADDS     R2,R2,#+24
+   \   00000016   0xC203             STM      R2!,{R0,R1}
+   \   00000018   0x3A08             SUBS     R2,R2,#+8
+    147              ptr->irms_msr    = irms;
+   \   0000001A   0xA802             ADD      R0,SP,#+8
+   \   0000001C   0xC803             LDM      R0,{R0,R1}
+   \   0000001E   0x0013             MOVS     R3,R2
+   \   00000020   0x3310             ADDS     R3,R3,#+16
+   \   00000022   0xC303             STM      R3!,{R0,R1}
+    148              ptr->P_msr       = w;
+   \   00000024   0xA804             ADD      R0,SP,#+16
+   \   00000026   0xC803             LDM      R0,{R0,R1}
+   \   00000028   0x0013             MOVS     R3,R2
+   \   0000002A   0x3328             ADDS     R3,R3,#+40
+   \   0000002C   0xC303             STM      R3!,{R0,R1}
+    149              ptr->Q_msr       = var;
+   \   0000002E   0xA806             ADD      R0,SP,#+24
+   \   00000030   0xC803             LDM      R0,{R0,R1}
+   \   00000032   0x3230             ADDS     R2,R2,#+48
+   \   00000034   0xC203             STM      R2!,{R0,R1}
+    150              
+    151              /* timeout check - when timeout expires then finish pre-processing state  */
+    152              /* by setting state at which calibration data are calculated after reset  */
+    153              if ((timeout++) > TIMEOUT_IN_SEC(35)) { ptr->flag = 0xffa5; }
+   \   00000036   0x....             LDR      R0,??DataTable5_1
+   \   00000038   0x6801             LDR      R1,[R0, #+0]
+   \   0000003A   0x1C4A             ADDS     R2,R1,#+1
+   \   0000003C   0x6002             STR      R2,[R0, #+0]
+   \   0000003E   0x298D             CMP      R1,#+141
+   \   00000040   0xDB02             BLT      ??CONFIG_PreProcessing_0
+   \   00000042   0x....             LDR      R0,??DataTable5_2  ;; 0xffa5
+   \   00000044   0x3474             ADDS     R4,R4,#+116
+   \   00000046   0x8020             STRH     R0,[R4, #+0]
+    154            }
+    155          }
+   \                     ??CONFIG_PreProcessing_0: (+1)
+   \   00000048   0xBC11             POP      {R0,R4}
+   \   0000004A   0x4770             BX       LR               ;; return
+
+   \                                 In section .bss, align 4
+   \                     ??timeout:
+   \   00000000                      DS8 4
+    156          
+    157          /***************************************************************************//*!
+    158           * @brief   Calculates calibration data conditionally.
+    159           * @param   ptr   - pointer to tCONFIG_DATA
+    160           * @return  FALSE - error
+    161           *          TRUE  - success
+    162           * @note    Implemented as a function call.
+    163           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    164          int16 CONFIG_CalcCalibData (tCONFIG_FLASH_DATA *ptr)
+    165          {  
+   \                     CONFIG_CalcCalibData: (+1)
+   \   00000000   0xB5F0             PUSH     {R4-R7,LR}
+   \   00000002   0xB083             SUB      SP,SP,#+12
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x3060             ADDS     R0,R0,#+96
+   \   00000008   0x8A80             LDRH     R0,[R0, #+20]
+   \   0000000A   0x....             LDR      R1,??DataTable5_2  ;; 0xffa5
+   \   0000000C   0x4288             CMP      R0,R1
+   \   0000000E   0xD000             BEQ      .+4
+   \   00000010   0xE0CC             B        ??CONFIG_CalcCalibData_0
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x3010             ADDS     R0,R0,#+16
+   \   00000016   0x3018             ADDS     R0,R0,#+24
+   \   00000018   0xC803             LDM      R0,{R0,R1}
+   \   0000001A   0x0022             MOVS     R2,R4
+   \   0000001C   0x3210             ADDS     R2,R2,#+16
+   \   0000001E   0x3210             ADDS     R2,R2,#+16
+   \   00000020   0xCA0C             LDM      R2,{R2,R3}
+   \   00000022   0x.... 0x....      BL       __aeabi_cdrcmple
+   \   00000026   0xD900             BLS      .+4
+   \   00000028   0xE0BD             B        ??CONFIG_CalcCalibData_1
+   \   0000002A   0x....             ADR      R0,??DataTable5_3
+   \   0000002C   0xC803             LDM      R0,{R0,R1}
+   \   0000002E   0x.... 0x....      BL       __aeabi_dmul
+   \   00000032   0x0022             MOVS     R2,R4
+   \   00000034   0x3210             ADDS     R2,R2,#+16
+   \   00000036   0x3218             ADDS     R2,R2,#+24
+   \   00000038   0xCA0C             LDM      R2,{R2,R3}
+   \   0000003A   0x.... 0x....      BL       __aeabi_cdrcmple
+   \   0000003E   0xD900             BLS      .+4
+   \   00000040   0xE0B1             B        ??CONFIG_CalcCalibData_1
+   \   00000042   0x0020             MOVS     R0,R4
+   \   00000044   0x3010             ADDS     R0,R0,#+16
+   \   00000046   0x3008             ADDS     R0,R0,#+8
+   \   00000048   0xC8C0             LDM      R0!,{R6,R7}
+   \   0000004A   0x0020             MOVS     R0,R4
+   \   0000004C   0x3010             ADDS     R0,R0,#+16
+   \   0000004E   0xC80C             LDM      R0!,{R2,R3}
+   \   00000050   0x0030             MOVS     R0,R6
+   \   00000052   0x0039             MOVS     R1,R7
+   \   00000054   0x.... 0x....      BL       __aeabi_cdrcmple
+   \   00000058   0xD900             BLS      .+4
+   \   0000005A   0xE0A4             B        ??CONFIG_CalcCalibData_1
+    166            /* calculates calibration data if pre-processing completed sucessfully      */
+    167            if (ptr->flag == 0xffa5) 
+    168            {
+    169              /* check calibration conditions to eliminate pre-heating states           */
+    170              if ((ptr->irms_msr >= ptr->irms_cal*1.0) && 
+    171                  (ptr->irms_msr <= ptr->irms_cal*1.1) &&
+    172                  (ptr->urms_msr >= ptr->urms_cal    ))
+    173              {      
+    174                /* store offsets                                                        */
+    175                ptr->u_offset = (ptr->u_msrmax+ptr->u_msrmin)>>1;
+   \   0000005C   0x0020             MOVS     R0,R4
+   \   0000005E   0x3010             ADDS     R0,R0,#+16
+   \   00000060   0x6C00             LDR      R0,[R0, #+64]
+   \   00000062   0x0021             MOVS     R1,R4
+   \   00000064   0x3110             ADDS     R1,R1,#+16
+   \   00000066   0x6C49             LDR      R1,[R1, #+68]
+   \   00000068   0x1840             ADDS     R0,R0,R1
+   \   0000006A   0x1040             ASRS     R0,R0,#+1
+   \   0000006C   0x0021             MOVS     R1,R4
+   \   0000006E   0x3160             ADDS     R1,R1,#+96
+   \   00000070   0x60C8             STR      R0,[R1, #+12]
+    176                ptr->i_offset = (ptr->i_msrmax+ptr->i_msrmin)>>1;
+   \   00000072   0x0020             MOVS     R0,R4
+   \   00000074   0x3010             ADDS     R0,R0,#+16
+   \   00000076   0x6C80             LDR      R0,[R0, #+72]
+   \   00000078   0x0021             MOVS     R1,R4
+   \   0000007A   0x3110             ADDS     R1,R1,#+16
+   \   0000007C   0x6CC9             LDR      R1,[R1, #+76]
+   \   0000007E   0x1840             ADDS     R0,R0,R1
+   \   00000080   0x1040             ASRS     R0,R0,#+1
+   \   00000082   0x0021             MOVS     R1,R4
+   \   00000084   0x3160             ADDS     R1,R1,#+96
+   \   00000086   0x6048             STR      R0,[R1, #+4]
+    177                
+    178                /* calculate and store voltage measurement gain (gain >= FRAC32(-1.0))  */
+    179                ptr->u_gain   = FRAC32((-ptr->urms_cal/ptr->urms_msr));
+   \   00000088   0x0010             MOVS     R0,R2
+   \   0000008A   0x0019             MOVS     R1,R3
+   \   0000008C   0x0032             MOVS     R2,R6
+   \   0000008E   0x003B             MOVS     R3,R7
+   \   00000090   0x.... 0x....      BL       __aeabi_ddiv
+   \   00000094   0x466A             MOV      R2,SP
+   \   00000096   0xC203             STM      R2!,{R0,R1}
+   \   00000098   0x4668             MOV      R0,SP
+   \   0000009A   0xC803             LDM      R0,{R0,R1}
+   \   0000009C   0x2280             MOVS     R2,#+128
+   \   0000009E   0x0612             LSLS     R2,R2,#+24       ;; #-2147483648
+   \   000000A0   0x4051             EORS     R1,R1,R2
+   \   000000A2   0x2200             MOVS     R2,#+0
+   \   000000A4   0x2300             MOVS     R3,#+0
+   \   000000A6   0x.... 0x....      BL       __aeabi_cdrcmple
+   \   000000AA   0xD202             BCS      ??CONFIG_CalcCalibData_2
+   \   000000AC   0x....             LDR      R0,??DataTable5_5  ;; 0x7fffffff
+   \   000000AE   0x....             LDR      R7,??DataTable5_6  ;; 0x3fe00000
+   \   000000B0   0xE002             B        ??CONFIG_CalcCalibData_3
+   \                     ??CONFIG_CalcCalibData_2: (+1)
+   \   000000B2   0x2080             MOVS     R0,#+128
+   \   000000B4   0x0600             LSLS     R0,R0,#+24       ;; #-2147483648
+   \   000000B6   0x....             LDR      R7,??DataTable5_7  ;; 0xbfe00000
+   \                     ??CONFIG_CalcCalibData_3: (+1)
+   \   000000B8   0x.... 0x....      BL       __aeabi_ui2d
+   \   000000BC   0x466A             MOV      R2,SP
+   \   000000BE   0xCA0C             LDM      R2,{R2,R3}
+   \   000000C0   0x.... 0x....      BL       __aeabi_dmul
+   \   000000C4   0x0002             MOVS     R2,R0
+   \   000000C6   0x000B             MOVS     R3,R1
+   \   000000C8   0x2000             MOVS     R0,#+0
+   \   000000CA   0x0039             MOVS     R1,R7
+   \   000000CC   0x.... 0x....      BL       __aeabi_dsub
+   \   000000D0   0x.... 0x....      BL       __aeabi_d2lz
+   \   000000D4   0x0021             MOVS     R1,R4
+   \   000000D6   0x3160             ADDS     R1,R1,#+96
+   \   000000D8   0x6108             STR      R0,[R1, #+16]
+    180                
+    181                /* calculate and store current measurement gain (gain >= FRAC32(-1.0))  */
+    182                /* constant 0.9998 is the gain adjustment to calibrate to 0.00% error   */
+    183                ptr->i_gain   = FRAC32((-ptr->irms_cal/ptr->irms_msr)*0.9998);
+   \   000000DA   0x0020             MOVS     R0,R4
+   \   000000DC   0x3010             ADDS     R0,R0,#+16
+   \   000000DE   0x3010             ADDS     R0,R0,#+16
+   \   000000E0   0xC803             LDM      R0,{R0,R1}
+   \   000000E2   0x0022             MOVS     R2,R4
+   \   000000E4   0x3210             ADDS     R2,R2,#+16
+   \   000000E6   0x3218             ADDS     R2,R2,#+24
+   \   000000E8   0xCA0C             LDM      R2,{R2,R3}
+   \   000000EA   0x.... 0x....      BL       __aeabi_ddiv
+   \   000000EE   0x0006             MOVS     R6,R0
+   \   000000F0   0x000F             MOVS     R7,R1
+   \   000000F2   0x....             ADR      R0,??DataTable5_4
+   \   000000F4   0xC803             LDM      R0,{R0,R1}
+   \   000000F6   0x0032             MOVS     R2,R6
+   \   000000F8   0x003B             MOVS     R3,R7
+   \   000000FA   0x.... 0x....      BL       __aeabi_dmul
+   \   000000FE   0x2200             MOVS     R2,#+0
+   \   00000100   0x2300             MOVS     R3,#+0
+   \   00000102   0x.... 0x....      BL       __aeabi_cdrcmple
+   \   00000106   0xD203             BCS      ??CONFIG_CalcCalibData_4
+   \   00000108   0x....             LDR      R5,??DataTable5_5  ;; 0x7fffffff
+   \   0000010A   0x2000             MOVS     R0,#+0
+   \   0000010C   0x....             LDR      R1,??DataTable5_6  ;; 0x3fe00000
+   \   0000010E   0xE003             B        ??CONFIG_CalcCalibData_5
+   \                     ??CONFIG_CalcCalibData_4: (+1)
+   \   00000110   0x2580             MOVS     R5,#+128
+   \   00000112   0x062D             LSLS     R5,R5,#+24       ;; #-2147483648
+   \   00000114   0x2000             MOVS     R0,#+0
+   \   00000116   0x....             LDR      R1,??DataTable5_7  ;; 0xbfe00000
+   \                     ??CONFIG_CalcCalibData_5: (+1)
+   \   00000118   0x466A             MOV      R2,SP
+   \   0000011A   0xC203             STM      R2!,{R0,R1}
+   \   0000011C   0x....             ADR      R0,??DataTable5_8
+   \   0000011E   0xC803             LDM      R0,{R0,R1}
+   \   00000120   0x0032             MOVS     R2,R6
+   \   00000122   0x003B             MOVS     R3,R7
+   \   00000124   0x.... 0x....      BL       __aeabi_dmul
+   \   00000128   0x0006             MOVS     R6,R0
+   \   0000012A   0x000F             MOVS     R7,R1
+   \   0000012C   0x0028             MOVS     R0,R5
+   \   0000012E   0x.... 0x....      BL       __aeabi_ui2d
+   \   00000132   0x0032             MOVS     R2,R6
+   \   00000134   0x003B             MOVS     R3,R7
+   \   00000136   0x.... 0x....      BL       __aeabi_dmul
+   \   0000013A   0x0002             MOVS     R2,R0
+   \   0000013C   0x000B             MOVS     R3,R1
+   \   0000013E   0x4668             MOV      R0,SP
+   \   00000140   0xC803             LDM      R0,{R0,R1}
+   \   00000142   0x.... 0x....      BL       __aeabi_dsub
+   \   00000146   0x.... 0x....      BL       __aeabi_d2lz
+   \   0000014A   0x0021             MOVS     R1,R4
+   \   0000014C   0x3160             ADDS     R1,R1,#+96
+   \   0000014E   0x6088             STR      R0,[R1, #+8]
+    184                
+    185                /* calculate and store phase shift delay value                          */
+    186                ptr->angle_msr= atan2 (ptr->Q_msr, ptr->P_msr);
+   \   00000150   0x0020             MOVS     R0,R4
+   \   00000152   0x3010             ADDS     R0,R0,#+16
+   \   00000154   0x3030             ADDS     R0,R0,#+48
+   \   00000156   0xC80C             LDM      R0!,{R2,R3}
+   \   00000158   0x0020             MOVS     R0,R4
+   \   0000015A   0x3010             ADDS     R0,R0,#+16
+   \   0000015C   0x3038             ADDS     R0,R0,#+56
+   \   0000015E   0xC803             LDM      R0,{R0,R1}
+   \   00000160   0x.... 0x....      BL       atan2
+   \   00000164   0x0002             MOVS     R2,R0
+   \   00000166   0x000B             MOVS     R3,R1
+   \   00000168   0x0020             MOVS     R0,R4
+   \   0000016A   0x3010             ADDS     R0,R0,#+16
+   \   0000016C   0x3028             ADDS     R0,R0,#+40
+   \   0000016E   0xC00C             STM      R0!,{R2,R3}
+    187                ptr->delay = (int16)((((double)(ptr->angle_cal-ptr->angle_msr)/          \
+    188                                    (2.0*3.141592654*50.0))*(6.144e6/1.0))+0.5);
+   \   00000170   0x0020             MOVS     R0,R4
+   \   00000172   0x3010             ADDS     R0,R0,#+16
+   \   00000174   0x3020             ADDS     R0,R0,#+32
+   \   00000176   0xC803             LDM      R0,{R0,R1}
+   \   00000178   0x.... 0x....      BL       __aeabi_dsub
+   \   0000017C   0x....             ADR      R2,??DataTable5_9
+   \   0000017E   0xCA0C             LDM      R2,{R2,R3}
+   \   00000180   0x.... 0x....      BL       __aeabi_ddiv
+   \   00000184   0x2200             MOVS     R2,#+0
+   \   00000186   0x....             LDR      R3,??DataTable5_10  ;; 0x41577000
+   \   00000188   0x.... 0x....      BL       __aeabi_dmul
+   \   0000018C   0x2200             MOVS     R2,#+0
+   \   0000018E   0x....             LDR      R3,??DataTable5_6  ;; 0x3fe00000
+   \   00000190   0x.... 0x....      BL       __aeabi_dadd
+   \   00000194   0x.... 0x....      BL       __aeabi_d2iz
+   \   00000198   0x2160             MOVS     R1,#+96
+   \   0000019A   0x5260             STRH     R0,[R4, R1]
+    189                
+    190                ptr->flag = 0xa5a5;     /* calibration completed successfully           */
+   \   0000019C   0x....             LDR      R0,??DataTable5_11  ;; 0xa5a5
+   \   0000019E   0x3460             ADDS     R4,R4,#+96
+   \   000001A0   0x82A0             STRH     R0,[R4, #+20]
+    191                return TRUE;
+   \   000001A2   0x2001             MOVS     R0,#+1
+   \   000001A4   0xE003             B        ??CONFIG_CalcCalibData_6
+    192              }
+    193              else
+    194                ptr->flag = 0xfff5;     /* reinitiate calibration                       */  
+   \                     ??CONFIG_CalcCalibData_1: (+1)
+   \   000001A6   0x....             LDR      R0,??DataTable5  ;; 0xfff5
+   \   000001A8   0x3460             ADDS     R4,R4,#+96
+   \   000001AA   0x82A0             STRH     R0,[R4, #+20]
+    195            }
+    196            return FALSE;
+   \                     ??CONFIG_CalcCalibData_0: (+1)
+   \   000001AC   0x2000             MOVS     R0,#+0
+   \                     ??CONFIG_CalcCalibData_6: (+1)
+   \   000001AE   0xB003             ADD      SP,SP,#+12
+   \   000001B0   0xBDF0             POP      {R4-R7,PC}       ;; return
+    197          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x0000FFF5         DC32     0xfff5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x........         DC32     ??timeout
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x0000FFA5         DC32     0xffa5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x9999999A         DC32     0x9999999A,0x3FF19999
+   \              0x3FF19999   
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x91D14E3C         DC32     0x91D14E3C,0xBFEFFE5C
+   \              0xBFEFFE5C   
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x7FFFFFFF         DC32     0x7fffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x3FE00000         DC32     0x3fe00000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \   00000000   0xBFE00000         DC32     0xbfe00000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_8:
+   \   00000000   0x91D14E3C         DC32     0x91D14E3C,0x3FEFFE5C
+   \              0x3FEFFE5C   
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_9:
+   \   00000000   0x59E04626         DC32     0x59E04626,0x4073A28C
+   \              0x4073A28C   
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_10:
+   \   00000000   0x41577000         DC32     0x41577000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_11:
+   \   00000000   0x0000A5A5         DC32     0xa5a5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_12:
+   \   00000000   0x........         DC32     nvmcfg
+    198          /******************************************************************************
+    199           * End of module                                                              *
+    200           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      32   CONFIG_CalcCalibData
+        32   -> __aeabi_cdrcmple
+        32   -> __aeabi_d2iz
+        32   -> __aeabi_d2lz
+        32   -> __aeabi_dadd
+        32   -> __aeabi_ddiv
+        32   -> __aeabi_dmul
+        32   -> __aeabi_dsub
+        32   -> __aeabi_ui2d
+        32   -> atan2
+       8   CONFIG_PreProcessing
+       8   CONFIG_ReadFlash
+         8   -> __aeabi_memcpy
+      16   CONFIG_SaveFlash
+        16   -> _FTFA_EraseSector
+        16   -> _FTFA_WriteArray
+      12   CONFIG_UpdateOffsets
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_10
+       4  ??DataTable5_11
+       4  ??DataTable5_12
+       4  ??DataTable5_2
+       8  ??DataTable5_3
+       8  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+       8  ??DataTable5_8
+       8  ??DataTable5_9
+     434  CONFIG_CalcCalibData
+      76  CONFIG_PreProcessing
+      12  CONFIG_ReadFlash
+      34  CONFIG_SaveFlash
+      58  CONFIG_UpdateOffsets
+     120  nvmcfg
+      16  nvmcnt
+     120  ramcfg
+      16  ramcnt
+       4  timeout
+
+ 
+   4 bytes in section .bss
+ 120 bytes in section .config
+ 136 bytes in section .noinit
+  16 bytes in section .rodata
+ 682 bytes in section .text
+ 
+ 682 bytes of CODE  memory
+ 136 bytes of CONST memory
+ 140 bytes of DATA  memory
+
+Errors: none
+Warnings: none

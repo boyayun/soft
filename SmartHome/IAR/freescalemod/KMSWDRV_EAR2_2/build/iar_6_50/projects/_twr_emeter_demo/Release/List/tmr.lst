@@ -1,0 +1,906 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.10.1.6676/W32 for ARM        30/Jan/2016  15:22:37
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\tmr\tmr.c
+#    Command line =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\tmr\tmr.c
+#        -D NDEBUG -lCN
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\
+#        -o
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\
+#        --debug --endian=little --cpu=Cortex-M0+ --no_mem_idioms -e --fpu=None
+#        --dlib_config "D:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\build\iar_6_50\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\fraclib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\meterlib\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\common\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\drivers\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\freemaster\
+#        -I
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\..\..\..\..\src\projects\_twr_emeter_demo\
+#        -Oh --require_prototypes
+#    List file    =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\List\tmr.lst
+#    Object file  =  
+#        E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\build\iar_6_50\projects\_twr_emeter_demo\Release\Obj\tmr.o
+#
+###############################################################################
+
+E:\TCL\PROJECT\SmartHome\资料\freescale\KMSWDRV_EAR2_2\src\drivers\tmr\tmr.c
+      1          /*****************************************************************************
+      2           * (c) Copyright 2010-2013, Freescale Semiconductor Inc.
+      3           * ALL RIGHTS RESERVED.
+      4           ***************************************************************************//*!
+      5           * @file      tmr.c
+      6           * @version   1.0.2.0
+      7           * @date      May-14-2012
+      8           * @brief     Quad Timer (TMR) driver source code.
+      9           ******************************************************************************/
+     10          #include "common.h"
+     11          #include "tmr.h"
+     12          
+     13          /******************************************************************************
+     14           * data type definitions                                                      *
+     15           ******************************************************************************/
+
+   \                                 In section .bss, align 4
+     16          static TMR_CH_CALLBACK pCallbackTMR0=NULL;
+   \                     pCallbackTMR0:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     17          static TMR_CH_CALLBACK pCallbackTMR1=NULL;
+   \                     pCallbackTMR1:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     18          static TMR_CH_CALLBACK pCallbackTMR2=NULL;
+   \                     pCallbackTMR2:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     19          static TMR_CH_CALLBACK pCallbackTMR3=NULL;
+   \                     pCallbackTMR3:
+   \   00000000                      DS8 4
+     20          
+     21          /******************************************************************************
+     22           * interrupt functions prototype                                              *
+     23           ******************************************************************************/
+     24          void TMR0_isr (void);
+     25          void TMR1_isr (void);
+     26          void TMR2_isr (void);
+     27          void TMR3_isr (void);
+     28          
+     29          /******************************************************************************
+     30           * Public function definitions                                                *
+     31           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     32          void TMR_CH0_Init (tTMR_CH ch, uint16 comp1, uint16 comp2, uint16 load, 
+     33                             uint16 cmpld1, uint16 cmpld2, uint8 ip, TMR_CH_CALLBACK pCallback)
+     34          {
+   \                     TMR_CH0_Init: (+1)
+   \   00000000   0xB41B             PUSH     {R0,R1,R3,R4}
+   \   00000002   0x9808             LDR      R0,[SP, #+32]
+     35            if (pCallback != NULL) { pCallbackTMR0 = pCallback; NVIC_SetIsr(INT_TMR0,ip); }  
+   \   00000004   0x0001             MOVS     R1,R0
+   \   00000006   0xD010             BEQ      ??TMR_CH0_Init_0
+   \   00000008   0x....             LDR      R1,??DataTable4
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+   \   0000000C   0x2080             MOVS     R0,#+128
+   \   0000000E   0x....             LDR      R1,??DataTable4_1  ;; 0xe000e280
+   \   00000010   0x680C             LDR      R4,[R1, #+0]
+   \   00000012   0x4304             ORRS     R4,R4,R0
+   \   00000014   0x600C             STR      R4,[R1, #+0]
+   \   00000016   0x....             LDR      R1,??DataTable4_2  ;; 0xe000e100
+   \   00000018   0x680C             LDR      R4,[R1, #+0]
+   \   0000001A   0x4320             ORRS     R0,R0,R4
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+   \   0000001E   0x....             LDR      R0,??DataTable4_3  ;; 0xe000e404
+   \   00000020   0x6801             LDR      R1,[R0, #+0]
+   \   00000022   0x9C07             LDR      R4,[SP, #+28]
+   \   00000024   0x07A4             LSLS     R4,R4,#+30
+   \   00000026   0x430C             ORRS     R4,R4,R1
+   \   00000028   0x6004             STR      R4,[R0, #+0]
+     36            TMR0_ENBL   &= ~TMR_ENBL_ENBL(0);
+   \                     ??TMR_CH0_Init_0: (+1)
+   \   0000002A   0x....             LDR      R0,??DataTable5  ;; 0x40057000
+   \   0000002C   0x8BC1             LDRH     R1,[R0, #+30]
+   \   0000002E   0x83C1             STRH     R1,[R0, #+30]
+   \   00000030   0x9904             LDR      R1,[SP, #+16]
+     37            TMR0_CNTR    = load;
+   \   00000032   0x8141             STRH     R1,[R0, #+10]
+     38            TMR0_ENBL   |= TMR_ENBL_ENBL(0);
+   \   00000034   0x8BC4             LDRH     R4,[R0, #+30]
+   \   00000036   0x83C4             STRH     R4,[R0, #+30]
+     39            
+     40            TMR0_COMP1   = comp1;
+   \   00000038   0x8002             STRH     R2,[R0, #+0]
+     41            TMR0_COMP2   = comp2;
+   \   0000003A   0x8043             STRH     R3,[R0, #+2]
+     42            TMR0_LOAD    = load;
+   \   0000003C   0x80C1             STRH     R1,[R0, #+6]
+     43            TMR0_CMPLD1  = cmpld1;
+   \   0000003E   0x9905             LDR      R1,[SP, #+20]
+   \   00000040   0x8201             STRH     R1,[R0, #+16]
+     44            TMR0_CMPLD2  = cmpld2;
+   \   00000042   0x9906             LDR      R1,[SP, #+24]
+   \   00000044   0x8241             STRH     R1,[R0, #+18]
+     45            
+     46            TMR0_SCTRL   = ch.SCTRL;
+   \   00000046   0x4669             MOV      R1,SP
+   \   00000048   0x8849             LDRH     R1,[R1, #+2]
+   \   0000004A   0x81C1             STRH     R1,[R0, #+14]
+     47            TMR0_CSCTRL  = ch.CSCTRL;
+   \   0000004C   0x4669             MOV      R1,SP
+   \   0000004E   0x8889             LDRH     R1,[R1, #+4]
+   \   00000050   0x8281             STRH     R1,[R0, #+20]
+     48            TMR0_CTRL    = ch.CTRL;
+   \   00000052   0x4669             MOV      R1,SP
+   \   00000054   0x8809             LDRH     R1,[R1, #+0]
+   \   00000056   0x8181             STRH     R1,[R0, #+12]
+     49          }
+   \   00000058   0xB003             ADD      SP,SP,#+12
+   \   0000005A   0xBC10             POP      {R4}
+   \   0000005C   0x4770             BX       LR               ;; return
+     50          
+
+   \                                 In section .text, align 2, keep-with-next
+     51          void TMR_CH1_Init (tTMR_CH ch, uint16 comp1, uint16 comp2, uint16 load, 
+     52                             uint16 cmpld1, uint16 cmpld2, uint8 ip, TMR_CH_CALLBACK pCallback)
+     53          {
+   \                     TMR_CH1_Init: (+1)
+   \   00000000   0xB47B             PUSH     {R0,R1,R3-R6}
+   \   00000002   0x980A             LDR      R0,[SP, #+40]
+     54          if (pCallback != NULL) { pCallbackTMR1 = pCallback; NVIC_SetIsr(INT_TMR1,ip); }  
+   \   00000004   0x0001             MOVS     R1,R0
+   \   00000006   0xD011             BEQ      ??TMR_CH1_Init_0
+   \   00000008   0x....             LDR      R1,??DataTable4_4
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+   \   0000000C   0x2080             MOVS     R0,#+128
+   \   0000000E   0x0040             LSLS     R0,R0,#+1        ;; #+256
+   \   00000010   0x....             LDR      R1,??DataTable4_1  ;; 0xe000e280
+   \   00000012   0x680C             LDR      R4,[R1, #+0]
+   \   00000014   0x4304             ORRS     R4,R4,R0
+   \   00000016   0x600C             STR      R4,[R1, #+0]
+   \   00000018   0x....             LDR      R1,??DataTable4_2  ;; 0xe000e100
+   \   0000001A   0x680C             LDR      R4,[R1, #+0]
+   \   0000001C   0x4320             ORRS     R0,R0,R4
+   \   0000001E   0x6008             STR      R0,[R1, #+0]
+   \   00000020   0x....             LDR      R0,??DataTable4_5  ;; 0xe000e408
+   \   00000022   0x6801             LDR      R1,[R0, #+0]
+   \   00000024   0x9C09             LDR      R4,[SP, #+36]
+   \   00000026   0x01A4             LSLS     R4,R4,#+6
+   \   00000028   0x430C             ORRS     R4,R4,R1
+   \   0000002A   0x6004             STR      R4,[R0, #+0]
+     55            TMR0_ENBL   &= ~TMR_ENBL_ENBL(1);
+   \                     ??TMR_CH1_Init_0: (+1)
+   \   0000002C   0x....             LDR      R0,??DataTable5_1  ;; 0x4005701e
+   \   0000002E   0x8801             LDRH     R1,[R0, #+0]
+   \   00000030   0x....             LDR      R4,??DataTable5_2  ;; 0xfffe
+   \   00000032   0x400C             ANDS     R4,R4,R1
+   \   00000034   0x8004             STRH     R4,[R0, #+0]
+     56            TMR1_CNTR    = load;
+   \   00000036   0x....             LDR      R1,??DataTable6  ;; 0x40058000
+   \   00000038   0x9C06             LDR      R4,[SP, #+24]
+   \   0000003A   0x814C             STRH     R4,[R1, #+10]
+     57            TMR0_ENBL   |= TMR_ENBL_ENBL(1);
+   \   0000003C   0x8805             LDRH     R5,[R0, #+0]
+   \   0000003E   0x2601             MOVS     R6,#+1
+   \   00000040   0x....             B.N      ?Subroutine0
+     58            
+     59            TMR1_COMP1   = comp1;
+     60            TMR1_COMP2   = comp2;
+     61            TMR1_LOAD    = load;
+     62            TMR1_CMPLD1  = cmpld1;
+     63            TMR1_CMPLD2  = cmpld2;
+     64            
+     65            TMR1_SCTRL   = ch.SCTRL;
+     66            TMR1_CSCTRL  = ch.CSCTRL;
+     67            TMR1_CTRL    = ch.CTRL;
+     68          }
+
+   \                                 In section .text, align 2, keep-with-next
+   \                     ?Subroutine0: (+1)
+   \   00000000   0x432E             ORRS     R6,R6,R5
+   \   00000002   0x8006             STRH     R6,[R0, #+0]
+   \   00000004   0x800A             STRH     R2,[R1, #+0]
+   \   00000006   0x804B             STRH     R3,[R1, #+2]
+   \   00000008   0x80CC             STRH     R4,[R1, #+6]
+   \   0000000A   0x9807             LDR      R0,[SP, #+28]
+   \   0000000C   0x8208             STRH     R0,[R1, #+16]
+   \   0000000E   0x9808             LDR      R0,[SP, #+32]
+   \   00000010   0x8248             STRH     R0,[R1, #+18]
+   \   00000012   0x4668             MOV      R0,SP
+   \   00000014   0x8840             LDRH     R0,[R0, #+2]
+   \   00000016   0x81C8             STRH     R0,[R1, #+14]
+   \   00000018   0x4668             MOV      R0,SP
+   \   0000001A   0x8880             LDRH     R0,[R0, #+4]
+   \   0000001C   0x8288             STRH     R0,[R1, #+20]
+   \   0000001E   0x4668             MOV      R0,SP
+   \   00000020   0x8800             LDRH     R0,[R0, #+0]
+   \   00000022   0x8188             STRH     R0,[R1, #+12]
+   \   00000024   0xB003             ADD      SP,SP,#+12
+   \   00000026   0xBC70             POP      {R4-R6}
+   \   00000028   0x4770             BX       LR               ;; return
+     69          
+
+   \                                 In section .text, align 2, keep-with-next
+     70          void TMR_CH2_Init (tTMR_CH ch, uint16 comp1, uint16 comp2, uint16 load, 
+     71                             uint16 cmpld1, uint16 cmpld2, uint8 ip, TMR_CH_CALLBACK pCallback)
+     72          {
+   \                     TMR_CH2_Init: (+1)
+   \   00000000   0xB47B             PUSH     {R0,R1,R3-R6}
+   \   00000002   0x980A             LDR      R0,[SP, #+40]
+     73            if (pCallback != NULL) { pCallbackTMR2 = pCallback; NVIC_SetIsr(INT_TMR2,ip); }
+   \   00000004   0x0001             MOVS     R1,R0
+   \   00000006   0xD011             BEQ      ??TMR_CH2_Init_0
+   \   00000008   0x....             LDR      R1,??DataTable5_3
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+   \   0000000C   0x2080             MOVS     R0,#+128
+   \   0000000E   0x0080             LSLS     R0,R0,#+2        ;; #+512
+   \   00000010   0x....             LDR      R1,??DataTable4_1  ;; 0xe000e280
+   \   00000012   0x680C             LDR      R4,[R1, #+0]
+   \   00000014   0x4304             ORRS     R4,R4,R0
+   \   00000016   0x600C             STR      R4,[R1, #+0]
+   \   00000018   0x....             LDR      R1,??DataTable4_2  ;; 0xe000e100
+   \   0000001A   0x680C             LDR      R4,[R1, #+0]
+   \   0000001C   0x4320             ORRS     R0,R0,R4
+   \   0000001E   0x6008             STR      R0,[R1, #+0]
+   \   00000020   0x....             LDR      R0,??DataTable4_5  ;; 0xe000e408
+   \   00000022   0x6801             LDR      R1,[R0, #+0]
+   \   00000024   0x9C09             LDR      R4,[SP, #+36]
+   \   00000026   0x03A4             LSLS     R4,R4,#+14
+   \   00000028   0x430C             ORRS     R4,R4,R1
+   \   0000002A   0x6004             STR      R4,[R0, #+0]
+     74            TMR0_ENBL   &= ~TMR_ENBL_ENBL(2);
+   \                     ??TMR_CH2_Init_0: (+1)
+   \   0000002C   0x....             LDR      R0,??DataTable5_1  ;; 0x4005701e
+   \   0000002E   0x8801             LDRH     R1,[R0, #+0]
+   \   00000030   0x....             LDR      R4,??DataTable5_4  ;; 0xfffd
+   \   00000032   0x400C             ANDS     R4,R4,R1
+   \   00000034   0x8004             STRH     R4,[R0, #+0]
+     75            TMR2_CNTR    = load;
+   \   00000036   0x....             LDR      R1,??DataTable5_5  ;; 0x40059000
+   \   00000038   0x9C06             LDR      R4,[SP, #+24]
+   \   0000003A   0x814C             STRH     R4,[R1, #+10]
+     76            TMR0_ENBL   |= TMR_ENBL_ENBL(2);
+   \   0000003C   0x8805             LDRH     R5,[R0, #+0]
+   \   0000003E   0x2602             MOVS     R6,#+2
+   \   00000040                      REQUIRE ?Subroutine0
+   \   00000040                      ;; // Fall through to label ?Subroutine0
+     77            
+     78            TMR2_COMP1   = comp1;
+     79            TMR2_COMP2   = comp2;
+     80            TMR2_LOAD    = load;
+     81            TMR2_CMPLD1  = cmpld1;
+     82            TMR2_CMPLD2  = cmpld2;
+     83            
+     84            TMR2_SCTRL   = ch.SCTRL;
+     85            TMR2_CSCTRL  = ch.CSCTRL;
+     86            TMR2_CTRL    = ch.CTRL;
+     87          }
+     88          
+
+   \                                 In section .text, align 2, keep-with-next
+     89          void TMR_CH3_Init (tTMR_CH ch, uint16 comp1, uint16 comp2, uint16 load, 
+     90                             uint16 cmpld1, uint16 cmpld2, uint8 ip, TMR_CH_CALLBACK pCallback)
+     91          {
+   \                     TMR_CH3_Init: (+1)
+   \   00000000   0xB47B             PUSH     {R0,R1,R3-R6}
+   \   00000002   0x980A             LDR      R0,[SP, #+40]
+     92            if (pCallback != NULL) { pCallbackTMR3 = pCallback; NVIC_SetIsr(INT_TMR3,ip); }
+   \   00000004   0x0001             MOVS     R1,R0
+   \   00000006   0xD011             BEQ      ??TMR_CH3_Init_0
+   \   00000008   0x....             LDR      R1,??DataTable6_1
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+   \   0000000C   0x2080             MOVS     R0,#+128
+   \   0000000E   0x00C0             LSLS     R0,R0,#+3        ;; #+1024
+   \   00000010   0x....             LDR      R1,??DataTable4_1  ;; 0xe000e280
+   \   00000012   0x680C             LDR      R4,[R1, #+0]
+   \   00000014   0x4304             ORRS     R4,R4,R0
+   \   00000016   0x600C             STR      R4,[R1, #+0]
+   \   00000018   0x....             LDR      R1,??DataTable4_2  ;; 0xe000e100
+   \   0000001A   0x680C             LDR      R4,[R1, #+0]
+   \   0000001C   0x4320             ORRS     R0,R0,R4
+   \   0000001E   0x6008             STR      R0,[R1, #+0]
+   \   00000020   0x....             LDR      R0,??DataTable4_5  ;; 0xe000e408
+   \   00000022   0x6801             LDR      R1,[R0, #+0]
+   \   00000024   0x9C09             LDR      R4,[SP, #+36]
+   \   00000026   0x05A4             LSLS     R4,R4,#+22
+   \   00000028   0x430C             ORRS     R4,R4,R1
+   \   0000002A   0x6004             STR      R4,[R0, #+0]
+     93            TMR0_ENBL   &= ~TMR_ENBL_ENBL(3);
+   \                     ??TMR_CH3_Init_0: (+1)
+   \   0000002C   0x....             LDR      R0,??DataTable5_1  ;; 0x4005701e
+   \   0000002E   0x8801             LDRH     R1,[R0, #+0]
+   \   00000030   0x....             LDR      R4,??DataTable6_2  ;; 0xfffc
+   \   00000032   0x400C             ANDS     R4,R4,R1
+   \   00000034   0x8004             STRH     R4,[R0, #+0]
+     94            TMR3_CNTR    = load;
+   \   00000036   0x....             LDR      R1,??DataTable6_3  ;; 0x4005a000
+   \   00000038   0x9C06             LDR      R4,[SP, #+24]
+   \   0000003A   0x814C             STRH     R4,[R1, #+10]
+     95            TMR0_ENBL   |= TMR_ENBL_ENBL(3);
+   \   0000003C   0x8805             LDRH     R5,[R0, #+0]
+   \   0000003E   0x2603             MOVS     R6,#+3
+   \   00000040   0x....             B.N      ?Subroutine0
+     96            
+     97            TMR3_COMP1   = comp1;
+     98            TMR3_COMP2   = comp2;
+     99            TMR3_LOAD    = load;
+    100            TMR3_CMPLD1  = cmpld1;
+    101            TMR3_CMPLD2  = cmpld2;
+    102            
+    103            TMR3_SCTRL   = ch.SCTRL;
+    104            TMR3_CSCTRL  = ch.CSCTRL;
+    105            TMR3_CTRL    = ch.CTRL;
+    106          }
+    107          
+    108          /******************************************************************************
+    109           * interrupt functions definitions                                            *
+    110           ******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    111          void TMR0_isr (void) 
+    112          {   
+   \                     TMR0_isr: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+    113            /* process TMR channel 0 interrupt                                          */
+    114            /* Check for Compare flag only it its interrupt is enabled                  */
+    115            if (((TMR0_SCTRL&TMR_SCTRL_TCFIE_MASK) == TMR_SCTRL_TCFIE_MASK))
+   \   00000002   0x....             LDR      R4,??DataTable6_4  ;; 0x4005700e
+   \   00000004   0x8820             LDRH     R0,[R4, #+0]
+   \   00000006   0x0440             LSLS     R0,R0,#+17
+   \   00000008   0xD50C             BPL      ??TMR0_isr_0
+    116            {
+    117              if (((TMR0_SCTRL&TMR_SCTRL_TCF_MASK) == TMR_SCTRL_TCF_MASK))
+   \   0000000A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000000C   0x0400             LSLS     R0,R0,#+16
+   \   0000000E   0xD509             BPL      ??TMR0_isr_0
+    118              {
+    119                ioclrh (TMR0_SCTRL,TMR_SCTRL_TCF_MASK);  /* clear interrupt flag       */
+   \   00000010   0x....             LDR      R0,??DataTable6_5  ;; 0x7fff
+   \   00000012   0x....             LDR      R1,??DataTable6_6  ;; 0x4405700e
+   \   00000014   0x8008             STRH     R0,[R1, #+0]
+    120                if (pCallbackTMR0 != (TMR_CH_CALLBACK)NULL) 
+   \   00000016   0x....             LDR      R0,??DataTable4
+   \   00000018   0x6802             LDR      R2,[R0, #+0]
+   \   0000001A   0x0010             MOVS     R0,R2
+   \   0000001C   0xD002             BEQ      ??TMR0_isr_0
+    121                  pCallbackTMR0 (COMPARE_CALLBACK,0);
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x2002             MOVS     R0,#+2
+   \   00000022   0x4790             BLX      R2
+    122              }
+    123            }
+    124            /* Check for Input capture flag only it its interrupt is enabled            */
+    125            if (((TMR0_SCTRL&TMR_SCTRL_IEFIE_MASK) == TMR_SCTRL_IEFIE_MASK))
+   \                     ??TMR0_isr_0: (+1)
+   \   00000024   0x8820             LDRH     R0,[R4, #+0]
+   \   00000026   0x0540             LSLS     R0,R0,#+21
+   \   00000028   0xD50C             BPL      ??TMR0_isr_1
+    126            {
+    127              if (((TMR0_SCTRL&TMR_SCTRL_IEF_MASK) == TMR_SCTRL_IEF_MASK))
+   \   0000002A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000002C   0x0500             LSLS     R0,R0,#+20
+   \   0000002E   0xD509             BPL      ??TMR0_isr_1
+    128              {
+    129                ioclrh (TMR0_SCTRL,TMR_SCTRL_IEF_MASK);  /* clear interrupt flag       */
+   \   00000030   0x....             LDR      R0,??DataTable6_7  ;; 0xf7ff
+   \   00000032   0x....             LDR      R1,??DataTable6_6  ;; 0x4405700e
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+    130                if (pCallbackTMR0 != (TMR_CH_CALLBACK)NULL) 
+   \   00000036   0x....             LDR      R0,??DataTable4
+   \   00000038   0x6802             LDR      R2,[R0, #+0]
+   \   0000003A   0x0010             MOVS     R0,R2
+   \   0000003C   0xD002             BEQ      ??TMR0_isr_1
+    131                  pCallbackTMR0 (CAPTURE_CALLBACK,0);
+   \   0000003E   0x2100             MOVS     R1,#+0
+   \   00000040   0x2003             MOVS     R0,#+3
+   \   00000042   0x4790             BLX      R2
+    132              }
+    133            }
+    134            /* Check for Overflow flag only it its interrupt is enabled                 */
+    135            if (((TMR0_SCTRL&TMR_SCTRL_TOFIE_MASK) == TMR_SCTRL_TOFIE_MASK))
+   \                     ??TMR0_isr_1: (+1)
+   \   00000044   0x8820             LDRH     R0,[R4, #+0]
+   \   00000046   0x04C0             LSLS     R0,R0,#+19
+   \   00000048   0xD50C             BPL      ??TMR0_isr_2
+    136            {
+    137              if (((TMR0_SCTRL&TMR_SCTRL_TOF_MASK) == TMR_SCTRL_TOF_MASK))
+   \   0000004A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000004C   0x0480             LSLS     R0,R0,#+18
+   \   0000004E   0xD509             BPL      ??TMR0_isr_2
+    138              {
+    139                ioclrh (TMR0_SCTRL,TMR_SCTRL_TOF_MASK);  /* clear interrupt flag       */
+   \   00000050   0x....             LDR      R0,??DataTable6_8  ;; 0xdfff
+   \   00000052   0x....             LDR      R1,??DataTable6_6  ;; 0x4405700e
+   \   00000054   0x8008             STRH     R0,[R1, #+0]
+    140                if (pCallbackTMR0 != (TMR_CH_CALLBACK)NULL) 
+   \   00000056   0x....             LDR      R0,??DataTable4
+   \   00000058   0x6802             LDR      R2,[R0, #+0]
+   \   0000005A   0x0010             MOVS     R0,R2
+   \   0000005C   0xD002             BEQ      ??TMR0_isr_2
+    141                  pCallbackTMR0 (ROLLOVER_CALLBACK,0);
+   \   0000005E   0x2100             MOVS     R1,#+0
+   \   00000060   0x2001             MOVS     R0,#+1
+   \   00000062   0x4790             BLX      R2
+    142              }
+    143            }
+    144          }
+   \                     ??TMR0_isr_2: (+1)
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+    145          
+
+   \                                 In section .text, align 2, keep-with-next
+    146          void TMR1_isr (void) 
+    147          {   
+   \                     TMR1_isr: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+    148            /* process TMR channel 1 interrupt                                          */
+    149            /* Check for Compare flag only it its interrupt is enabled                  */
+    150            if (((TMR1_SCTRL&TMR_SCTRL_TCFIE_MASK) == TMR_SCTRL_TCFIE_MASK))
+   \   00000002   0x....             LDR      R4,??DataTable6_9  ;; 0x4005800e
+   \   00000004   0x8820             LDRH     R0,[R4, #+0]
+   \   00000006   0x0440             LSLS     R0,R0,#+17
+   \   00000008   0xD50C             BPL      ??TMR1_isr_0
+    151            {
+    152              if (((TMR1_SCTRL&TMR_SCTRL_TCF_MASK) == TMR_SCTRL_TCF_MASK))
+   \   0000000A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000000C   0x0400             LSLS     R0,R0,#+16
+   \   0000000E   0xD509             BPL      ??TMR1_isr_0
+    153              {
+    154                ioclrh (TMR1_SCTRL,TMR_SCTRL_TCF_MASK);  /* clear interrupt flag       */
+   \   00000010   0x....             LDR      R0,??DataTable6_5  ;; 0x7fff
+   \   00000012   0x....             LDR      R1,??DataTable6_10  ;; 0x4405800e
+   \   00000014   0x8008             STRH     R0,[R1, #+0]
+    155                if (pCallbackTMR1 != (TMR_CH_CALLBACK)NULL) 
+   \   00000016   0x....             LDR      R0,??DataTable4_4
+   \   00000018   0x6802             LDR      R2,[R0, #+0]
+   \   0000001A   0x0010             MOVS     R0,R2
+   \   0000001C   0xD002             BEQ      ??TMR1_isr_0
+    156                  pCallbackTMR1 (COMPARE_CALLBACK,0);
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x2002             MOVS     R0,#+2
+   \   00000022   0x4790             BLX      R2
+    157              }
+    158            }
+    159            /* Check for Input capture flag only it its interrupt is enabled            */
+    160            if (((TMR1_SCTRL&TMR_SCTRL_IEFIE_MASK) == TMR_SCTRL_IEFIE_MASK))
+   \                     ??TMR1_isr_0: (+1)
+   \   00000024   0x8820             LDRH     R0,[R4, #+0]
+   \   00000026   0x0540             LSLS     R0,R0,#+21
+   \   00000028   0xD50C             BPL      ??TMR1_isr_1
+    161            {
+    162              if (((TMR1_SCTRL&TMR_SCTRL_IEF_MASK) == TMR_SCTRL_IEF_MASK))
+   \   0000002A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000002C   0x0500             LSLS     R0,R0,#+20
+   \   0000002E   0xD509             BPL      ??TMR1_isr_1
+    163              {
+    164                ioclrh (TMR1_SCTRL,TMR_SCTRL_IEF_MASK);  /* clear interrupt flag       */
+   \   00000030   0x....             LDR      R0,??DataTable6_7  ;; 0xf7ff
+   \   00000032   0x....             LDR      R1,??DataTable6_10  ;; 0x4405800e
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+    165                if (pCallbackTMR1 != (TMR_CH_CALLBACK)NULL) 
+   \   00000036   0x....             LDR      R0,??DataTable4_4
+   \   00000038   0x6802             LDR      R2,[R0, #+0]
+   \   0000003A   0x0010             MOVS     R0,R2
+   \   0000003C   0xD002             BEQ      ??TMR1_isr_1
+    166                  pCallbackTMR1 (CAPTURE_CALLBACK,0);
+   \   0000003E   0x2100             MOVS     R1,#+0
+   \   00000040   0x2003             MOVS     R0,#+3
+   \   00000042   0x4790             BLX      R2
+    167              }
+    168            }
+    169             /* Check for Overflow flag only it its interrupt is enabled                */
+    170            if (((TMR1_SCTRL&TMR_SCTRL_TOFIE_MASK) == TMR_SCTRL_TOFIE_MASK))
+   \                     ??TMR1_isr_1: (+1)
+   \   00000044   0x8820             LDRH     R0,[R4, #+0]
+   \   00000046   0x04C0             LSLS     R0,R0,#+19
+   \   00000048   0xD50C             BPL      ??TMR1_isr_2
+    171            {
+    172              if (((TMR1_SCTRL&TMR_SCTRL_TOF_MASK) == TMR_SCTRL_TOF_MASK))
+   \   0000004A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000004C   0x0480             LSLS     R0,R0,#+18
+   \   0000004E   0xD509             BPL      ??TMR1_isr_2
+    173              {
+    174                ioclrh (TMR1_SCTRL,TMR_SCTRL_TOF_MASK);  /* clear interrupt flag       */
+   \   00000050   0x....             LDR      R0,??DataTable6_8  ;; 0xdfff
+   \   00000052   0x....             LDR      R1,??DataTable6_10  ;; 0x4405800e
+   \   00000054   0x8008             STRH     R0,[R1, #+0]
+    175                if (pCallbackTMR1 != (TMR_CH_CALLBACK)NULL) 
+   \   00000056   0x....             LDR      R0,??DataTable4_4
+   \   00000058   0x6802             LDR      R2,[R0, #+0]
+   \   0000005A   0x0010             MOVS     R0,R2
+   \   0000005C   0xD002             BEQ      ??TMR1_isr_2
+    176                  pCallbackTMR1 (ROLLOVER_CALLBACK,0);
+   \   0000005E   0x2100             MOVS     R1,#+0
+   \   00000060   0x2001             MOVS     R0,#+1
+   \   00000062   0x4790             BLX      R2
+    177              }
+    178            }
+    179          }
+   \                     ??TMR1_isr_2: (+1)
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+    180          
+
+   \                                 In section .text, align 2, keep-with-next
+    181          void TMR2_isr (void) 
+    182          {   
+   \                     TMR2_isr: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+    183            /* process TMR channel 2 interrupt                                          */
+    184            /* Check for Compare flag only it its interrupt is enabled                  */
+    185            if (((TMR2_SCTRL&TMR_SCTRL_TCFIE_MASK) == TMR_SCTRL_TCFIE_MASK))
+   \   00000002   0x....             LDR      R4,??DataTable6_11  ;; 0x4005900e
+   \   00000004   0x8820             LDRH     R0,[R4, #+0]
+   \   00000006   0x0440             LSLS     R0,R0,#+17
+   \   00000008   0xD50C             BPL      ??TMR2_isr_0
+    186            {
+    187              if (((TMR2_SCTRL&TMR_SCTRL_TCF_MASK) == TMR_SCTRL_TCF_MASK))
+   \   0000000A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000000C   0x0400             LSLS     R0,R0,#+16
+   \   0000000E   0xD509             BPL      ??TMR2_isr_0
+    188              {
+    189                ioclrh (TMR2_SCTRL,TMR_SCTRL_TCF_MASK);  /* clear interrupt flag       */
+   \   00000010   0x....             LDR      R0,??DataTable6_5  ;; 0x7fff
+   \   00000012   0x....             LDR      R1,??DataTable6_12  ;; 0x4405900e
+   \   00000014   0x8008             STRH     R0,[R1, #+0]
+    190                if (pCallbackTMR2 != (TMR_CH_CALLBACK)NULL) 
+   \   00000016   0x....             LDR      R0,??DataTable5_3
+   \   00000018   0x6802             LDR      R2,[R0, #+0]
+   \   0000001A   0x0010             MOVS     R0,R2
+   \   0000001C   0xD002             BEQ      ??TMR2_isr_0
+    191                  pCallbackTMR2 (COMPARE_CALLBACK,0);
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x2002             MOVS     R0,#+2
+   \   00000022   0x4790             BLX      R2
+    192              }
+    193            }
+    194            /* Check for Input capture flag only it its interrupt is enabled            */
+    195            if (((TMR2_SCTRL&TMR_SCTRL_IEFIE_MASK) == TMR_SCTRL_IEFIE_MASK))
+   \                     ??TMR2_isr_0: (+1)
+   \   00000024   0x8820             LDRH     R0,[R4, #+0]
+   \   00000026   0x0540             LSLS     R0,R0,#+21
+   \   00000028   0xD50C             BPL      ??TMR2_isr_1
+    196            {
+    197              if (((TMR2_SCTRL&TMR_SCTRL_IEF_MASK) == TMR_SCTRL_IEF_MASK))
+   \   0000002A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000002C   0x0500             LSLS     R0,R0,#+20
+   \   0000002E   0xD509             BPL      ??TMR2_isr_1
+    198              {
+    199                ioclrh (TMR2_SCTRL,TMR_SCTRL_IEF_MASK);  /* clear interrupt flag       */
+   \   00000030   0x....             LDR      R0,??DataTable6_7  ;; 0xf7ff
+   \   00000032   0x....             LDR      R1,??DataTable6_12  ;; 0x4405900e
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+    200                if (pCallbackTMR2 != (TMR_CH_CALLBACK)NULL) 
+   \   00000036   0x....             LDR      R0,??DataTable5_3
+   \   00000038   0x6802             LDR      R2,[R0, #+0]
+   \   0000003A   0x0010             MOVS     R0,R2
+   \   0000003C   0xD002             BEQ      ??TMR2_isr_1
+    201                  pCallbackTMR2 (CAPTURE_CALLBACK,0);
+   \   0000003E   0x2100             MOVS     R1,#+0
+   \   00000040   0x2003             MOVS     R0,#+3
+   \   00000042   0x4790             BLX      R2
+    202              }
+    203            }
+    204             /* Check for Overflow flag only it its interrupt is enabled                */
+    205            if (((TMR2_SCTRL&TMR_SCTRL_TOFIE_MASK) == TMR_SCTRL_TOFIE_MASK))
+   \                     ??TMR2_isr_1: (+1)
+   \   00000044   0x8820             LDRH     R0,[R4, #+0]
+   \   00000046   0x04C0             LSLS     R0,R0,#+19
+   \   00000048   0xD50C             BPL      ??TMR2_isr_2
+    206            {
+    207              if (((TMR2_SCTRL&TMR_SCTRL_TOF_MASK) == TMR_SCTRL_TOF_MASK))
+   \   0000004A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000004C   0x0480             LSLS     R0,R0,#+18
+   \   0000004E   0xD509             BPL      ??TMR2_isr_2
+    208              {
+    209                ioclrh (TMR2_SCTRL,TMR_SCTRL_TOF_MASK);  /* clear interrupt flag       */
+   \   00000050   0x....             LDR      R0,??DataTable6_8  ;; 0xdfff
+   \   00000052   0x....             LDR      R1,??DataTable6_12  ;; 0x4405900e
+   \   00000054   0x8008             STRH     R0,[R1, #+0]
+    210                if (pCallbackTMR2 != (TMR_CH_CALLBACK)NULL) 
+   \   00000056   0x....             LDR      R0,??DataTable5_3
+   \   00000058   0x6802             LDR      R2,[R0, #+0]
+   \   0000005A   0x0010             MOVS     R0,R2
+   \   0000005C   0xD002             BEQ      ??TMR2_isr_2
+    211                  pCallbackTMR2 (ROLLOVER_CALLBACK,0);
+   \   0000005E   0x2100             MOVS     R1,#+0
+   \   00000060   0x2001             MOVS     R0,#+1
+   \   00000062   0x4790             BLX      R2
+    212              }
+    213             }
+    214          }
+   \                     ??TMR2_isr_2: (+1)
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+    215          
+
+   \                                 In section .text, align 2, keep-with-next
+    216          void TMR3_isr (void) 
+    217          {   
+   \                     TMR3_isr: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+    218            /* process TMR channel 3 interrupt                                          */
+    219            /* Check for Compare flag only it its interrupt is enabled                  */
+    220            if (((TMR3_SCTRL&TMR_SCTRL_TCFIE_MASK) == TMR_SCTRL_TCFIE_MASK))
+   \   00000002   0x....             LDR      R4,??DataTable6_13  ;; 0x4005a00e
+   \   00000004   0x8820             LDRH     R0,[R4, #+0]
+   \   00000006   0x0440             LSLS     R0,R0,#+17
+   \   00000008   0xD50C             BPL      ??TMR3_isr_0
+    221            {
+    222              if (((TMR3_SCTRL&TMR_SCTRL_TCF_MASK) == TMR_SCTRL_TCF_MASK))
+   \   0000000A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000000C   0x0400             LSLS     R0,R0,#+16
+   \   0000000E   0xD509             BPL      ??TMR3_isr_0
+    223              {
+    224                ioclrh (TMR3_SCTRL,TMR_SCTRL_TCF_MASK);  /* clear interrupt flag       */
+   \   00000010   0x....             LDR      R0,??DataTable6_5  ;; 0x7fff
+   \   00000012   0x....             LDR      R1,??DataTable6_14  ;; 0x4405a00e
+   \   00000014   0x8008             STRH     R0,[R1, #+0]
+    225                if (pCallbackTMR3 != (TMR_CH_CALLBACK)NULL) 
+   \   00000016   0x....             LDR      R0,??DataTable6_1
+   \   00000018   0x6802             LDR      R2,[R0, #+0]
+   \   0000001A   0x0010             MOVS     R0,R2
+   \   0000001C   0xD002             BEQ      ??TMR3_isr_0
+    226                  pCallbackTMR3 (COMPARE_CALLBACK,0);
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x2002             MOVS     R0,#+2
+   \   00000022   0x4790             BLX      R2
+    227              }
+    228            }
+    229            /* Check for Input capture flag only it its interrupt is enabled            */
+    230            if (((TMR3_SCTRL&TMR_SCTRL_IEFIE_MASK) == TMR_SCTRL_IEFIE_MASK))
+   \                     ??TMR3_isr_0: (+1)
+   \   00000024   0x8820             LDRH     R0,[R4, #+0]
+   \   00000026   0x0540             LSLS     R0,R0,#+21
+   \   00000028   0xD50C             BPL      ??TMR3_isr_1
+    231            {
+    232              if (((TMR3_SCTRL&TMR_SCTRL_IEF_MASK) == TMR_SCTRL_IEF_MASK))
+   \   0000002A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000002C   0x0500             LSLS     R0,R0,#+20
+   \   0000002E   0xD509             BPL      ??TMR3_isr_1
+    233              {
+    234                ioclrh (TMR3_SCTRL,TMR_SCTRL_IEF_MASK);  /* clear interrupt flag       */
+   \   00000030   0x....             LDR      R0,??DataTable6_7  ;; 0xf7ff
+   \   00000032   0x....             LDR      R1,??DataTable6_14  ;; 0x4405a00e
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+    235                if (pCallbackTMR3 != (TMR_CH_CALLBACK)NULL) 
+   \   00000036   0x....             LDR      R0,??DataTable6_1
+   \   00000038   0x6802             LDR      R2,[R0, #+0]
+   \   0000003A   0x0010             MOVS     R0,R2
+   \   0000003C   0xD002             BEQ      ??TMR3_isr_1
+    236                  pCallbackTMR3 (CAPTURE_CALLBACK,0);
+   \   0000003E   0x2100             MOVS     R1,#+0
+   \   00000040   0x2003             MOVS     R0,#+3
+   \   00000042   0x4790             BLX      R2
+    237              }
+    238            }
+    239             /* Check for Overflow flag only it its interrupt is enabled                */
+    240            if (((TMR3_SCTRL&TMR_SCTRL_TOFIE_MASK) == TMR_SCTRL_TOFIE_MASK))
+   \                     ??TMR3_isr_1: (+1)
+   \   00000044   0x8820             LDRH     R0,[R4, #+0]
+   \   00000046   0x04C0             LSLS     R0,R0,#+19
+   \   00000048   0xD50C             BPL      ??TMR3_isr_2
+    241            {
+    242              if (((TMR3_SCTRL&TMR_SCTRL_TOF_MASK) == TMR_SCTRL_TOF_MASK))
+   \   0000004A   0x8820             LDRH     R0,[R4, #+0]
+   \   0000004C   0x0480             LSLS     R0,R0,#+18
+   \   0000004E   0xD509             BPL      ??TMR3_isr_2
+    243              {
+    244                ioclrh (TMR3_SCTRL,TMR_SCTRL_TOF_MASK);  /* clear interrupt flag       */
+   \   00000050   0x....             LDR      R0,??DataTable6_8  ;; 0xdfff
+   \   00000052   0x....             LDR      R1,??DataTable6_14  ;; 0x4405a00e
+   \   00000054   0x8008             STRH     R0,[R1, #+0]
+    245                if (pCallbackTMR3 != (TMR_CH_CALLBACK)NULL) 
+   \   00000056   0x....             LDR      R0,??DataTable6_1
+   \   00000058   0x6802             LDR      R2,[R0, #+0]
+   \   0000005A   0x0010             MOVS     R0,R2
+   \   0000005C   0xD002             BEQ      ??TMR3_isr_2
+    246                  pCallbackTMR3 (ROLLOVER_CALLBACK,0);
+   \   0000005E   0x2100             MOVS     R1,#+0
+   \   00000060   0x2001             MOVS     R0,#+1
+   \   00000062   0x4790             BLX      R2
+    247              }
+    248            }
+    249          }
+   \                     ??TMR3_isr_2: (+1)
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4:
+   \   00000000   0x........         DC32     pCallbackTMR0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_1:
+   \   00000000   0xE000E280         DC32     0xe000e280
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_2:
+   \   00000000   0xE000E100         DC32     0xe000e100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_3:
+   \   00000000   0xE000E404         DC32     0xe000e404
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_4:
+   \   00000000   0x........         DC32     pCallbackTMR1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_5:
+   \   00000000   0xE000E408         DC32     0xe000e408
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x40057000         DC32     0x40057000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x4005701E         DC32     0x4005701e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x0000FFFE         DC32     0xfffe
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x........         DC32     pCallbackTMR2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x0000FFFD         DC32     0xfffd
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x40059000         DC32     0x40059000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6:
+   \   00000000   0x40058000         DC32     0x40058000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_1:
+   \   00000000   0x........         DC32     pCallbackTMR3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_2:
+   \   00000000   0x0000FFFC         DC32     0xfffc
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_3:
+   \   00000000   0x4005A000         DC32     0x4005a000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_4:
+   \   00000000   0x4005700E         DC32     0x4005700e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_5:
+   \   00000000   0x00007FFF         DC32     0x7fff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_6:
+   \   00000000   0x4405700E         DC32     0x4405700e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_7:
+   \   00000000   0x0000F7FF         DC32     0xf7ff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_8:
+   \   00000000   0x0000DFFF         DC32     0xdfff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_9:
+   \   00000000   0x4005800E         DC32     0x4005800e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_10:
+   \   00000000   0x4405800E         DC32     0x4405800e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_11:
+   \   00000000   0x4005900E         DC32     0x4005900e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_12:
+   \   00000000   0x4405900E         DC32     0x4405900e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_13:
+   \   00000000   0x4005A00E         DC32     0x4005a00e
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_14:
+   \   00000000   0x4405A00E         DC32     0x4405a00e
+    250          /******************************************************************************
+    251           * End of module                                                              *
+    252           ******************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   TMR0_isr
+         8   -- Indirect call
+       8   TMR1_isr
+         8   -- Indirect call
+       8   TMR2_isr
+         8   -- Indirect call
+       8   TMR3_isr
+         8   -- Indirect call
+      16   TMR_CH0_Init
+      24   TMR_CH1_Init
+      24   TMR_CH2_Init
+      24   TMR_CH3_Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable4
+       4  ??DataTable4_1
+       4  ??DataTable4_2
+       4  ??DataTable4_3
+       4  ??DataTable4_4
+       4  ??DataTable4_5
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_10
+       4  ??DataTable6_11
+       4  ??DataTable6_12
+       4  ??DataTable6_13
+       4  ??DataTable6_14
+       4  ??DataTable6_2
+       4  ??DataTable6_3
+       4  ??DataTable6_4
+       4  ??DataTable6_5
+       4  ??DataTable6_6
+       4  ??DataTable6_7
+       4  ??DataTable6_8
+       4  ??DataTable6_9
+      42  ?Subroutine0
+     102  TMR0_isr
+     102  TMR1_isr
+     102  TMR2_isr
+     102  TMR3_isr
+      94  TMR_CH0_Init
+      66  TMR_CH1_Init
+      64  TMR_CH2_Init
+      66  TMR_CH3_Init
+       4  pCallbackTMR0
+       4  pCallbackTMR1
+       4  pCallbackTMR2
+       4  pCallbackTMR3
+
+ 
+  16 bytes in section .bss
+ 848 bytes in section .text
+ 
+ 848 bytes of CODE memory
+  16 bytes of DATA memory
+
+Errors: none
+Warnings: none

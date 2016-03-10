@@ -1,0 +1,27 @@
+var group__adc__channel =
+[
+    [ "AD3", "group__adc__channel.html#gad41a6acf9983e9d4c0cbab9d33ff2b17", null ],
+    [ "AD6", "group__adc__channel.html#gaecab84a1ced95db1675c411d680a397d", null ],
+    [ "AD8", "group__adc__channel.html#ga04d133b0028e9489a7fd0ff8a54d5886", null ],
+    [ "AD9", "group__adc__channel.html#ga4a839ebd347faa23254764638e37d1cc", null ],
+    [ "VLL1", "group__adc__channel.html#ga76f177d8141341b22e21ab6493d592ed", null ],
+    [ "VCAP1", "group__adc__channel.html#ga3d18f766b941c9e4d14cb9cf90f1f380", null ],
+    [ "AD0", "group__adc__channel.html#gaccb4263b3ac467839927fb6946312e1e", null ],
+    [ "AD1", "group__adc__channel.html#gaf343a3060786e77012298be547e60fc1", null ],
+    [ "VLL2", "group__adc__channel.html#ga89db8d51d6695e41781542e614ac3473", null ],
+    [ "VCAP2", "group__adc__channel.html#ga0b64a703108285eca4a6171848225a1a", null ],
+    [ "AD2", "group__adc__channel.html#ga6c2980228540dcc9e3b29773e117ff64", null ],
+    [ "AD4", "group__adc__channel.html#ga1bc39ea8ed2006949fe01c5988af3308", null ],
+    [ "PMC_VDD", "group__adc__channel.html#ga525187ab4008e28e42ce3051d3c0f5c0", null ],
+    [ "PMC_VDD_SW", "group__adc__channel.html#ga5ae0bb587d071a623f3c68bde5663f1d", null ],
+    [ "SAR_VDDA", "group__adc__channel.html#ga1f8de081c421f58605a725c057f2e1fb", null ],
+    [ "AD5", "group__adc__channel.html#ga0367b047bf8bf67774e6d0f983e69fcd", null ],
+    [ "AD7", "group__adc__channel.html#ga7677b93f202e90ccc5fa13af4ffe25e1", null ],
+    [ "CMP0_DAC_OUT", "group__adc__channel.html#gabe23cb94ac1bd4eef705f7f3d4920a2e", null ],
+    [ "CMP1_DAC_OUT", "group__adc__channel.html#ga289c0f37220ee60571e04627cb70c7b3", null ],
+    [ "AD10", "group__adc__channel.html#ga1f5758fcef9b070fd07a0d57718399e3", null ],
+    [ "AD11", "group__adc__channel.html#ga787860e39ffb92d14552a8a62be3c8ac", null ],
+    [ "TEMP_SENSOR", "group__adc__channel.html#ga16433c75f0d3615fe60d59ec8a86834a", null ],
+    [ "PMC_1V_BG_OUT", "group__adc__channel.html#gab1bb54d7358c6d5398eda2739c178788", null ],
+    [ "AD_OFF", "group__adc__channel.html#gad8a2d98bf7098d42cb025fc7d206386e", null ]
+];

@@ -1,0 +1,27 @@
+var group__afe__chan__config =
+[
+    [ "AFE_CH_HWTRG_CCM_PGAON_CONFIG", "group__afe__chan__config.html#gaea3d1d9adc6588102e000897169a0f92", null ],
+    [ "AFE_CH_SWTRG_CCM_PGAON_CONFIG", "group__afe__chan__config.html#gaa8746d1669408beedba12ab02e717e53", null ],
+    [ "AFE_CH_HWTRG_SCM_PGAON_CONFIG", "group__afe__chan__config.html#ga918eb1a3f4bc846614a644339505d3ac", null ],
+    [ "AFE_CH_SWTRG_SCM_PGAON_CONFIG", "group__afe__chan__config.html#ga3036a738d690ecd6a5cb3309d78d674d", null ],
+    [ "AFE_CH_HWTRG_CCM_PGAOFF_CONFIG", "group__afe__chan__config.html#ga4bd7ea4ffe9aaf8b1bcdf5bbcd5f9d0d", null ],
+    [ "AFE_CH_SWTRG_CCM_PGAOFF_CONFIG", "group__afe__chan__config.html#gad5fe9fa72b8c407e87bb9fcba39519d7", null ],
+    [ "AFE_CH_HWTRG_SCM_PGAOFF_CONFIG", "group__afe__chan__config.html#gacc54d2f579d34b36fa13eceb817bf40e", null ],
+    [ "AFE_CH_SWTRG_SCM_PGAOFF_CONFIG", "group__afe__chan__config.html#ga54db2b5b6516b98f8ce930fd89cd25c8", null ],
+    [ "AFE_CH_SWTRG_SCM_DEC_INT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga55786df8f1c1a267dc439a6a98c3fb0f", null ],
+    [ "AFE_CH_HWTRG_SCM_DEC_INT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga4953f5c93331892d511743dfeadf9fc5", null ],
+    [ "AFE_CH_SWTRG_SCM_DEC_EXT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga4cab11a7635f18df17309cf9fe4211bd", null ],
+    [ "AFE_CH_HWTRG_SCM_DEC_EXT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga6d12e8523b83b2194f0c1ddae4d97dd8", null ],
+    [ "AFE_CH_SWTRG_SCM_DEC_INT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gacf2d6b1a749516798b7a177bdf365b7c", null ],
+    [ "AFE_CH_HWTRG_SCM_DEC_INT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga504d2c29281331cd96afa57c46531ad8", null ],
+    [ "AFE_CH_SWTRG_SCM_DEC_EXT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga371135418bd960d71a4822939b8e39d7", null ],
+    [ "AFE_CH_HWTRG_SCM_DEC_EXT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga7bd0776f43182d61429ca3f129fff95c", null ],
+    [ "AFE_CH_SWTRG_CCM_DEC_INT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gabb9c83aed92214c0a23740d4e45ebb85", null ],
+    [ "AFE_CH_HWTRG_CCM_DEC_INT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gadab0a109ac89bb95a6257aeba75aee48", null ],
+    [ "AFE_CH_SWTRG_CCM_DEC_EXT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gab23bd26b7d4996812f6ffbdf1fbaeed2", null ],
+    [ "AFE_CH_HWTRG_CCM_DEC_EXT_PE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gadd90f8505e8839cab3096b5d64b4b044", null ],
+    [ "AFE_CH_SWTRG_CCM_DEC_INT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga98fc51e557fb35d23d5c3c33436c48c4", null ],
+    [ "AFE_CH_HWTRG_CCM_DEC_INT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gae8cd5d67d5d33875c0b07998d5c28d2f", null ],
+    [ "AFE_CH_SWTRG_CCM_DEC_EXT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#ga8eac7a75c8f3efab9a5b29f65d3176b1", null ],
+    [ "AFE_CH_HWTRG_CCM_DEC_EXT_NE_CLK_BYPASS_CONFIG", "group__afe__chan__config.html#gad54b1f0d3cd97c50d6def78bbd85b875", null ]
+];
