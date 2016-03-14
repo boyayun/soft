@@ -235,14 +235,14 @@ void UIDisplayHandle(u8 disnum)
 	u8 temp = 0;
 	switch(disnum)
 	{
+#ifdef KONGTIAO	
         case 0:		//温度
-		sprintf(&lcdpara.disdata[0], "TEMP");
-		sprintf(&lcdpara.disdata[4], "%02d", devstate.temparature);
-		lcdpara.disdata[temp++] = 't';
-		lcdpara.disflag[3] = 1;
-		break;
-		
-#ifdef KONGTIAO		
+            sprintf(&lcdpara.disdata[0], "TEMP");
+            sprintf(&lcdpara.disdata[4], "%02d", devstate.temparature[1]);
+            lcdpara.disdata[temp++] = 't';
+            lcdpara.disflag[3] = 1;
+            break;
+			
 		case 1:		//模式
 			switch(devstate.mode)
 			{
@@ -318,8 +318,7 @@ void UIDisplayHandle(u8 disnum)
 			
 			lcdpara.disflag[2] = 1;
 			break;
-#endif
-
+#endif 
 		case 2:		//电源
 			switch(devstate.power)
 			{
@@ -336,9 +335,9 @@ void UIDisplayHandle(u8 disnum)
 			}
 			lcdpara.disflag[2] = 1;
 			break;
-						
+#ifdef	KONGTIAO				
 		case 3:		//风量
-			switch(devstate.tempalarm)
+			switch(devstate.wind)
 			{
 				case 1:
 					sprintf(lcdpara.disdata, "WINAUT");
@@ -361,7 +360,7 @@ void UIDisplayHandle(u8 disnum)
 			}
 			lcdpara.disflag[2] = 1;
 			break;
-			
+#endif			
 //		case 4:		//日期 年
 //            {
 //                u16 tem = 0;
@@ -397,7 +396,7 @@ void LcdDisplayHandle()
 	{
 		lcdpara.state = 0;
 		UIDisplayHandle(lcdpara.disnum);
-		lcdpara.disnum++;
+//		lcdpara.disnum++;
 		switch(lcdpara.disnum)
 		{
 			case 0:		//温度
@@ -435,10 +434,10 @@ void LcdDisplayHandle()
 			default:
 				break;
 		}
-#ifdef KONGTIAO
-		lcdpara.disnum &= 0x03;
-#else
-		lcdpara.disnum &= 0x01;
-#endif
+//#ifdef KONGTIAO
+//		lcdpara.disnum &= 0x03;
+//#else
+//		lcdpara.disnum &= 0x01;
+//#endif
 	}
 }

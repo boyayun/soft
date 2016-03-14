@@ -20,14 +20,14 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 	HAL_RTC_GetTime(hrtc, &sTime, FORMAT_BIN);
 	HAL_RTC_GetDate(hrtc, &sDate, FORMAT_BIN);
 #ifdef KONGTIAO
-	devstate.time[0] = sTime.Hours;
-	devstate.time[1] = sTime.Minutes;
-	devstate.time[2] = sTime.Seconds;
-
-	devstate.date[0] = (sDate.Year+2000)>>8;
-    devstate.date[1] = (sDate.Year+2000)&0xff;
-	devstate.date[2] = sDate.Month;
-	devstate.date[3] = sDate.Date;
+//	devstate.time[0] = sTime.Hours;
+//	devstate.time[1] = sTime.Minutes;
+//	devstate.time[2] = sTime.Seconds;
+//
+//	devstate.date[0] = (sDate.Year+2000)>>8;
+//    devstate.date[1] = (sDate.Year+2000)&0xff;
+//	devstate.date[2] = sDate.Month;
+//	devstate.date[3] = sDate.Date;
 #endif
 }
 
@@ -35,9 +35,9 @@ void SetRTCDate()
 {
 	RTC_DateTypeDef sDate;
 #ifdef KONGTIAO
-	sDate.Year = (devstate.date[0]<<8 | devstate.date[1])-2000;
-	sDate.Month = devstate.date[2];
-	sDate.Date = devstate.date[3];
+//	sDate.Year = (devstate.date[0]<<8 | devstate.date[1])-2000;
+//	sDate.Month = devstate.date[2];
+//	sDate.Date = devstate.date[3];
 #endif
 	HAL_RTC_SetDate(&hrtc, &sDate, FORMAT_BIN);
 }
@@ -46,9 +46,9 @@ void SetRTCTime()
 {
 	RTC_TimeTypeDef sTime;
 #ifdef KONGTIAO
-	sTime.Hours= devstate.time[0];
-	sTime.Minutes= devstate.time[1];
-	sTime.Seconds= devstate.time[2];
+//	sTime.Hours= devstate.time[0];
+//	sTime.Minutes= devstate.time[1];
+//	sTime.Seconds= devstate.time[2];
 #endif
 	HAL_RTC_SetTime(&hrtc, &sTime, FORMAT_BIN);
 }

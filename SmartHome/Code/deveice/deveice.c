@@ -32,6 +32,7 @@ DataInterfaceStu datadown;			//下行数据到设备接口
 DevStateStuType devstate;			//设备状态
 u8 cmdsend;				//要发送的命令
 u8 signal;				//信号等级
+u8 tempalarm;
 const u8 devid[DEVIDLEN] = "69245757160260316150723123456780124";
 const DevInfoStuType devinfo = {{16, 01, 26}, {16, 01, 26}, 0};
 const u8 testbuf[3] = {0x01, 0x00};
@@ -378,7 +379,8 @@ static void DevCtrlHandle()
 //		break;
 		
 		case 611:		//温度
-		devstate.temparature = dataup.framedata.data[i++];
+		devstate.temparature[0] = dataup.framedata.data[i++];
+        devstate.temparature[1] = dataup.framedata.data[i++];
 		lcdpara.disnum = 0;
 		break;
 
@@ -796,7 +798,7 @@ static void DatadownHandle(void)
 			case CMDSETWORKMODE:
 			case CMDRDMODINFO:				
 			datadown.state = 3;
-			APIInitTimer(&framesendtimer, FRAMESENDCNT, NULL, NULL);
+            APIReloadTimer(&framesendtimer, FRAMESENDCNT);
 //			APIStartTimer(&framesendtimer);
 			break;
 			
@@ -810,27 +812,27 @@ static void DatadownHandle(void)
 void AlarmHandle()
 {
 #ifdef KONGTIAO
-	if(devstate.temparature >= TEMPALARMVALUE)
+	if(devstate.temparature[1] >= TEMPALARMVALUE)
 	{
-		if(0 == alarmpara.state)
+		if(0 == alarmpara.state)            //报警
 		{
 			alarmpara.state = 1;
-			devstate.tempalarm = 1;
+			tempalarm = 1;
 			FormatSend(CMDALARM, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
 			
-			APIInitTimer(&alarmpara.alarmtimer, ALARMCNTNOMAL, NULL, NULL);
+            APIReloadTimer(&alarmpara.alarmtimer, ALARMCNTNOMAL);
 			APIStartTimer(&alarmpara.alarmtimer);
 			
-			lcdpara.disnum = 3;
+//			lcdpara.disnum = 3;
 		}
 		
-		if(2 == alarmpara.state)
+		if(2 == alarmpara.state)            //收到确认后的报警
 		{
 			alarmpara.state = 4;
-			APIInitTimer(&alarmpara.alarmtimer, ALARMCNTHANDLED, NULL, NULL);
+            APIReloadTimer(&alarmpara.alarmtimer, ALARMCNTNOMAL);
 		}
 		
-		if(3 == alarmpara.state)
+		if(3 == alarmpara.state)            //收到停止报警后的报警
 		{
 			alarmpara.state = 4;
 			APIStopTimer(&alarmpara.alarmtimer);
@@ -838,12 +840,13 @@ void AlarmHandle()
 	}
 	else
 	{
-		if(0 != alarmpara.state)
+		if(0 != alarmpara.state)        //停止报警，恢复常态
 		{
 			alarmpara.state = 0;
 			APIStopTimer(&alarmpara.alarmtimer);
-			devstate.tempalarm = 0;
-			lcdpara.disnum = 3;
+			tempalarm = 0;
+            
+//			lcdpara.disnum = 3;
 		}
 	}
 #endif
@@ -872,16 +875,17 @@ void KeyTimerHandle()
 		{
 			keyvalue.KeyValueNum = KeyNumNOkey;
 			APIStopTimer(&keypara.keytimer);
-			
-			//			if(35 > devstate.temparature)
-			//			{
-			//				devstate.temparature++;
-			//			}
-			//			else
-			//			{
-			//				devstate.temparature = 25;
-			//			}
-			//			lcdpara.disnum = 0;
+#ifdef KONGTIAO			
+            if(35 > devstate.temparature[1])
+            {
+                devstate.temparature[1]++;
+            }
+            else
+            {
+                devstate.temparature[1] = 25;
+            }
+            lcdpara.disnum = 0;
+#endif      
 		}
 	}
 }
@@ -899,7 +903,7 @@ void KeyScan()
 			{
 				keypara.KeyParaState = KeyStateDowning;
 				keypara.KeyParaShake = TRUE;
-				APIInitTimer(&keypara.keytimer, KEYSHAKECNT, NULL, NULL);
+                APIReloadTimer(&keypara.keytimer, KEYSHAKECNT);
 				APIStartTimer(&keypara.keytimer);
 				//					FifoInput(&Uart1SendFifo, "开始消抖\r\n", sizeof"开始消抖\r\n");		//test
 				return;
@@ -927,7 +931,7 @@ void KeyScan()
 			{
 				keypara.KeyParaState = KeyStateUping;
 				keypara.KeyParaShake = TRUE;
-				APIInitTimer(&keypara.keytimer, KEYSHAKECNT, NULL, NULL);
+				APIReloadTimer(&keypara.keytimer, KEYSHAKECNT);
 				APIStartTimer(&keypara.keytimer);
 				//					FifoInput(&Uart1SendFifo, "开始消抖\r\n", sizeof"开始消抖\r\n"); 	//test
 			}
@@ -956,24 +960,24 @@ void KeyScan()
 		{
 			keyvalue.KeyValueNum = KeyNumNOkey;
 			APIStopTimer(&keypara.keytimer);
-			
-			//			if(16 < devstate.temparature)
-			//			{
-			//				devstate.temparature--;
-			//			}
-			//			else
-			//			{
-			//				devstate.temparature = 25;
-			//			}
-			//			lcdpara.disnum = 0;
+#ifdef KONGTIAO
+            if(16 < devstate.temparature[1])
+            {
+                devstate.temparature[1]--;
+            }
+            else
+            {
+                devstate.temparature[1] = 25;
+            }
+            lcdpara.disnum = 0;
+#endif
 		}
 		else				//单击
 		{
-//			cmdsend = CMDALARM;
-			FormatSend(CMDALARM, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
+//			FormatSend(CMDALARM, (u8*)&devstate, sizeof(DevStateStuType));	//发送状态帧
 			
 			keyvalue.KeyValueNum++;
-			APIInitTimer(&keypara.keytimer, KEYDOUBLECLICK, NULL, NULL);
+            APIReloadTimer(&keypara.keytimer, KEYDOUBLECLICK);
 			APIStartTimer(&keypara.keytimer);
 		}
 	}
@@ -985,7 +989,7 @@ void InfoReportHandle()
 	{
 		inforeportpara.sw = 1;
 		inforeportpara.timercnt = inforeportpara.reportcnt;
-		APIInitTimer(&inforeportpara.timer, INFOREPORTCNT, NULL, NULL);
+        APIReloadTimer(&inforeportpara.timer, INFOREPORTCNT);
 		APIStartTimer(&inforeportpara.timer);
 	}
 	else if((0 != inforeportpara.sw) && (0 == inforeportpara.reportcnt))
@@ -1068,7 +1072,7 @@ void DevParaInit()
 	
 #ifdef KONGTIAO	
 	devstate.power = 0;
-	devstate.temparature = 25;
+	devstate.temparature[1] = 25;
 	devstate.mode = 1;
 	devstate.wind = 1;
 //	devstate.date[0] = 2016>>8;
@@ -1083,6 +1087,8 @@ void DevParaInit()
 	devstate.mode = 1;
 #endif
 
+    lcdpara.disnum = 2;
+    
 	dataup.framehead[0] = 0xf5;
 	dataup.framehead[1] = 0xf5;
 //	inforeportpara.reportcnt = DEVCFGFREMIN;

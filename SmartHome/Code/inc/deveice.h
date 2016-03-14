@@ -7,7 +7,7 @@ extern "C" {
 
 #include "common.h"
     
-//#define KONGTIAO
+#define KONGTIAO
 #define DEBUGFRAMEREV		0		//运行模式 0:正常运行 1:DEBUG
 
 /*定义命令字*/
@@ -67,7 +67,7 @@ extern "C" {
 
 #define DEVIDLEN  36				//设备ID的长度
 
-#define TEMPALARMVALUE	26			//高温报警值
+#define TEMPALARMVALUE	32			//高温报警值
 #define ALARMCNTNOMAL 	200			//正常200ms报警
 #define ALARMCNTHANDLED 5000		//正常5000ms报警
 
@@ -141,21 +141,23 @@ typedef struct
     TimerParaStu timer;
 }InfoReportStuType;
 
+#pragma pack(1)
 typedef struct
 {
 #ifdef KONGTIAO
     u8 power;		//电源开关	0:关 1:开
-	u8 temparature;	//温度
+	u8 temparature[2];	//温度
     u8 mode;		//模式选择  0:制冷 1:制热 2:除湿
     u8 wind;		//风量
 //    u8 date[4];		//年、月、日
 //    u8 time[3];		//时分秒
-    u8 tempalarm;	//高温报警
+//    u8 tempalarm;	//高温报警
 #else
 	u8 power;		//电源开关	0:关 1:开
     u8 mode;		//模式选择  0:制冷 1:制热 2:除湿
 #endif
 }DevStateStuType;
+#pragma pack()
 /*识别信息结构体*/
 //typedef struct
 //{
