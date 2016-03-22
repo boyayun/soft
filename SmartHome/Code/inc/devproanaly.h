@@ -6,7 +6,7 @@
 #endif
 
 #include "common.h"
-//#define OLD		//老的协议
+#define OLD		//老的协议
 
 #define DEBUGFRAMEREV		0		//运行模式 0:正常运行 1:DEBUG
 //#define TESTTIMER		//定时器测试
@@ -102,19 +102,10 @@ typedef struct
 
 typedef struct
 {
-#ifdef OLD
-	u8 framehead[4];
-	u8 saddr;
-	u8 daddr;
-	u8 cmd;
-	u8 len;
-	u8 data[245];
-	u16 crc;
-#else
 	u8 framehead[2];
 	FrameCtrlUni framectrl;	//帧控制域
 	FrameDataStu framedata; //帧数据域
-#endif
+
 	//数据状态 0:无数据或数据已处理完 1:开始写入数据,内存已被占用
 	//2:数据写入完成可以处理 3:数据正在进行处理(只有为0时才可写入)
 	u8 state;
@@ -167,7 +158,7 @@ extern TimerParaStu framesendtimer; 		//帧发送定时器接口
 
 extern FifoTyp modsendfifo;				//模块数据发送FIFO
 extern _Bool DataDownWr(u8* data, u8 datalen);
-extern void DevFrameHandle(void);
+extern void FrameHandle(void);
 extern void RevDataWrFifo(u8* data, u8 len);
 extern void DevHardInit(void);
 extern void DevParaInit(void);

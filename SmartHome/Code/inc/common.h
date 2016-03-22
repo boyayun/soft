@@ -1,7 +1,7 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
-//#define OS		//操作系统
+#define OS		//操作系统
 
 #ifdef OS
 #include "MICO.h"

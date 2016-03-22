@@ -34,12 +34,12 @@
         
         
       <ShowCodeCoverage>1</ShowCodeCoverage><ShowInstrProfiling>1</ShowInstrProfiling></Disassembly>
-    <WATCH_1><expressions><item>datadown</item><item>modsendfifo</item><item>hrtc</item><item>devstate</item><item>alarmpara</item><item>dataup</item><item>framerevpara</item><item>modsendfifobuf</item><item>revfifobuf</item><item>tempbuffer</item><item>framerevfifo</item><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>173</item><item>150</item><item>100</item><item>185</item></col-widths></WATCH_1><Register/><Find-in-Files><ColumnWidth0>403</ColumnWidth0><ColumnWidth1>67</ColumnWidth1><ColumnWidth2>604</ColumnWidth2><ColumnWidth3>268</ColumnWidth3></Find-in-Files><Select-Ambiguous-Definitions><ColumnWidth0>470</ColumnWidth0><ColumnWidth1>67</ColumnWidth1><ColumnWidth2>806</ColumnWidth2></Select-Ambiguous-Definitions><Memory><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><FindDirection>1</FindDirection><FindAsHex>0</FindAsHex></Memory></Static>
+    <WATCH_1><expressions><item>datadown</item><item>modsendfifo</item><item>hrtc</item><item>devstate</item><item>alarmpara</item><item>dataup</item><item>framerevpara</item><item>modsendfifobuf</item><item>revfifobuf</item><item>framerevfifo</item><item>lcdpara</item><item>datadown</item><item>lcdpara</item><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>173</item><item>150</item><item>100</item><item>185</item></col-widths></WATCH_1><Register/><Find-in-Files><ColumnWidth0>403</ColumnWidth0><ColumnWidth1>67</ColumnWidth1><ColumnWidth2>604</ColumnWidth2><ColumnWidth3>268</ColumnWidth3></Find-in-Files><Select-Ambiguous-Definitions><ColumnWidth0>470</ColumnWidth0><ColumnWidth1>67</ColumnWidth1><ColumnWidth2>806</ColumnWidth2></Select-Ambiguous-Definitions><Memory><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><FindDirection>1</FindDirection><FindAsHex>0</FindAsHex></Memory></Static>
     <Windows>
       
       
       
-    <Wnd0>
+    <Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-13125-7664</Identity>
@@ -55,7 +55,7 @@
           </Tab>
         <Tab><Identity>TabID-12094-6870</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-21306-9864</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>1</SelectedTab></Wnd0><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd2>
         <Tabs>
           <Tab>
             <Identity>TabID-23873-7667</Identity>
@@ -67,25 +67,25 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3><Wnd4><Tabs><Tab><Identity>TabID-20493-19379</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab><Tab><Identity>TabID-21809-12865</Identity><TabName>Register</TabName><Factory>Register</Factory><Session><REG1>0</REG1><REG2>0</REG2><Group>28</Group><States>0</States></Session></Tab><Tab>
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd5><Tabs><Tab><Identity>TabID-20493-19379</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab><Tab><Identity>TabID-21809-12865</Identity><TabName>Register</TabName><Factory>Register</Factory><Session><REG1>0</REG1><REG2>0</REG2><Group>28</Group><States>0</States></Session></Tab><Tab>
             <Identity>TabID-1854-7670</Identity>
             <TabName>Disassembly</TabName>
             <Factory>Disassembly</Factory>
             <Session/>
-          </Tab></Tabs><SelectedTab>0</SelectedTab></Wnd4></Windows>
+          </Tab></Tabs><SelectedTab>0</SelectedTab></Wnd5></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\Code\inc\common.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>44</SelStart2><SelEnd2>44</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\Code\deveice\deveice.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>340</YPos2><SelStart2>7767</SelStart2><SelEnd2>7767</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\IAR\deveicetest\DeviceTest\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>47</YPos2><SelStart2>2885</SelStart2><SelEnd2>2885</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\IAR\deveicetest\DeviceTest\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_lcd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>496</YPos2><SelStart2>19332</SelStart2><SelEnd2>19332</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\Code\inc\deveice.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>117</SelStart2><SelEnd2>117</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\IAR\deveicetest\DeviceTest\Src\lcd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>130</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\Code\lcddriver\lcddriver.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>236</YPos2><SelStart2>8065</SelStart2><SelEnd2>8065</SelEnd2></Tab><ActiveTab>6</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\Code\deveice\deveice.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>947</YPos2><SelStart2>20980</SelStart2><SelEnd2>20980</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\soft\SmartHome\IAR\deveicetest\DeviceTest\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>47</YPos2><SelStart2>2772</SelStart2><SelEnd2>2772</SelEnd2></Tab><ActiveTab>1</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-010A4E48><key>iaridepm.enu1</key></Toolbar-010A4E48></Sizes></Row0><Row1><Sizes><Toolbar-23FFB900><key>debuggergui.enu1</key></Toolbar-23FFB900></Sizes></Row1><Row2><Sizes><Toolbar-23FFBC20><key>armstlink.enu1</key></Toolbar-23FFBC20></Sizes></Row2></Top><Left><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>670</Bottom><Right>350</Right><x>-2</x><y>-2</y><xscreen>333</xscreen><yscreen>412</yscreen><sizeHorzCX>198214</sizeHorzCX><sizeHorzCY>425620</sizeHorzCY><sizeVertCX>209524</sizeVertCX><sizeVertCY>694215</sizeVertCY></Rect></Wnd3></Sizes></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>670</Bottom><Right>417</Right><x>-2</x><y>-2</y><xscreen>451</xscreen><yscreen>605</yscreen><sizeHorzCX>268452</sizeHorzCX><sizeHorzCY>625000</sizeHorzCY><sizeVertCX>249405</sizeVertCX><sizeVertCY>694215</sizeVertCY></Rect></Wnd4></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>205</Bottom><Right>1682</Right><x>-2</x><y>-2</y><xscreen>1684</xscreen><yscreen>207</yscreen><sizeHorzCX>1002381</sizeHorzCX><sizeHorzCY>213843</sizeHorzCY><sizeVertCX>198214</sizeVertCX><sizeVertCY>425620</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00DE4E48><key>iaridepm.enu1</key></Toolbar-00DE4E48></Sizes></Row0><Row1><Sizes><Toolbar-16C04A78><key>debuggergui.enu1</key></Toolbar-16C04A78></Sizes></Row1><Row2><Sizes><Toolbar-16C04758><key>armstlink.enu1</key></Toolbar-16C04758></Sizes></Row2></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>670</Bottom><Right>350</Right><x>-2</x><y>-2</y><xscreen>333</xscreen><yscreen>412</yscreen><sizeHorzCX>198214</sizeHorzCX><sizeHorzCY>425620</sizeHorzCY><sizeVertCX>209524</sizeVertCX><sizeVertCY>694215</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>670</Bottom><Right>417</Right><x>-2</x><y>-2</y><xscreen>451</xscreen><yscreen>605</yscreen><sizeHorzCX>268452</sizeHorzCX><sizeHorzCY>625000</sizeHorzCY><sizeVertCX>249405</sizeVertCX><sizeVertCY>694215</sizeVertCY></Rect></Wnd5></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>205</Bottom><Right>1682</Right><x>-2</x><y>-2</y><xscreen>1684</xscreen><yscreen>207</yscreen><sizeHorzCX>1002381</sizeHorzCX><sizeHorzCY>213843</sizeHorzCY><sizeVertCX>198214</sizeVertCX><sizeVertCY>425620</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 
